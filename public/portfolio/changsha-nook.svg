@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="changsha-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181b" />
+      <stop offset="60%" stop-color="#2d0f05" />
+      <stop offset="100%" stop-color="#451a03" />
+    </linearGradient>
+    <radialGradient id="neon-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ea580c" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#18181b" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Base background -->
+  <rect width="800" height="600" fill="url(#changsha-grad)" />
+  
+  <!-- Neon soft background glow -->
+  <circle cx="500" cy="250" r="280" fill="url(#neon-glow)" />
+
+  <!-- Alleyways grid & cozy architectural lines -->
+  <g stroke="#f97316" stroke-width="1.2" fill="none" opacity="0.2">
+    <!-- Isometric alleyway layout grids -->
+    <line x1="100" y1="100" x2="700" y2="500" />
+    <line x1="100" y1="200" x2="600" y2="550" />
+    <line x1="200" y1="50" x2="700" y2="400" />
+    
+    <line x1="700" y1="100" x2="100" y2="500" />
+    <line x1="600" y1="50" x2="100" y2="400" />
+    <line x1="700" y1="200" x2="200" y2="550" />
+  </g>
+  
+  <!-- Tea cup stain rings / warm steam circles representing Hunan tea culture -->
+  <circle cx="360" cy="320" r="130" stroke="#f59e0b" stroke-width="2.5" opacity="0.3" fill="none" />
+  <circle cx="390" cy="340" r="100" stroke="#ea580c" stroke-dasharray="12 18" stroke-width="1.5" opacity="0.25" fill="none" />
+  <circle cx="340" cy="300" r="70" stroke="#f59e0b" stroke-width="1" opacity="0.15" fill="none" />
+
+  <!-- Cozy architectural alleyway gate abstract shape (Nook gate / Changsha street corner) -->
+  <path d="M 280 450 L 280 260 C 280 240, 320 220, 400 220 C 480 220, 520 240, 520 260 L 520 450" stroke="#fdba74" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.35" />
+  <line x1="280" y1="320" x2="520" y2="320" stroke="#fdba74" stroke-width="1.5" opacity="0.25" />
+  <line x1="280" y1="380" x2="520" y2="380" stroke="#fdba74" stroke-width="1.5" opacity="0.25" />
+  
+  <!-- Cozy warm glowing lantern or window light -->
+  <circle cx="400" cy="220" r="25" fill="#f59e0b" opacity="0.4" filter="blur(10px)" />
+  <circle cx="400" cy="220" r="8" fill="#ffffff" opacity="0.7" />
+</svg>

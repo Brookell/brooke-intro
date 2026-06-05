@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="coffee-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3e2723" />
+      <stop offset="50%" stop-color="#6d4c41" />
+      <stop offset="100%" stop-color="#a1887f" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#coffee-grad)" />
+  
+  {/* Abstract geometric coffee cup rings */}
+  <circle cx="400" cy="300" r="140" stroke="#ffffff" strokeWidth="2" opacity="0.12" fill="none" />
+  <circle cx="400" cy="300" r="110" stroke="#ffffff" strokeWidth="1.5" opacity="0.08" fill="none" />
+  <circle cx="400" cy="300" r="80" stroke="#ffffff" strokeWidth="1" opacity="0.05" fill="none" />
+  
+  {/* Soft light steam glow */}
+  <circle cx="400" cy="220" r="120" fill="#ffffff" opacity="0.08" filter="blur(50px)" />
+</svg>

@@ -1,0 +1,1486 @@
+< !DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Love Letters - Immersive Digital Archive</title>< !-- 引入打字机字体 Special Elite 和艺术字体组合 --><link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700&family=Great+Vibes&family=Playfair+Display:wght@400;600;700;800&display=swap"
+
+rel="stylesheet"><style> :root {
+    --paper-color: #e6dfcf;
+    --ink-color: #2b2b2b;
+    --bg-dark: #080808;
+    --accent-gold: #c5a059;
+    --accent-gold-soft: rgba(197, 160, 89, 0.15);
+    --transition-silky: all 1.2s cubic-bezier(0.7, 0, 0.3, 1);
+
+    /* 复古垂直信笺比例 */
+    --paper-width: 620px;
+    --paper-height: 82vh;
+    /* 修正：字号缩小以符合真实打字机大小 */
+    --paper-font-size: 0.92rem;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: #eee;
+    font-family: 'EB Garamond', serif;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 全局艺术噪点层 */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* 管理模式控件显示 */
+.admin-controls {
+    display: none;
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    z-index: 300;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+body.admin-mode .admin-controls {
+    display: flex;
+    opacity: 1;
+}
+
+#master-viewport {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: var(--bg-dark);
+    overflow: hidden;
+}
+
+/* --- 首页 (Landing Page) --- */
+#landing-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    transition: var(--transition-silky);
+    text-align: center;
+    padding: 20px;
+    background-color: var(--bg-dark);
+}
+
+#landing-bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+#landing-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.85)),
+        url('https://pastlovespodcast.co.uk/wp-content/uploads/2022/05/56.jpg?w=1568');
+    background-size: cover;
+    background-position: center;
+    animation: kenBurns 40s infinite alternate ease-in-out;
+}
+
+@keyframes kenBurns {
+    0% {
+        transform: scale(1) translate(0, 0);
+    }
+
+    100% {
+        transform: scale(1.15) translate(-2%, -1%);
+    }
+}
+
+.vignette-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.8) 100%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.reveal-text {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 2.5s forwards cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 10;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 强化标识 */
+.landing-prefix {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-weight: 700;
+    letter-spacing: 22px;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    margin-bottom: 25px;
+    animation-delay: 0.2s;
+    text-indent: 22px;
+    opacity: 0;
+}
+
+/* 标题文字分段逐字/词进入动画 */
+.landing-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(3rem, 9vw, 6.5rem);
+    color: rgba(255, 255, 255, 0.92);
+    margin-bottom: 60px;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    filter: blur(0.9px) contrast(1.1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1), 0 0 45px rgba(197, 160, 89, 0.2), 3px 3px 15px rgba(0, 0, 0, 0.9);
+    user-select: none;
+    max-width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.title-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+    animation: elegantEnter 2.4s forwards cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+@keyframes elegantEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+        filter: blur(8px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+.title-word:nth-child(1) {
+    animation-delay: 0.6s;
+}
+
+/* Virginia */
+.title-word:nth-child(2) {
+    animation-delay: 0.9s;
+}
+
+/* Woolf */
+.title-word:nth-child(3) {
+    animation-delay: 1.2s;
+    font-size: 0.7em;
+    margin: 0 10px;
+    opacity: 0.7;
+}
+
+/* & */
+.title-word:nth-child(4) {
+    animation-delay: 1.5s;
+}
+
+/* Vita */
+.title-word:nth-child(5) {
+    animation-delay: 1.8s;
+}
+
+/* Sackville-West */
+
+.enter-btn-wrap {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    animation: fadeInUp 2s forwards cubic-bezier(0.23, 1, 0.32, 1);
+    animation-delay: 2.8s;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    color: var(--accent-gold);
+    z-index: 10;
+}
+
+.enter-btn-wrap svg {
+    width: 38px;
+    height: 38px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 0.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.enter-btn-wrap:hover svg {
+    transform: translateY(5px) scale(1.1);
+    color: #fff;
+    filter: drop-shadow(0 0 8px var(--accent-gold));
+}
+
+.enter-btn-wrap::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 1px solid var(--accent-gold-soft);
+    opacity: 0.3;
+    animation: pulseCircle 4s infinite;
+}
+
+@keyframes pulseCircle {
+    0% {
+        transform: scale(0.6);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
+/* --- 档案库层 --- */
+#archive-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-dark);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.5s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+#archive-layer.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 虚化背景 */
+#archive-blurred-bg {
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
+    background: linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.85)),
+        url('https://pastlovespodcast.co.uk/wp-content/uploads/2022/05/56.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(45px);
+    z-index: -1;
+    opacity: 0.7;
+}
+
+.back-home-btn {
+    position: absolute;
+    top: 45px;
+    left: 45px;
+    cursor: pointer;
+    z-index: 200;
+    transition: all 0.4s;
+    opacity: 0.15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.back-home-btn svg {
+    width: 28px;
+    height: 28px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.1;
+}
+
+.back-home-btn:hover {
+    opacity: 0.9;
+    transform: translateX(-6px);
+}
+
+.admin-mode-trigger {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 200;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity: 0.08;
+    color: #fff;
+}
+
+.admin-mode-trigger:hover {
+    opacity: 0.6;
+    color: var(--accent-gold);
+    transform: scale(1.1);
+}
+
+#hover-quote-container {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 40;
+    text-align: center;
+    pointer-events: none;
+    width: 85%;
+    max-width: 700px;
+}
+
+.hover-quote {
+    font-family: 'Special Elite', monospace;
+    font-size: clamp(0.85rem, 2.2vw, 1.2rem);
+    color: var(--accent-gold);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    letter-spacing: 0.02em;
+    line-height: 1.6;
+}
+
+.hover-quote.active {
+    opacity: 0.8;
+    transform: translateY(0);
+}
+
+#gallery-container {
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+    z-index: 10;
+    transition: opacity 0.8s ease, filter 0.8s ease;
+}
+
+#gallery-container.switching {
+    opacity: 0;
+    filter: blur(35px);
+    pointer-events: none;
+}
+
+.header-controls {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* 切换按钮绝对居中 */
+.archive-toggle {
+    display: flex;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(197, 160, 89, 0.1);
+    border-radius: 40px;
+    padding: 3px;
+    position: relative;
+    backdrop-filter: blur(15px);
+    pointer-events: auto;
+    width: 320px;
+}
+
+.toggle-btn {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 38px;
+    font-family: 'EB Garamond', serif;
+    font-size: 0.65rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+    z-index: 1;
+    transition: color 0.6s ease;
+    white-space: nowrap;
+}
+
+.toggle-btn.active {
+    color: #000;
+    font-weight: 700;
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    height: calc(100% - 6px);
+    width: calc(50% - 3px);
+    background: var(--accent-gold);
+    border-radius: 30px;
+    transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.right .toggle-slider {
+    transform: translateX(100%);
+}
+
+.circle-btn {
+    width: 52px;
+    height: 52px;
+    background: rgba(197, 160, 89, 0.04);
+    border: 0.5px solid rgba(197, 160, 89, 0.25);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--accent-gold);
+    transition: all 0.4s;
+    backdrop-filter: blur(10px);
+}
+
+/* --- 极简单横线密码界面 --- */
+.password-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.98);
+    backdrop-filter: blur(50px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.password-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.password-content {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+
+.pass-line-wrapper {
+    width: 100%;
+    position: relative;
+    border-bottom: 0.5px solid rgba(197, 160, 89, 0.4);
+    padding-bottom: 2px;
+}
+
+.pass-line-wrapper:focus-within {
+    border-color: var(--accent-gold);
+}
+
+.admin-pass-field {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-family: sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 24px;
+    text-align: center;
+    padding: 12px 0;
+    text-indent: 24px;
+    caret-color: #fff;
+}
+
+#closePassModal {
+    font-size: 0.5rem;
+    color: rgba(255, 255, 255, 0.15);
+    cursor: pointer;
+    text-decoration: underline;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin-top: 25px;
+}
+
+/* --- Dashboard 仪表盘 --- */
+.dashboard-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1100;
+    background: rgba(0, 0, 0, 0.94);
+    backdrop-filter: blur(35px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.dashboard-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: #0b0b0b;
+    border: 1px solid rgba(197, 160, 89, 0.12);
+    padding: 45px;
+    width: 95%;
+    max-width: 800px;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    box-shadow: 0 40px 120px rgba(0, 0, 0, 1);
+}
+
+.dashboard-title {
+    font-family: 'Playfair Display';
+    font-size: 0.95rem;
+    letter-spacing: 12px;
+    text-align: center;
+    color: var(--accent-gold);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    opacity: 0.9;
+}
+
+.dash-action-bar {
+    display: flex;
+    gap: 15px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.dash-btn {
+    flex: 1;
+    padding: 14px;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    background: rgba(255, 255, 255, 0.03);
+    border: 0.5px solid rgba(197, 160, 89, 0.2);
+    color: rgba(197, 160, 89, 0.7);
+}
+
+.dash-btn:hover {
+    background: rgba(197, 160, 89, 0.1);
+    color: var(--accent-gold);
+    border-color: var(--accent-gold);
+}
+
+.add-btn {
+    background: rgba(197, 160, 89, 0.05);
+    border: 1px dashed rgba(197, 160, 89, 0.45);
+    color: var(--accent-gold);
+}
+
+.undo-btn.disabled {
+    opacity: 0.05;
+    pointer-events: none;
+}
+
+.save-close-btn {
+    background: rgba(197, 160, 89, 0.08);
+    color: var(--accent-gold);
+    padding: 18px;
+    border: 0.5px solid rgba(197, 160, 89, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    font-size: 0.65rem;
+    cursor: pointer;
+    transition: 0.4s;
+    border-radius: 1px;
+    margin-top: 10px;
+}
+
+#data-list-container {
+    max-height: 42vh;
+    overflow-y: auto;
+    padding-right: 15px;
+}
+
+#data-list-container::-webkit-scrollbar {
+    width: 1px;
+}
+
+#data-list-container::-webkit-scrollbar-thumb {
+    background: rgba(197, 160, 89, 0.2);
+}
+
+.archive-item {
+    padding: 25px;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+    background: rgba(255, 255, 255, 0.01);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.archive-item:hover {
+    background: rgba(197, 160, 89, 0.03);
+}
+
+.item-actions {
+    position: absolute;
+    right: 0;
+    top: 25px;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+
+.action-icon {
+    cursor: pointer;
+    opacity: 0.3;
+    transition: 0.3s;
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+.action-icon:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.action-icon.edit {
+    color: #fff;
+}
+
+.action-icon.delete {
+    color: #a04545;
+}
+
+.action-icon.lock {
+    color: var(--accent-gold);
+    opacity: 1;
+}
+
+/* 编辑表单 */
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 4px;
+    border: 0.5px solid rgba(255, 255, 255, 0.05);
+}
+
+.form-label {
+    font-size: 0.5rem;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: -5px;
+}
+
+.admin-input,
+.admin-textarea {
+    background: rgba(255, 255, 255, 0.01);
+    border: 0.5px solid rgba(197, 160, 89, 0.2);
+    padding: 14px;
+    color: #d1c8b8;
+    font-family: 'Special Elite', monospace;
+    font-size: 0.85rem;
+    outline: none;
+    width: 100%;
+    border-radius: 1px;
+    transition: all 0.3s ease;
+}
+
+.admin-input:focus,
+.admin-textarea:focus {
+    background: rgba(197, 160, 89, 0.05);
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 15px rgba(197, 160, 89, 0.1);
+}
+
+/* --- 信件阅读层 --- */
+#letter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 500;
+    background: rgba(0, 0, 0, 0.94);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+    cursor: pointer;
+}
+
+#letter-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+#letter-bg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(75px) brightness(0.15);
+    z-index: -1;
+}
+
+.letter-paper {
+    background-color: var(--paper-color);
+    width: 90%;
+    max-width: var(--paper-width);
+    height: var(--paper-height);
+    padding: clamp(60px, 12vh, 100px) clamp(30px, 10vw, 80px);
+    position: relative;
+    color: var(--ink-color);
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.5),
+        0 50px 150px rgba(0, 0, 0, 0.9);
+    background-image:
+        url("https://www.transparenttextures.com/patterns/old-map.png"),
+        radial-gradient(circle at center, transparent 30%, rgba(139, 117, 72, 0.08) 100%);
+    transform: scale(0.9) translateY(40px) rotate(-0.5deg);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow-y: auto;
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    border-radius: 2px;
+    /* 边缘做旧效果 */
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* 蜡封效果 (Wax Seal) */
+.wax-seal {
+    position: absolute;
+    bottom: 60px;
+    right: 60px;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle at 30% 30%, #a52a2a, #800000);
+    border-radius: 50%;
+    box-shadow:
+        4px 4px 15px rgba(0, 0, 0, 0.5),
+        inset -2px -2px 5px rgba(0, 0, 0, 0.3),
+        inset 2px 2px 5px rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    opacity: 0;
+    transform: scale(1.5) rotate(20deg);
+    transition: all 1s cubic-bezier(0.17, 0.67, 0.83, 0.67) 1.5s;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
+}
+
+#letter-overlay.active .wax-seal {
+    opacity: 0.9;
+    transform: scale(1) rotate(0deg);
+}
+
+.wax-seal::before {
+    content: 'V';
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    color: rgba(255, 255, 255, 0.15);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#letter-overlay.active .letter-paper {
+    transform: scale(1) translateY(0) rotate(0.15deg);
+}
+
+.letter-content {
+    font-family: 'Special Elite', monospace;
+    font-size: var(--paper-font-size);
+    line-height: 1.85;
+    white-space: pre-wrap;
+    color: #2b2b2b;
+    filter: blur(0.15px);
+    opacity: 0.9;
+}
+
+/* 纤细光标 */
+.cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.15em;
+    background-color: rgba(43, 43, 43, 0.5);
+    vertical-align: middle;
+    margin-left: 2px;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-8px);
+    }
+
+    75% {
+        transform: translateX(8px);
+    }
+}
+
+.shake {
+    animation: shake 0.4s both;
+}
+
+</style></head><body><div id="master-viewport">< !-- 首页 --><section id="landing-page"><div id="landing-bg-container"><div id="landing-bg"></div></div><div class="vignette-overlay"></div><p class="landing-prefix reveal-text">Love Letters</p><h1 class="landing-title"><span class="title-word">Virginia</span><span class="title-word">Woolf</span><span class="title-word">&amp;
+</span><span class="title-word">Vita</span><span class="title-word">Sackville-West</span></h1><div class="enter-btn-wrap reveal-text" id="enterBtnWrap"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7" fill="none" stroke="currentColor" stroke-width="1.2"
+stroke-linecap="round" stroke-linejoin="round" /></svg></div></section>< !-- 档案库 --><div id="archive-layer"><div id="archive-blurred-bg"></div><div class="back-home-btn" id="backHomeBtn"><svg viewBox="0 0 24 24"><path d="M20 12H4M10 18l-6-6 6-6" /></svg></div><div class="admin-mode-trigger" id="adminTrigger"><svg viewBox="0 0 24 24" width="18" height="18"
+fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM12 8v4M12 16h.01" /></svg></div><div id="hover-quote-container"><div class="hover-quote" id="hoverQuoteText"></div></div><div id="hover-quote-container"><div class="hover-quote" id="hoverQuoteText"></div></div><div id="gallery-container"></div><div class="admin-controls" id="adminControls"><div class="circle-btn" id="dataListBtn"><svg viewBox="0 0 24 24" width="18" height="18" fill="none"
+stroke="currentColor" stroke-width="1.3"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z" /></svg></div></div></div>< !-- 极简单横线密码 --><div id="password-overlay" class="password-overlay"><div class="password-content" id="passContainer"><div class="pass-line-wrapper"><input type="password" id="adminPasscode" class="admin-pass-field"
+
+placeholder="••••" autocomplete="off"></div><div id="closePassModal">Cancel</div></div></div>< !-- Dashboard --><div id="dashboard-modal" class="dashboard-modal"><div class="modal-content"><h1 class="dashboard-title">Archive Dashboard</h1><div class="dash-action-bar"><button class="dash-btn add-btn" id="addNewInDashboard">+ADD ENTRY</button><button class="dash-btn undo-btn disabled" id="globalUndoBtn">UNDO ACTION</button></div><div id="data-list-container"></div><button id="closeDataModal" class="save-close-btn">SAVE & CLOSE DASHBOARD</button></div></div>< !-- 信详情 --><div id="letter-overlay"><div id="letter-bg-layer"></div><div class="letter-paper" id="mainPaper" onclick="event.stopPropagation()"><div class="wax-seal" id="waxSeal"></div><div class="letter-content" id="displayText"></div></div></div></div><script type="module">import {
+    Renderer,
+    Camera,
+    Transform,
+    Plane,
+    Mesh,
+    Program,
+    Texture
+}
+
+from 'https://cdn.skypack.dev/ogl';
+
+// 核心数据库
+let dbLetters=[ {
+    id: 1, sender: 'vita', date: "16 JULY, 1924", image: "https://pastlovespodcast.co.uk/wp-content/uploads/2022/05/56.jpg?w=1568", quote: "On the peaks of mountains, and beside green lakes, I am writing it for you.", text: "I hope that no one has ever yet, or ever will, throw down a glove I was not ready to pick up. You asked me to write a story for you. On the peaks of mountains, and beside green lakes, I am writing it for you. I shut my eyes to the blue of gentians, to the coral of androsace; I shut my ears to the brawling rivers; I shut my nose to the scent of pines; I concentrate on my story.", isEditing: false
+}
+
+,
+{
+id: 2, sender: 'vita', date: "25 AUGUST, 1925", image: "https://i0.wp.com/www.themarginalian.org/wp-content/uploads/2012/01/virginiavita.jpg?w=500&ssl=1", quote: "You’ve fanned the embers and today there is quite a little blaze.", text: "My interest in my own poem was dying down like an old fire, but you’ve fanned the embers and today there is quite a little blaze [...] If ever you feel inclined, let me come and carry you off from Rodmell. I know that road so well, from going to see my mother at Brighton, that I can bundle along it with my eyes shut. I could devise many places to take you to.", isEditing: false
+}
+
+,
+{
+id: 3, sender: 'vita', date: "11 OCTOBER, 1925", image: "https://www.theparisreview.org/blog/wp-content/uploads/2016/03/vita_sackville-west.jpg", quote: "How poignant it will be to feel that ink is one’s only means of communication.", text: "The ideal travel letter should be without address, I think; it should arrive like the Dove at the Ark, with no hint of where it has come from, so that it may evoke a landscape romantically beautiful but geographically vague. How I shall enjoy writing to you; how poignant it will be to feel that ink is one’s only means of communication; how ruthlessly I shall lay upon you the burden of writing to the absent friend.", isEditing: false
+}
+
+,
+{
+id: 5, sender: 'virginia', date: "15 SEPTEMBER, 1924", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/George_Charles_Beresford_-_Virginia_Woolf_in_1902_-_Restoration.jpg/960px-George_Charles_Beresford_-_Virginia_Woolf_in_1902_-_Restoration.jpg", quote: "My childlike dazzled affection for you.", text: "It is not, of course, altogether thrust through; I think it could be tightened up, aimed straighter, but there is nothing to spoil it in this. This is all quite sincere, though not well expressed.", isEditing: false
+}
+
+];
+
+let archiveActive=false,
+currentGalleryApp=null,
+currentDatabaseView=[],
+undoStack=[],
+typingTimer=null;
+const lerp=(p1, p2, t)=>p1+(p2 - p1) * t;
+
+function getRandomSubset(count=4) {
+    const res=[...dbLetters].sort(()=> 0.5 - Math.random());
+    if (res.length===0) return [];
+    while (res.length < 4) res.push(...res);
+    return res.slice(0, 4);
+}
+
+class Media {
+    constructor({
+        gl, geometry, scene, data, index, length
+
+    }) {
+    this.gl=gl;
+    this.geometry=geometry;
+    this.scene=scene;
+    this.data=data;
+    this.index=index;
+    this.length=length;
+    this.extra=0;
+    this.targetScale=1.0;
+    this.currentScale=1.0;
+    this.createShader();
+    this.createMesh();
+}
+
+createShader() {
+    const texture=new Texture(this.gl, {
+        generateMipmaps: true
+    });
+const img=new Image();
+img.crossOrigin="anonymous";
+img.src=this.data.image+"?cb="+Date.now();
+
+img.onload=()=> {
+    texture.image=img;
+}
+
+;
+
+this.program=new Program(this.gl, {
+    vertex: `attribute vec3 position; attribute vec2 uv; uniform mat4 modelViewMatrix; uniform mat4 projectionMatrix; varying vec2 vUv; void main() {
+        vUv=uv; gl_Position=projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+
+    `,
+    fragment: ` precision highp float;
+    uniform sampler2D tMap;
+    varying vec2 vUv;
+
+    float noise(vec2 st) {
+        return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
+    }
+
+    void main() {
+        vec4 color=texture2D(tMap, vUv);
+
+        // 优化噪点：多层叠加
+        float n=noise(vUv * 800.0 + fract(sin(0.1)));
+        float n2=noise(vUv * 400.0);
+        float grain=mix(n, n2, 0.5);
+
+        // 基础偏色 (Vintage Sepia)
+        vec3 sepia=vec3(1.1, 0.95, 0.82);
+        color.rgb *=sepia;
+
+        // 混合噪点
+        color.rgb=mix(color.rgb, color.rgb * (0.85 + 0.3 * grain), 0.25);
+
+        // 更有机的大晕影 (Vignette)
+        float dist=distance(vUv, vec2(0.5));
+        float edge=smoothstep(0.8, 0.2, dist);
+        color.rgb *=mix(0.6, 1.0, edge);
+
+        // 边缘稍微虚化/变暗感
+        float border=smoothstep(0.48, 0.5, abs(vUv.x - 0.5)) + smoothstep(0.48, 0.5, abs(vUv.y - 0.5));
+        color.rgb *=mix(1.0, 0.8, border);
+
+        gl_FragColor=color;
+    }
+
+    `,
+    uniforms: {
+        tMap: {
+            value: texture
+        }
+    }
+});
+}
+
+createMesh() {
+    this.plane=new Mesh(this.gl, {
+        geometry: this.geometry, program: this.program
+    });
+this.plane.setParent(this.scene);
+const canvas=document.createElement('canvas');
+const ctx=canvas.getContext('2d');
+ctx.font='italic 700 40px EB Garamond';
+const w=ctx.measureText(this.data.date).width+80;
+canvas.width=w;
+canvas.height=100;
+ctx.fillStyle='#c5a059';
+ctx.textAlign='center';
+ctx.textBaseline='middle';
+ctx.fillText(this.data.date, w / 2, 50);
+
+const t=new Texture(this.gl, {
+    generateMipmaps: false
+});
+t.image=canvas;
+
+this.dateMesh=new Mesh(this.gl, {
+    geometry: this.geometry, program: new Program(this.gl, {
+        vertex: `attribute vec3 position; attribute vec2 uv; uniform mat4 modelViewMatrix; uniform mat4 projectionMatrix; varying vec2 vUv; void main() {
+            vUv=uv; gl_Position=projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+
+        `, fragment: `precision highp float; uniform sampler2D tMap; uniform float uOpacity; varying vec2 vUv; void main() {
+            vec4 color=texture2D(tMap, vUv); if (color.a < 0.05) discard; gl_FragColor=vec4(color.rgb, color.a * uOpacity);
+        }
+
+        `, uniforms: {
+            tMap: {
+                value: t
+            }
+
+            , uOpacity: {
+                value: 0.3
+            }
+        }
+
+        , transparent: true
+    })
+});
+this.dateMesh.setParent(this.plane);
+}
+
+update(scroll, time, viewport) {
+    const baseW=Math.min(viewport.width / 4, 3.8) * 1.35;
+    this.plane.position.x=(baseW * this.index) - scroll.current - this.extra;
+    this.plane.position.y=Math.sin(time * 0.001 + this.index) * 0.04;
+    const dist=Math.abs(this.plane.position.x);
+    const isFocused=dist < 1.4 && archiveActive;
+    this.targetScale=isFocused ? 1.15: 1.0;
+    this.currentScale=lerp(this.currentScale, this.targetScale, 0.1);
+    const w=Math.min(viewport.width / 4, 3.8);
+    this.plane.scale.set(w * this.currentScale, (w * 0.65) * this.currentScale, 1);
+    this.dateMesh.position.y=-0.85;
+    this.dateMesh.scale.set(1.8 / this.currentScale, (1.8 * 100 / 300) / this.currentScale, 1);
+    this.dateMesh.program.uniforms.uOpacity.value=lerp(this.dateMesh.program.uniforms.uOpacity.value, isFocused ? 0.95 : 0.2, 0.1);
+    const total=baseW * 4;
+    if (this.plane.position.x + baseW / 2 < -viewport.width / 2) this.extra -=total;
+    else if (this.plane.position.x - baseW / 2 > viewport.width / 2) this.extra+=total;
+    return isFocused;
+}
+}
+
+class GalleryApp {
+    constructor(container, items, onSelect) {
+        this.container=container;
+        this.onSelect=onSelect;
+
+        this.scroll= {
+            current: 0, target: 0, ease: 0.05
+        }
+
+        ;
+
+        this.renderer=new Renderer({
+            alpha: true, antialias: true
+        });
+    this.gl=this.renderer.gl;
+    this.container.appendChild(this.gl.canvas);
+
+    this.camera=new Camera(this.gl, {
+        fov: 45
+    });
+this.camera.position.z=15;
+this.scene=new Transform();
+this.geometry=new Plane(this.gl);
+
+this.viewport= {
+    width: 0, height: 0
+}
+
+;
+this.calculateViewport();
+
+this.medias=items.map((d, i)=> new Media({
+        gl: this.gl, geometry: this.geometry, scene: this.scene, data: d, index: i, length: 4
+    }));
+this.addEvents();
+this.isRunning=true;
+this.update(0);
+this.onResize();
+}
+
+calculateViewport() {
+    const aspect=this.container.clientWidth / this.container.clientHeight;
+    const fov=this.camera.fov * Math.PI / 180;
+
+    this.viewport= {
+        height: Math.tan(fov / 2) * 30, width: Math.tan(fov / 2) * 30 * aspect
+    }
+
+    ;
+}
+
+addEvents() {
+    const move=e=> {
+        if ( !this.isDown) return;
+        this.scroll.target+=(this.startX - e.clientX) * 0.035;
+        this.startX=e.clientX;
+        this.moved=true;
+    }
+
+    ;
+
+    const up=(e)=> {
+        this.isDown=false;
+
+        if ( !this.moved && archiveActive && !this.isHeaderClick) {
+            const rect=this.gl.canvas.getBoundingClientRect();
+            const clickY=e.clientY - rect.top;
+
+            if (clickY > rect.height * 0.3 && clickY < rect.height * 0.7) {
+                const baseW=Math.min(this.viewport.width / 4, 3.8) * 1.35;
+                const idx=Math.round(this.scroll.target / baseW) % 4;
+                const d=currentDatabaseView[idx < 0 ? 4+idx: idx];
+                if (d) this.onSelect(d.id);
+            }
+        }
+
+        this.isHeaderClick=false;
+    }
+
+    ;
+
+    this.gl.canvas.addEventListener('mousedown', e=> {
+            if ( !archiveActive) return; if (e.clientY < 120) {
+                this.isHeaderClick=true; return;
+            }
+
+            this.isDown=true; this.moved=false; this.startX=e.clientX;
+        });
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', up);
+
+    this.gl.canvas.addEventListener('wheel', e=> {
+            if ( !archiveActive) return; this.scroll.target +=(e.deltaX || e.deltaY) * 0.02;
+        }
+
+        , {
+        passive: true
+    });
+}
+
+onResize() {
+    const w=this.container.clientWidth,
+    h=this.container.clientHeight;
+
+    if (w && h) {
+        this.renderer.setSize(w, h);
+
+        this.camera.perspective({
+            aspect: w / h
+        });
+    this.calculateViewport();
+}
+}
+
+update(time) {
+    if ( !this.isRunning) return;
+    this.scroll.current=lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
+    let closest=null;
+    let minX=999;
+
+    this.medias.forEach(m=> {
+            m.update(this.scroll, time, this.viewport); const absX=Math.abs(m.plane.position.x); if (absX < minX) {
+                minX=absX; closest=m.data;
+            }
+        });
+
+    if (closest && archiveActive) {
+        const qEl=document.getElementById('hoverQuoteText');
+
+        if (qEl) {
+            qEl.textContent=closest.quote;
+            qEl.classList.add('active');
+        }
+    }
+
+    this.renderer.render({
+        scene: this.scene, camera: this.camera
+    });
+requestAnimationFrame(t=> this.update(t));
+}
+
+destroy() {
+    this.isRunning=false;
+    if (this.container) this.container.innerHTML='';
+}
+}
+
+/* 控制逻辑 */
+const landingPage=document.getElementById('landing-page'),
+archiveLayer=document.getElementById('archive-layer'),
+backHomeBtn=document.getElementById('backHomeBtn');
+const adminTrigger=document.getElementById('adminTrigger'),
+passOverlay=document.getElementById('password-overlay'),
+enterBtnWrap=document.getElementById('enterBtnWrap');
+const dashboardModal=document.getElementById('dashboard-modal'),
+dataListContainer=document.getElementById('data-list-container');
+const letterOverlay=document.getElementById('letter-overlay'),
+letterBgLayer=document.getElementById('letter-bg-layer'),
+displayText=document.getElementById('displayText');
+
+function initGallery() {
+    const container=document.getElementById('gallery-container');
+    container.classList.add('switching');
+
+    setTimeout(()=> {
+            if (currentGalleryApp) currentGalleryApp.destroy();
+            currentDatabaseView=getRandomSubset(4);
+            currentGalleryApp=new GalleryApp(container, currentDatabaseView, id=> openLetter(id));
+            setTimeout(()=> container.classList.remove('switching'), 150);
+        }
+
+        , 700);
+}
+
+if (enterBtnWrap) enterBtnWrap.addEventListener('click', ()=> {
+        landingPage.style.transform='translateY(-100%)';
+        archiveLayer.classList.add('active');
+
+        setTimeout(()=> {
+                archiveActive=true;
+                if (currentGalleryApp) currentGalleryApp.onResize();
+            }
+
+            , 800);
+    });
+
+if (backHomeBtn) backHomeBtn.addEventListener('click', ()=> {
+        archiveActive=false;
+        landingPage.style.transform='translateY(0)';
+        archiveLayer.classList.remove('active');
+    });
+
+// 密码逻辑
+const passInput=document.getElementById('adminPasscode');
+
+if (adminTrigger) adminTrigger.addEventListener('click', ()=> {
+        passOverlay.classList.add('active'); setTimeout(()=> passInput && passInput.focus(), 200); archiveActive=false;
+    });
+
+if (passInput) {
+    passInput.addEventListener('keydown', (e)=> {
+            if (e.key==='Enter') {
+                if (passInput.value==="2026") {
+                    document.body.classList.add('admin-mode'); passOverlay.classList.remove('active'); passInput.value=''; archiveActive=true;
+                }
+
+                else {
+                    document.getElementById('passContainer').classList.add('shake'); setTimeout(()=> document.getElementById('passContainer').classList.remove('shake'), 400); passInput.value='';
+                }
+            }
+        });
+}
+
+if (document.getElementById('closePassModal')) document.getElementById('closePassModal').addEventListener('click', ()=> {
+        passOverlay.classList.remove('active'); archiveActive=true;
+    });
+
+// 编辑/保存逻辑
+window.toggleEditMode=(id)=> {
+    const item=dbLetters.find(x=> x.id===id);
+
+    if (item) {
+        if (item.isEditing) {
+            item.date=document.getElementById(`edit-date-$ {
+                    id
+                }
+
+                `).value;
+
+            item.quote=document.getElementById(`edit-quote-$ {
+                    id
+                }
+
+                `).value;
+
+            item.image=document.getElementById(`edit-img-$ {
+                    id
+                }
+
+                `).value;
+
+            item.text=document.getElementById(`edit-text-$ {
+                    id
+                }
+
+                `).value;
+        }
+
+        item.isEditing= !item.isEditing;
+        refreshDataList();
+    }
+}
+
+;
+
+window.delItem=(id)=> {
+    const idx=dbLetters.findIndex(x=> x.id===id);
+
+    if (idx > -1) {
+        dbLetters.splice(idx, 1);
+        refreshDataList();
+    }
+}
+
+;
+
+function refreshDataList() {
+    dataListContainer.innerHTML='';
+
+    dbLetters.forEach((item)=> {
+            const div=document.createElement('div'); div.className='archive-item';
+
+            if ( !item.isEditing) {
+                div.innerHTML=`<div class="item-header" ><span style="font-family:'Special Elite'; font-size:0.75rem;" >$ {
+                    item.date
+                }
+
+                </span><div class="item-actions" ><svg class="action-icon edit" onclick="toggleEditMode(${item.id})" viewBox="0 0 24 24" ><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z" /></svg><svg class="action-icon delete" onclick="delItem(${item.id})" viewBox="0 0 24 24" ><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12z" /></svg></div></div><div style="font-family:'Special Elite'; font-size:0.6rem; color:rgba(255,255,255,0.25);" >"${item.quote}" </div>`;
+            }
+
+            else {
+                div.innerHTML=`<div class="item-header" ><span class="form-label" style="color:white; letter-spacing:8px;" >EDITING</span><div class="item-actions" ><svg class="action-icon lock" onclick="toggleEditMode(${item.id})" viewBox="0 0 24 24" ><path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6-9h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z" /></svg></div></div><div class="edit-form" ><span class="form-label" >Date</span><input class="admin-input" id="edit-date-${item.id}" value="${item.date}" ><span class="form-label" >Quote</span><input class="admin-input" id="edit-quote-${item.id}" value="${item.quote}" ><span class="form-label" >Image URL</span><input class="admin-input" id="edit-img-${item.id}" value="${item.image}" ><span class="form-label" >Content</span><textarea class="admin-textarea" rows="4" id="edit-text-${item.id}" >$ {
+                    item.text
+                }
+
+                </textarea></div>`;
+            }
+
+            dataListContainer.appendChild(div);
+        });
+}
+
+document.getElementById('addNewInDashboard').addEventListener('click', ()=> {
+        dbLetters.unshift({
+            id: Date.now(), sender: 'vita', date: "NEW DATE", image: "https://picsum.photos/id/100/800/600?grayscale", quote: "New Quote...", text: "Content...", isEditing: true
+        }); refreshDataList();
+});
+
+document.getElementById('dataListBtn').addEventListener('click', ()=> {
+        refreshDataList(); dashboardModal.classList.add('active'); archiveActive=false;
+    });
+
+document.getElementById('closeDataModal').addEventListener('click', ()=> {
+        dashboardModal.classList.remove('active'); archiveActive=true; initGallery();
+    });
+
+initGallery();
+
+function openLetter(id) {
+    const l=dbLetters.find(x=> x.id===id);
+    if ( !l) return;
+    if (letterBgLayer) letterBgLayer.style.backgroundImage=`url('${l.image}')`;
+
+    if (letterOverlay) {
+        letterOverlay.classList.add('active');
+
+        if (displayText) {
+            const senderName=l.sender==='vita' ? 'Vita': 'Virginia';
+
+            displayText.innerHTML=`<div style="font-family:'Special Elite', monospace; font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; color: #5a4b3d;">From: $ {
+                senderName
+            }
+
+            </div><span class="cursor"></span>`;
+            setTimeout(()=> typeText(l.text), 600);
+        }
+    }
+}
+
+function typeText(fullText) {
+    let i=0;
+
+    function step() {
+        const cursor=displayText.querySelector('.cursor');
+
+        if (i < fullText.length) {
+            const char=fullText[i++];
+            const span=document.createElement('span');
+            span.textContent=char;
+
+            if (cursor && cursor.parentNode===displayText) {
+                displayText.insertBefore(span, cursor);
+            }
+
+            else {
+                displayText.appendChild(span);
+            }
+
+            let delay=35+Math.random() * 55;
+            if (char===' ') delay+=40;
+            if (/[., !?]/.test(char)) delay+=450;
+            if (char==='\n') delay+=850;
+            typingTimer=setTimeout(step, delay);
+        }
+
+        else if (cursor) cursor.style.display='none';
+    }
+
+    step();
+}
+
+if (letterOverlay) letterOverlay.addEventListener('click', ()=> {
+        letterOverlay.classList.remove('active'); clearTimeout(typingTimer);
+    });
+
+if (letterOverlay) letterOverlay.addEventListener('click', ()=> {
+        letterOverlay.classList.remove('active'); clearTimeout(typingTimer);
+    });
+</script></body></html>

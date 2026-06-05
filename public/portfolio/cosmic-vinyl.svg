@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <!-- Deep space gradients -->
+    <linearGradient id="cosmic-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#09090b" />
+      <stop offset="50%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#3b0764" />
+    </linearGradient>
+    
+    <!-- Neon vinyl glow -->
+    <radialGradient id="neon-vinyl-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.4" />
+      <stop offset="60%" stop-color="#d946ef" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#09090b" stop-opacity="0" />
+    </radialGradient>
+    
+    <!-- Metallic vinyl sheen -->
+    <linearGradient id="metallic-reflection" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15" />
+      <stop offset="45%" stop-color="#ffffff" stop-opacity="0.02" />
+      <stop offset="50%" stop-color="#000000" stop-opacity="0.5" />
+      <stop offset="55%" stop-color="#ffffff" stop-opacity="0.02" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.15" />
+    </linearGradient>
+  </defs>
+
+  <!-- Base background -->
+  <rect width="800" height="600" fill="url(#cosmic-grad)" />
+
+  <!-- Ambient cosmic glow -->
+  <circle cx="400" cy="300" r="320" fill="url(#neon-vinyl-glow)" />
+
+  <!-- Constellation/Orbit Lines -->
+  <g stroke="#06b6d4" stroke-width="1" fill="none" opacity="0.25">
+    <ellipse cx="400" cy="300" rx="350" ry="180" stroke-dasharray="8 12" />
+    <ellipse cx="400" cy="300" rx="280" ry="110" />
+    <line x1="50" y1="300" x2="750" y2="300" opacity="0.1" />
+    <line x1="400" y1="50" x2="400" y2="550" opacity="0.1" />
+  </g>
+
+  <!-- Star nodes -->
+  <g fill="#06b6d4" opacity="0.6">
+    <circle cx="150" cy="200" r="3" />
+    <circle cx="680" cy="420" r="2.5" />
+    <circle cx="280" cy="460" r="2" />
+    <circle cx="620" cy="180" r="3" />
+    <!-- Glowing starburst -->
+    <path d="M 620 165 L 620 195 M 605 180 L 635 180" stroke="#06b6d4" stroke-width="1" opacity="0.4" />
+    <path d="M 150 185 L 150 215 M 135 200 L 165 200" stroke="#d946ef" stroke-width="1" opacity="0.4" />
+  </g>
+
+  <!-- Vinyl Record Model -->
+  <g id="vinyl-disc">
+    <!-- Outer rim -->
+    <circle cx="400" cy="300" r="180" fill="#111115" stroke="#222227" stroke-width="2" />
+    
+    <!-- Sound grooves (concentric circles) -->
+    <circle cx="400" cy="300" r="170" fill="none" stroke="#1c1c22" stroke-width="1.5" opacity="0.8" />
+    <circle cx="400" cy="300" r="160" fill="none" stroke="#18181f" stroke-width="2" opacity="0.9" />
+    <circle cx="400" cy="300" r="150" fill="none" stroke="#1a1a20" stroke-width="1" opacity="0.8" />
+    <circle cx="400" cy="300" r="135" fill="none" stroke="#16161c" stroke-width="3" opacity="0.9" />
+    <circle cx="400" cy="300" r="120" fill="none" stroke="#18181e" stroke-width="1.5" opacity="0.8" />
+    <circle cx="400" cy="300" r="105" fill="none" stroke="#15151a" stroke-width="2" opacity="0.85" />
+    
+    <!-- Metallic reflection overlay -->
+    <circle cx="400" cy="300" r="180" fill="url(#metallic-reflection)" pointer-events="none" />
+
+    <!-- Center Label Border -->
+    <circle cx="400" cy="300" r="60" fill="#d946ef" opacity="0.8" />
+    <circle cx="400" cy="300" r="55" fill="#09090b" />
+    
+    <!-- Cosmic Center Art -->
+    <circle cx="400" cy="300" r="30" fill="#06b6d4" opacity="0.3" />
+    
+    <!-- Constellation pattern on label -->
+    <path d="M 385 285 L 400 300 L 415 290 L 405 315 L 390 310 Z" stroke="#06b6d4" stroke-width="1" fill="none" opacity="0.6" />
+    <circle cx="385" cy="285" r="2" fill="#fff" />
+    <circle cx="400" cy="300" r="2" fill="#fff" />
+    <circle cx="415" cy="290" r="2" fill="#fff" />
+    
+    <!-- Spindle Hole -->
+    <circle cx="400" cy="300" r="8" fill="#09090b" stroke="#ffffff" stroke-width="1" />
+  </g>
+</svg>
