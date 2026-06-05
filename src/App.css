@@ -305,6 +305,35 @@ body {
   transform: rotateY(0deg);
 }
 
+.pillar-bg-letter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 15rem;
+  font-weight: 900;
+  font-family: var(--font-sans);
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+  opacity: 0.8;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pillar-card-wrapper:hover .pillar-bg-letter {
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.16);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.pillar-card-top,
+.pillar-front-middle,
+.pillar-discover-btn {
+  position: relative;
+  z-index: 1;
+}
+
 .pillar-card-back {
   z-index: 1;
   transform: rotateY(180deg);

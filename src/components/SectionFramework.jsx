@@ -64,15 +64,10 @@ export default function SectionFramework() {
   const viewportRef = useRef(null)
   const scrollbarTrackRef = useRef(null)
   
-  // Tripled list mapping to ensure card E is followed seamlessly by B, and B by E
-  const extendedPillars = [...pillars, ...pillars, ...pillars]
-  const totalCards = extendedPillars.length // 18
-  
-  // Start at index 6 (middle copy's first card "Bold")
-  const [currentIndex, setCurrentIndex] = useState(6)
+  // Start at index 0 (first card "Bold")
+  const [currentIndex, setCurrentIndex] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const [isDraggingScrollbar, setIsDraggingScrollbar] = useState(false)
-  const [transitionEnabled, setTransitionEnabled] = useState(true)
 
   const handleScrollbarPointerDown = (e) => {
     setIsDraggingScrollbar(true)
@@ -133,26 +128,7 @@ export default function SectionFramework() {
     return () => window.removeEventListener('resize', updateWidth)
   }, [])
 
-  // Instant warp teleportation on boundaries when sliding
-  const handleAnimationComplete = () => {
-    if (currentIndex >= 12) {
-      setTransitionEnabled(false)
-      setCurrentIndex(currentIndex - 6)
-    } else if (currentIndex < 6) {
-      setTransitionEnabled(false)
-      setCurrentIndex(currentIndex + 6)
-    }
-  }
-
-  // Restore transition mode on the frame following the teleport warp
-  useEffect(() => {
-    if (!transitionEnabled) {
-      const raf = requestAnimationFrame(() => {
-        setTransitionEnabled(true)
-      })
-      return () => cancelAnimationFrame(raf)
-    }
-  }, [transitionEnabled])
+  // Warp logic removed for non-looping scrolling mode
 
   // Trackpad horizontal swipe / wheel scroll support
   useEffect(() => {
@@ -238,18 +214,17 @@ export default function SectionFramework() {
 
   const toggleFlip = (index) => {
     if (isDragging) return
-    const pillarIdx = index % 6
     setFlippedCards(prev => ({
       ...prev,
-      [pillarIdx]: !prev[pillarIdx]
+      [index]: !prev[index]
     }))
   }
 
   const goTo = (index) => {
-    setCurrentIndex(index + 6)
+    setCurrentIndex(index)
   }
 
-  const activeIndex = ((currentIndex % 6) + 6) % 6
+  const activeIndex = currentIndex
 
   return (
     <section id="framework" className="section" style={{ background: 'transparent', overflow: 'hidden' }}>
@@ -280,19 +255,18 @@ export default function SectionFramework() {
             className="carousel-track"
             drag="x"
             dragConstraints={{
-              left: -currentIndex * (cardWidth + gap) - 180,
-              right: -currentIndex * (cardWidth + gap) + 180
+              left: -currentIndex * (cardWidth + gap) - (currentIndex === pillars.length - 1 ? 0 : 180),
+              right: -currentIndex * (cardWidth + gap) + (currentIndex === 0 ? 0 : 180)
             }}
             dragElastic={0.4}
             onDragStart={() => setIsDragging(true)}
             onDragEnd={handleDragEnd}
             animate={{ x: -currentIndex * (cardWidth + gap) }}
-            onAnimationComplete={handleAnimationComplete}
-            transition={transitionEnabled ? { type: 'spring', stiffness: 180, damping: 24, mass: 0.8 } : { duration: 0 }}
+            transition={{ type: 'spring', stiffness: 180, damping: 24, mass: 0.8 }}
             style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
           >
-            {extendedPillars.map((item, i) => {
-              const isFlipped = !!flippedCards[i % 6]
+            {pillars.map((item, i) => {
+              const isFlipped = !!flippedCards[i]
               const offsetIndex = i - currentIndex
               
               // Clean straight horizontal layout
@@ -336,6 +310,9 @@ export default function SectionFramework() {
                       boxShadow: `0 12px 40px ${item.shadow}`,
                     }}
                   >
+                    {/* Giant background letter spelling BROOKE */}
+                    <div className="pillar-bg-letter">{item.name[0]}</div>
+
                     <div className="pillar-card-top">
                       <span className="pillar-icon">
                         <item.icon size={36} strokeWidth={1.5} />
