@@ -2227,64 +2227,48 @@ body {
   }
 }
 
-/* ═══ Slider Navigation Arrows ═══ */
-.carousel-nav-btn {
-  position: absolute;
-  top: 45%;
-  transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
+/* ═══ Slider Scrollbar / Dragbar ═══ */
+.carousel-scrollbar-container {
   display: flex;
-  align-items: center;
   justify-content: center;
-  color: var(--text-primary);
-  cursor: pointer;
+  align-items: center;
+  width: 100%;
+  margin: 32px auto 0;
+  padding: 10px 0;
   z-index: 30;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-  outline: none;
-  opacity: 0.65;
-  pointer-events: auto;
+  position: relative;
 }
 
-.carousel-nav-btn.prev {
-  left: max(calc((100vw - 1200px) / 2 + 2vw), 2vw);
+.carousel-scrollbar-track {
+  position: relative;
+  width: 240px;
+  height: 4px;
+  background: rgba(15, 15, 15, 0.08);
+  border-radius: 4px;
+  cursor: pointer;
+  touch-action: none;
+  transition: background 0.3s ease;
 }
 
-.carousel-nav-btn.next {
-  right: max(calc((100vw - 1200px) / 2 + 2vw), 2vw);
+.carousel-scrollbar-track:hover {
+  background: rgba(15, 15, 15, 0.14);
 }
 
-/* Hover triggers beautiful scaling and focus */
-@media (hover: hover) {
-  .carousel-nav-btn:hover {
-    background: rgba(255, 255, 255, 0.95);
-    border-color: rgba(255, 255, 255, 0.95);
-    color: var(--text-primary);
-    transform: translateY(-50%) scale(1.12);
-    opacity: 1 !important;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  }
+.carousel-scrollbar-thumb {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: var(--text-primary);
+  border-radius: 4px;
+  transition: left 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  cursor: grab;
 }
 
-/* On mobile / touch devices, keep them visible but smaller */
-@media (hover: none) {
-  .carousel-nav-btn {
-    opacity: 0.6;
-    width: 36px;
-    height: 36px;
-  }
-  .carousel-nav-btn.prev {
-    left: 2%;
-  }
-  .carousel-nav-btn.next {
-    right: 2%;
-  }
+.carousel-scrollbar-track:active .carousel-scrollbar-thumb,
+.carousel-scrollbar-thumb:active {
+  cursor: grabbing;
+  transform: scaleY(1.5);
+  background: #000;
 }
 
 /* ═══ Bento Grid Skills Section ═══ */

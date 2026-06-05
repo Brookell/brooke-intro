@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Trophy, Sparkles, Eye, Leaf, Zap, Mountain, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Trophy, Sparkles, Eye, Leaf, Zap, Mountain } from 'lucide-react'
 
 const pillars = [
   { 
@@ -62,6 +62,7 @@ const pillars = [
 export default function SectionFramework() {
   const trackRef = useRef(null)
   const viewportRef = useRef(null)
+  const scrollbarTrackRef = useRef(null)
   
   // Tripled list mapping to ensure card E is followed seamlessly by B, and B by E
   const extendedPillars = [...pillars, ...pillars, ...pillars]
@@ -70,7 +71,36 @@ export default function SectionFramework() {
   // Start at index 6 (middle copy's first card "Bold")
   const [currentIndex, setCurrentIndex] = useState(6)
   const [isDragging, setIsDragging] = useState(false)
+  const [isDraggingScrollbar, setIsDraggingScrollbar] = useState(false)
   const [transitionEnabled, setTransitionEnabled] = useState(true)
+
+  const handleScrollbarPointerDown = (e) => {
+    setIsDraggingScrollbar(true)
+    updateScrollPosition(e)
+    e.currentTarget.setPointerCapture(e.pointerId)
+  }
+
+  const handleScrollbarPointerMove = (e) => {
+    if (!isDraggingScrollbar) return
+    updateScrollPosition(e)
+  }
+
+  const handleScrollbarPointerUp = (e) => {
+    setIsDraggingScrollbar(false)
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    } catch (err) {}
+  }
+
+  const updateScrollPosition = (e) => {
+    if (!scrollbarTrackRef.current) return
+    const rect = scrollbarTrackRef.current.getBoundingClientRect()
+    const clientX = e.clientX
+    const clickX = clientX - rect.left
+    const percentage = Math.max(0, Math.min(1, clickX / rect.width))
+    const targetIndex = Math.round(percentage * (pillars.length - 1))
+    goTo(targetIndex)
+  }
   
   // Tracking individual card flip states (0 to 5 index representing the root pillars)
   const [flippedCards, setFlippedCards] = useState({})
@@ -219,6 +249,8 @@ export default function SectionFramework() {
     setCurrentIndex(index + 6)
   }
 
+  const activeIndex = ((currentIndex % 6) + 6) % 6
+
   return (
     <section id="framework" className="section" style={{ background: 'transparent', overflow: 'hidden' }}>
       <div className="container">
@@ -237,21 +269,6 @@ export default function SectionFramework() {
 
       {/* Slider Viewport Container */}
       <div className="carousel-viewport-wrapper" style={{ position: 'relative', width: '100%' }}>
-        {/* Click Navigation Guides - Smaller & Elegant */}
-        <button 
-          className="carousel-nav-btn prev"
-          onClick={() => setCurrentIndex(prev => prev - 1)}
-          title="Previous Card"
-        >
-          <ChevronLeft size={16} />
-        </button>
-        <button 
-          className="carousel-nav-btn next"
-          onClick={() => setCurrentIndex(prev => prev + 1)}
-          title="Next Card"
-        >
-          <ChevronRight size={16} />
-        </button>
 
         <div 
           className="carousel-viewport" 
@@ -370,15 +387,24 @@ export default function SectionFramework() {
       </div>
     </div>
 
-      {/* Dot indicators */}
-      <div className="carousel-dots">
-        {pillars.map((_, i) => (
-          <button
-            key={i}
-            className={`carousel-dot ${i === (currentIndex % 6) ? 'active' : ''}`}
-            onClick={() => goTo(i)}
+      {/* Horizontal Scrollbar Drag-bar */}
+      <div className="carousel-scrollbar-container">
+        <div 
+          className="carousel-scrollbar-track"
+          ref={scrollbarTrackRef}
+          onPointerDown={handleScrollbarPointerDown}
+          onPointerMove={handleScrollbarPointerMove}
+          onPointerUp={handleScrollbarPointerUp}
+          style={{ touchAction: 'none' }}
+        >
+          <div 
+            className="carousel-scrollbar-thumb"
+            style={{
+              width: `${100 / pillars.length}%`,
+              left: `${(activeIndex / pillars.length) * 100}%`
+            }}
           />
-        ))}
+        </div>
       </div>
     </section>
   )
