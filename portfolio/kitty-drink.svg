@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="kitty-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff7ed" />
+      <stop offset="50%" stop-color="#ffedd5" />
+      <stop offset="100%" stop-color="#fed7aa" />
+    </linearGradient>
+    <radialGradient id="milk-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#fdba74" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Base background -->
+  <rect width="800" height="600" fill="url(#kitty-grad)" />
+  
+  <!-- Ambient soft warm light -->
+  <circle cx="400" cy="300" r="300" fill="url(#milk-glow)" opacity="0.6" />
+
+  <!-- Playful water ripples & abstract cat element -->
+  <g stroke="#f97316" stroke-width="1.5" fill="none" opacity="0.25">
+    <!-- Water ripples -->
+    <circle cx="400" cy="320" r="160" />
+    <circle cx="400" cy="320" r="120" stroke-dasharray="8 8" />
+    <circle cx="400" cy="320" r="80" />
+  </g>
+  
+  <!-- Cute abstract cat ear contours popping from ripples -->
+  <path d="M 280 280 L 320 200 L 360 250" stroke="#f97316" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.35" />
+  <path d="M 520 280 L 480 200 L 440 250" stroke="#f97316" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.35" />
+  
+  <!-- Water droplets -->
+  <path d="M 400 240 C 400 240, 415 260, 415 270 C 415 278.28, 408.28 285, 400 285 C 391.72 285, 385 278.28, 385 270 C 385 260, 400 240, 400 240 Z" fill="#ffedd5" stroke="#f97316" stroke-width="2.5" opacity="0.4" />
+  <path d="M 330 330 C 330 330, 338 340, 338 345 C 338 349.4, 334.4 353, 330 353 C 325.6 353, 322 349.4, 322 345 C 322 340, 330 330, 330 330 Z" fill="none" stroke="#ea580c" stroke-width="1.5" opacity="0.3" />
+  <path d="M 470 330 C 470 330, 478 340, 478 345 C 478 349.4, 474.4 353, 470 353 C 465.6 353, 462 349.4, 462 345 C 462 340, 470 330, 470 330 Z" fill="none" stroke="#ea580c" stroke-width="1.5" opacity="0.3" />
+  
+  <!-- Cute cat face simple abstract outline -->
+  <path d="M 370 320 Q 400 340 430 320" stroke="#ea580c" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.35" />
+  <path d="M 390 310 L 400 315 L 410 310" stroke="#ea580c" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.4" />
+</svg>

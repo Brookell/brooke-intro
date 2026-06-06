@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cat-puccino Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#6f5b40",
+                    "secondary-fixed": "#ffdbce",
+                    "on-secondary-fixed": "#2b160f",
+                    "on-background": "#1c1c19",
+                    "on-primary-fixed": "#271905",
+                    "primary-container": "#bda485",
+                    "on-secondary-fixed-variant": "#5b4137",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#e4beb2",
+                    "surface": "#fcf9f4",
+                    "primary-fixed-dim": "#ddc2a2",
+                    "surface-container": "#f0ede9",
+                    "on-secondary-container": "#795c51",
+                    "surface-container-low": "#f6f3ee",
+                    "on-surface-variant": "#4d453d",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed-variant": "#4c4542",
+                    "on-error": "#ffffff",
+                    "tertiary-container": "#b0a6a2",
+                    "primary-fixed": "#fadebc",
+                    "on-tertiary-fixed": "#201a18",
+                    "surface-dim": "#dcdad5",
+                    "surface-container-high": "#ebe8e3",
+                    "inverse-primary": "#ddc2a2",
+                    "surface-tint": "#6f5b40",
+                    "tertiary-fixed": "#ece0dc",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-container": "#423c39",
+                    "on-primary-container": "#4c3a22",
+                    "tertiary": "#655d5a",
+                    "on-tertiary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "secondary": "#75584d",
+                    "surface-container-highest": "#e5e2dd",
+                    "inverse-on-surface": "#f3f0eb",
+                    "outline-variant": "#d0c5b9",
+                    "outline": "#7f766b",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed-dim": "#cfc4c0",
+                    "on-primary": "#ffffff",
+                    "background": "#fcf9f4",
+                    "on-primary-fixed-variant": "#56442b",
+                    "surface-variant": "#e5e2dd",
+                    "surface-bright": "#fcf9f4",
+                    "secondary-container": "#fed7ca",
+                    "inverse-surface": "#31302d",
+                    "on-surface": "#1c1c19"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>body {
+    font-family: "Plus Jakarta Sans", sans-serif
+    }
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.froth-overlay {
+    background-image: radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.2) 1px, transparent 0);
+    background-size: 8px 8px
+    }
+/* Cat Pattern Background updated with IMAGE_2 */
+.cat-pattern {
+    position: relative;
+    background-color: #fcf9f4
+    }
+.cat-pattern::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(https://lh3.googleusercontent.com/aida/ADBb0ugcFReJRdxfiykfmlSwAQ9Ya8SOilqy81dpL5exoYXzgnqeGh8tcfagzrq68EbSaRfsza9Zu8GGYrPjSquFku9vwzEVwdEFVzrX8m7zyPJgB6g1jDWRKlgbyKeEOjwxFuFSWMiMSbnc0kRYTmNY6EPza-4Mhqv3fpmgpEescnbXAHNOZV_QCqNnFMITY4olqexJzHiNVZOIUVjUWju0k2LLQITcMz-LEgUP2PS5Ic_Lr7yMKc-Zj3ks9D0xFZYGZ-6LHhNe1Ps2_4o);
+    background-repeat: repeat;
+    background-size: 180px;
+    /* Adjusted for subtle tiling */
+    opacity: 0.05;
+    /* Low opacity for legibility */
+    z-index: 0;
+    pointer-events: none;
+    filter: sepia(0.5) hue-rotate(-20deg);
+    /* Adjust pattern to match warm theme */
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="cat-pattern text-on-surface min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="sticky top-0 w-full z-50 bg-[#fdfcfb]/90 backdrop-blur-xl flex justify-between items-center px-6 py-4 border-b border-surface-container-high/50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#6f5b40]" data-icon="pets">pets</span>
+<span class="text-2xl font-black text-[#6f5b40] tracking-tighter">Cat-puccino</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-stone-200/50 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[#6f5b40]" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="px-6 py-8 max-w-2xl mx-auto space-y-8 relative z-10">
+<!-- Profile Hero Section -->
+<section class="relative flex flex-col items-center text-center space-y-4">
+<div class="relative">
+<div class="w-32 h-32 rounded-full overflow-hidden border-4 border-surface-container-high shadow-lg bg-surface">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a fluffy ginger cat with bright green eyes resting comfortably on a cream-colored knit blanket" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkVYhYnx9NkW7fQQQxxUkAozpId2ZYfwThPvbXla9HSDYmEnR1kgRqn3OVc8EYdL-9pK5ceEklXxpmBiq9WvTbxIvKXPlNF5B_5WcHEtHgAqMLvB3Db6ZzIVHON8gSm6iJcWV4b0y0TlNBCP9yVIHNl8IU_qpp_vw_P9Z2xmpZCLW_UqDw5AohpmCPcIxEQ-vaQzn_txV1KpqIrF161mQv5RC6tGnyQeQSIlbHcDMfrQCmFIKKhyidbpn1FQfCjLcbzwY_bOVE3meR"/>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-primary p-2 rounded-full text-surface shadow-md cursor-pointer active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="edit" style="font-variation-settings: 'FILL' 1;">edit</span>
+</div>
+</div>
+<div>
+<h1 class="text-3xl font-extrabold text-on-primary-container tracking-tight">Caffeine Cat</h1>
+<p class="text-on-surface-variant font-medium">Lover of Lattes &amp; Naps</p>
+</div>
+</section>
+<!-- Gamification Progress: The Froth Tracker -->
+<section class="bg-surface-container/90 backdrop-blur-sm rounded-xl p-8 space-y-6 shadow-sm">
+<div class="flex justify-between items-end">
+<div class="space-y-1">
+<span class="text-xs font-black uppercase tracking-widest text-primary/60">Current Rank</span>
+<h2 class="text-xl font-bold text-primary">Level 5: Espresso Expert</h2>
+</div>
+<span class="text-primary font-bold">750 / 1000 XP</span>
+</div>
+<div class="w-full h-8 bg-surface-variant rounded-full overflow-hidden relative">
+<div class="h-full bg-gradient-to-r from-primary to-primary-container w-3/4 rounded-full relative overflow-hidden">
+<div class="absolute inset-0 froth-overlay"></div>
+</div>
+</div>
+<p class="text-sm text-center text-on-surface-variant italic">Only 250 XP until "Macchiato Master" status!</p>
+</section>
+<!-- Lifetime Stats Bento Grid -->
+<section class="grid grid-cols-2 gap-4">
+<div class="bg-secondary-container/90 backdrop-blur-sm rounded-xl p-6 flex flex-col justify-between h-40 shadow-sm transition-transform active:scale-[0.98]">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="coffee">coffee</span>
+<div>
+<div class="text-2xl font-black text-on-secondary-container">128</div>
+<div class="text-xs font-bold uppercase tracking-wider text-on-secondary-container/70">Cups Tracked</div>
+</div>
+</div>
+<div class="bg-surface-container-high/90 backdrop-blur-sm rounded-xl p-6 flex flex-col justify-between h-40 shadow-sm transition-transform active:scale-[0.98]">
+<span class="material-symbols-outlined text-primary" data-icon="bolt">bolt</span>
+<div>
+<div class="text-2xl font-black text-primary">12.4g</div>
+<div class="text-xs font-bold uppercase tracking-wider text-primary/70">Caffeine Total</div>
+</div>
+</div>
+<div class="col-span-2 bg-tertiary-fixed/90 backdrop-blur-sm rounded-xl p-6 flex items-center justify-between shadow-sm transition-transform active:scale-[0.98]">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-on-tertiary-fixed-variant/10 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-on-tertiary-fixed" data-icon="calendar_month">calendar_month</span>
+</div>
+<div>
+<div class="text-lg font-bold text-on-tertiary-fixed">15 Day Streak</div>
+<div class="text-xs font-medium text-on-tertiary-fixed-variant">You're on a roll, kitty!</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-tertiary-fixed text-3xl" data-icon="local_fire_department" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+</section>
+<!-- Settings List -->
+<section class="space-y-4">
+<h3 class="text-sm font-black uppercase tracking-[0.2em] text-on-surface-variant/50 ml-2">Preferences</h3>
+<div class="bg-surface-container-lowest/90 backdrop-blur-sm rounded-xl overflow-hidden shadow-sm">
+<div class="p-4 flex items-center justify-between hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary/60 group-hover:text-primary" data-icon="language">language</span>
+<span class="font-bold">Language</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-sm font-semibold text-on-surface-variant">English</span>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<div class="p-4 flex items-center justify-between hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary/60 group-hover:text-primary" data-icon="palette">palette</span>
+<span class="font-bold">App Theme</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-sm font-semibold text-on-surface-variant">Warm Roast</span>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<div class="p-4 flex items-center justify-between hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary/60 group-hover:text-primary" data-icon="security">security</span>
+<span class="font-bold">Privacy &amp; Security</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+<button class="w-full py-4 text-center font-bold text-error bg-error-container/20 rounded-xl active:scale-[0.98] transition-all">
+                Sign Out
+            </button>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-8 pt-4 bg-[#fdfcfb]/95 backdrop-blur-2xl shadow-[0_-8px_32px_rgba(111,91,64,0.08)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-[#6f5b40]/50 px-4 py-2 hover:text-[#6f5b40] transition-all active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-bold uppercase tracking-widest mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#6f5b40]/50 px-4 py-2 hover:text-[#6f5b40] transition-all active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="equalizer">equalizer</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-bold uppercase tracking-widest mt-1">Stats</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-[#bda485]/20 text-[#6f5b40] rounded-full px-6 py-2 scale-110 transition-all active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-['Plus_Jakarta_Sans'] text-[11px] font-bold uppercase tracking-widest mt-1">Profile</span>
+</a>
+</nav>
+</body></html>
