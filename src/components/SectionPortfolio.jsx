@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ExternalLink } from 'lucide-react'
 
@@ -105,6 +105,17 @@ function ProjectDetails({ project, device }) {
 export default function SectionPortfolio() {
   const [activeProject, setActiveProject] = useState(null)
   const [modalTab, setModalTab] = useState('preview') // 'preview' or 'details'
+
+  useEffect(() => {
+    if (activeProject) {
+      document.body.classList.add('modal-open')
+    } else {
+      document.body.classList.remove('modal-open')
+    }
+    return () => {
+      document.body.classList.remove('modal-open')
+    }
+  }, [activeProject])
 
   return (
     <section id="portfolio" className="section portfolio-section-container" style={{ background: 'transparent' }}>
