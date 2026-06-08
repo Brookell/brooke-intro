@@ -217,6 +217,7 @@ export default function SectionPortfolio() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setActiveProject(null)}
+            onTouchMove={(e) => e.preventDefault()}
           >
             <motion.div 
               className={`portfolio-modal-container device-${activeProject.deviceType}`}
@@ -264,7 +265,7 @@ export default function SectionPortfolio() {
                         title="Open in new tab"
                       >
                         <ExternalLink size={18} />
-                        <span>Open App</span>
+                        <span>Open</span>
                       </a>
                       <button 
                         className="phone-close-btn" 

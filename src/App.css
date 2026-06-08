@@ -1862,6 +1862,7 @@ body.modal-open .nav-fixed {
   align-items: center;
   z-index: 10000;
   padding: 20px;
+  overscroll-behavior: contain;
 }
 
 .portfolio-modal-container {
@@ -1997,6 +1998,7 @@ body.modal-open .nav-fixed {
   border: none;
   background: transparent;
   display: block;
+  overscroll-behavior: contain;
 }
 
 /* 📱 PHONE DEVICE FRAME STYLES */
