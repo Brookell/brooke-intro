@@ -293,6 +293,7 @@ export default function SectionPortfolio() {
                           src={activeProject.path} 
                           title={activeProject.title}
                           className="portfolio-modal-iframe"
+                          allow="camera"
                         />
                       ) : (
                         <ProjectDetails project={activeProject} device="phone" />
@@ -368,6 +369,7 @@ export default function SectionPortfolio() {
                         src={activeProject.path} 
                         title={activeProject.title}
                         className="portfolio-modal-iframe"
+                        allow="camera"
                       />
                     ) : (
                       <ProjectDetails project={activeProject} device="browser" />

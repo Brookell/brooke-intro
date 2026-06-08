@@ -1990,6 +1990,7 @@ body.modal-open .nav-fixed {
   height: calc(100% - 48px);
   position: relative;
   background: #09090b;
+  overflow: hidden;
 }
 
 .portfolio-modal-iframe {
@@ -1999,6 +2000,13 @@ body.modal-open .nav-fixed {
   background: transparent;
   display: block;
   overscroll-behavior: contain;
+}
+
+.browser-device-wrapper .portfolio-modal-iframe {
+  width: 133.33%;
+  height: 133.33%;
+  transform: scale(0.75);
+  transform-origin: top left;
 }
 
 /* 📱 PHONE DEVICE FRAME STYLES */
