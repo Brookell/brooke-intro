@@ -155,12 +155,12 @@ export default function SectionPortfolio() {
               >
                 <div className="portfolio-premium-card-image-wrapper">
                   <img 
-                    src={work.image} 
+                    src={`${import.meta.env.BASE_URL}${work.image.startsWith('/') ? work.image.slice(1) : work.image}`} 
                     alt={work.title} 
                     className="portfolio-premium-card-image"
                     onError={(e) => {
                       e.target.onerror = null; // Prevent infinite loop if fallback fails
-                      e.target.src = work.fallbackImage;
+                      e.target.src = `${import.meta.env.BASE_URL}${work.fallbackImage.startsWith('/') ? work.fallbackImage.slice(1) : work.fallbackImage}`;
                     }}
                   />
                 </div>

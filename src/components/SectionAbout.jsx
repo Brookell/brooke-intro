@@ -32,7 +32,7 @@ export default function SectionAbout() {
           >
             {/* Photo placeholder */}
             <div className="profile-photo">
-              <img src="/about.png" alt="Brooke" className="photo-img" />
+              <img src={`${import.meta.env.BASE_URL}about.png`} alt="Brooke" className="photo-img" />
             </div>
 
             <h3 className="profile-name">

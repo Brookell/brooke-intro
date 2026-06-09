@@ -336,7 +336,7 @@ export default function SectionFramework() {
                       {/* Media Image Frame with Guide text */}
                       <div className="pillar-media-placeholder">
                         <img 
-                          src={`/pillars/${item.fileName}`} 
+                          src={`${import.meta.env.BASE_URL}pillars/${item.fileName}`} 
                           alt={item.name} 
                           className="pillar-media-img"
                           onError={(e) => { e.target.style.display = 'none'; }}
