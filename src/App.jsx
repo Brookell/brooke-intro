@@ -13,9 +13,9 @@ import './App.css'
 const navItems = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
-  { id: 'framework', label: 'Pillars' },
   { id: 'experience', label: 'Experience' },
   { id: 'portfolio', label: 'Projects' },
+  { id: 'framework', label: 'Pillars' },
   { id: 'skills', label: 'Skills' },
   { id: 'footer', label: 'Contact' }
 ]
@@ -33,7 +33,7 @@ function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'framework', 'experience', 'portfolio', 'skills', 'footer']
+      const sections = ['home', 'about', 'experience', 'portfolio', 'framework', 'skills', 'footer']
       const scrollPosition = window.scrollY + 200
 
       for (const section of sections) {
@@ -171,11 +171,11 @@ function App() {
 
         <SectionAbout />
 
-        <SectionFramework />
-
         <SectionExperience />
 
         <SectionPortfolio />
+
+        <SectionFramework />
 
         <SectionGallery />
         

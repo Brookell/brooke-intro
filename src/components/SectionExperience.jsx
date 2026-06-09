@@ -104,11 +104,6 @@ export default function SectionExperience() {
                             <h3 className="role-title" style={{ fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)', fontWeight: '700', color: 'var(--text-primary)' }}>
                               {exp.role}
                             </h3>
-                            <div className="experience-arrow">
-                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                              </svg>
-                            </div>
                           </div>
                           
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '8px' }}>

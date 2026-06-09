@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { X, ExternalLink } from 'lucide-react'
+import React, { useState, useEffect, useRef } from 'react'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { X, ExternalLink, Film, BookOpen, Music, Coffee, Activity, Sparkles, Globe, FileText } from 'lucide-react'
+import RotatingText from './RotatingText'
 
 const works = [
   { 
     title: "Her Gaze", 
     meta: "Vibecoding / Cinema", 
-    desc: "A breathtaking feminist editorial cinema platform exploring visual theories, reclaiming the gaze, and curating deep film criticism through a stunning minimalist grid.",
+    category: "film",
+    desc: "A feminist editorial cinema platform exploring visual theories and reclaiming the gaze through a stunning minimalist digital experience.",
     image: "/portfolio/hergaze.png",
     fallbackImage: "/portfolio/hergaze.svg",
     date: "May 10, 2026",
@@ -14,14 +16,25 @@ const works = [
     displayUrl: "https://brookell.github.io/her-gaze/",
     deviceType: "browser",
     details: {
-      motivation: "hergaze was created to challenge the historically dominant male gaze in traditional cinema culture. The goal was to build a digital pocket sanctuary that merges visual editorial excellence with deep, rigorous, text-based feminist film criticism. It serves as an archive of reclamation, putting female and queer directors at the forefront of digital history.",
-      stack: ["React", "Vite", "Framer Motion", "CSS Grid & Flexbox", "Google Fonts (Outfit, Inter)"],
-      methods: "Implemented a high-contrast editorial grid layout inspired by premium print fashion magazines. Utilized Framer Motion for scroll-linked typography scaling and rich animations. Integrated responsive media assets with smooth fallback mechanisms to ensure instant, immersive visual load times."
+      subtitle: "A cinema of her own.",
+      motivation: "Her Gaze started from a question: who gets to look, and who gets to be seen? I wanted to create a quiet digital archive that challenges the historically dominant male gaze in cinema and celebrates women behind and in front of the camera.",
+      exploring: "I explored a dark, cinematic interface that uses contrast, silence, and spacing to create a gallery-like reading experience. The goal was to make every image and sentence feel intentional.",
+      exploringFeatures: [
+        { icon: "✦", label: "Slow Browsing", desc: "Encouraging reflection, not mindless scrolling." },
+        { icon: "✦", label: "Editorial Rhythm", desc: "Inspired by print magazines and essay layouts." },
+        { icon: "✦", label: "Cinematic Contrast", desc: "Using light and dark to evoke focus and intimacy." }
+      ],
+      stack: ["React", "Vite", "Framer Motion", "CSS Grid & Flexbox", "Google Fonts"],
+      howBuilt: "I used Framer Motion for subtle scroll-based animations and CSS Grid to build an editorial layout that feels more like a printed spread than a typical website.",
+      noticeQuote: "“My favorite part is the tension between softness and darkness: the interface feels quiet, but the subject matter is sharp.”",
+      noticeText: "I wanted the website to feel like entering a small cinema room — focused, intimate, and slightly mysterious.",
+      stickyNote: "Who gets to look, and who gets to be remembered?"
     }
   },
   { 
     title: "Catpuccino", 
     meta: "Vibecoding / Web App", 
+    category: "coffee",
     desc: "A playful, tactile hydration logger for cats, crafted with beautiful fluid-physics animations, adorable micro-interactions, and visual health insights.",
     image: "/portfolio/catpuccino.png",
     fallbackImage: "/portfolio/kitty-drink.svg",
@@ -30,14 +43,25 @@ const works = [
     displayUrl: "https://brookell.github.io/cat-pu-c-ci-no/",
     deviceType: "phone",
     details: {
-      motivation: "Cats are notoriously poor drinkers, often leading to renal concerns later in life. Catpuccino was designed as a gamified, beautiful hydration diary to make tracking water logging a daily joy for cat parents, blending strict pet health monitoring with cute, cozy, and ultra-tactile digital interfaces.",
-      stack: ["HTML5 Canvas API", "Vanilla JavaScript", "CSS Liquid Shader Effects", "LocalStorage", "Web Audio API"],
-      methods: "Built a custom HTML5 canvas liquid rendering engine with custom shaders that animate water waves based on logged milliliters. Programmed highly responsive micro-interactions (dragging physical water drops) and integrated delightful auditory Purr feedback on successful logs."
+      subtitle: "Tactile purr-fection for hydration.",
+      motivation: "Catpuccino was born from a simple observation: cats rarely drink enough water, yet their parents struggle to log hydration consistently. I designed a cozy, comforting pocket diary that transforms health tracking into a delightful daily ritual.",
+      exploring: "I explored organic fluid-physics, high-fidelity tactile micro-interactions, and visual feedback that feels like physical toy play rather than corporate data logging.",
+      exploringFeatures: [
+        { icon: "✦", label: "Fluid Shaders", desc: "Real-time web shaders that ripple and bounce with water entries." },
+        { icon: "✦", label: "Cozy Micro-interactions", desc: "Dragging water drops, cute purring sound loops on completion." },
+        { icon: "✦", label: "Warm Claymorphism", desc: "Soft shadows and warm pastel tones that create a safe, domestic space." }
+      ],
+      stack: ["HTML5 Canvas", "Web Audio API", "LocalStorage", "Claymorphism CSS", "Tailwind CSS"],
+      howBuilt: "I created custom fluid animation nodes using pure HTML Canvas and designed micro-sounds to play dynamically. LocalStorage keeps the daily history local and instant.",
+      noticeQuote: "“Hydration shouldn't feel like a medical chart. It should feel like pouring a warm glass of milk for a friend.”",
+      noticeText: "The visual ripples are physically modeled: dragging your finger creates responsive turbulence, mimicking a cat's tongue touching water.",
+      stickyNote: "A tiny drop of water, a huge leap for kitty kidney health."
     }
   },
   { 
     title: "Virginia Woolf Space", 
     meta: "Vibecoding / Literature", 
+    category: "literature",
     desc: "An immersive stream-of-consciousness web experience celebrating Virginia Woolf's literary legacy, centering around the philosophy 'I am rooted, but I flow.'",
     image: "/portfolio/virginia-woolf.png",
     fallbackImage: "/portfolio/virginia-woolf.svg",
@@ -46,15 +70,26 @@ const works = [
     displayUrl: "https://brookell.github.io/love-letters-space/",
     deviceType: "browser",
     details: {
-      motivation: "Inspired by Virginia Woolf's classic stream-of-consciousness novel 'The Waves' and her historic correspondence with Vita Sackville-West. Created to translate the fluid, poetic movement of Woolf's prose into an immersive, spatial web playground that bridges literature, philosophy, and creative code.",
-      stack: ["React", "Three.js (WebGL)", "GSAP (GreenSock)", "Custom Web Audio API", "Google Fonts (Playfair Display)"],
-      methods: "Programmed an interactive 3D WebGL star constellation field using Three.js, mapping individual stars to actual letters exchanged. Implemented seamless horizontal scrolling powered by GSAP scroll-triggers to evoke the physical flow of a river, accompanied by a curated ambient audio player."
+      subtitle: "Rooted in words, flowing in space.",
+      motivation: "An interactive tribute to Virginia Woolf's stream-of-consciousness philosophy: 'I am rooted, but I flow.' The challenge was converting complex, non-linear literary prose into an immersive spatial choreography.",
+      exploring: "I wanted to visualize stream-of-consciousness by projecting letters as a flowing, responsive river of light, allowing users to scroll horizontally and browse stars of thoughts.",
+      exploringFeatures: [
+        { icon: "✦", label: "Star Fields", desc: "Constellations generated from real letters exchanged with Vita Sackville-West." },
+        { icon: "✦", label: "Prose Flow", desc: "Horizontal scrolling that accelerates and decelerates like Woolf's inner monologues." },
+        { icon: "✦", label: "Ambient Generator", desc: "Generative piano tracks based on cursor movements." }
+      ],
+      stack: ["Three.js", "WebGL Shaders", "GSAP (GreenSock)", "Web Audio API", "Custom Layout"],
+      howBuilt: "Built using Three.js custom particle physics for the starfield. GSAP controls the letter flow transitions, dynamically aligning text to a curve in 3D space.",
+      noticeQuote: "“Prose is not static ink; it is a current of consciousness. The screen should feel as fluid as the mind.”",
+      noticeText: "Moving the mouse doesn't just rotate the scene; it creates ripples in the star field that align the letters into legible sentences.",
+      stickyNote: "I am rooted, but I flow."
     }
   },
   { 
     title: "Cosmic Vinyl", 
     meta: "Vibecoding / Music", 
-    desc: "A gesture-controlled 3D audio gallery integrating MediaPipe hand tracking, Three.js spatial canvas, and the Web Audio API for an immersive vinyl browsing experience.",
+    category: "music",
+    desc: "A gesture-controlled 3D audio gallery integrating MediaPipe hand tracking and the Web Audio API for an immersive vinyl browsing experience.",
     image: "/portfolio/cosmic-vinyl.png",
     fallbackImage: "/portfolio/cosmic-vinyl.svg",
     date: "May 24, 2026",
@@ -62,49 +97,207 @@ const works = [
     displayUrl: "https://brookell.github.io/cosmic-vinyl/",
     deviceType: "browser",
     details: {
-      motivation: "Designed to explore natural, contact-free user interfaces in spatial music browsing. Cosmic Vinyl recreates the physical feel of flipping through vinyl records in a crate, translated into an interactive 3D particle field controlled by simple hand gestures.",
-      stack: ["Three.js", "MediaPipe Hands", "Web Audio API", "Vanilla JavaScript", "CSS Glassmorphism"],
-      methods: "Engineered a custom 3D carousel loop with dynamic particle field lighting. Programmed hand gesture recognitions (Open Palm to fast-swipe, Digit One to slow-swipe, Fist to select/zoom). Integrated real-time spatial audio panning and automated online song search."
+      subtitle: "Flipping records in a starfield.",
+      motivation: "Cosmic Vinyl addresses the loss of physical sensation in digital music browsing. By pairing gesture tracking with generative spatial audio, we recreate the tactile joy of record store crates in a cosmic virtual showroom.",
+      exploring: "I explored spatial user interfaces where a user's physical hand can flip, zoom, and spin interactive 3D vinyl models without touching the keyboard.",
+      exploringFeatures: [
+        { icon: "✦", label: "Gesture Recognition", desc: "MediaPipe hand landmarks map swiping and grabbing gestures directly." },
+        { icon: "✦", label: "Spatial Audio", desc: "Panned ambient vinyl crackle that shifts dynamically with records." },
+        { icon: "✦", label: "Glassmorphism Crates", desc: "Futuristic glossy acrylic crates floating in a dark WebGL nebula." }
+      ],
+      stack: ["Three.js", "MediaPipe Hands", "Web Audio API", "Vanilla JavaScript", "Custom CSS"],
+      howBuilt: "MediaPipe hand-landmark detections are piped to a coordinate mapping system to slide records. Custom Web Audio nodes synthesize live vinyl static noise.",
+      noticeQuote: "“Music should be felt, both in ears and hands. Cosmic Vinyl restores the physical crate-digging ritual.”",
+      noticeText: "Making a fist doesn't just select the record; it drops the virtual tone-arm, initiating the vinyl crackle sound effect.",
+      stickyNote: "Bringing the texture of dust and vinyl back to digital streams."
+    }
+  },
+  { 
+    title: "MoveTrack", 
+    meta: "Vibecoding / Sports", 
+    category: "sports",
+    desc: "A comprehensive fitness companion that tracks your activities, progress, and helps you build sustainable healthy habits through data-driven insights.",
+    image: "/portfolio/movetrack.png",
+    fallbackImage: "/portfolio/work-1.svg",
+    date: "June 9, 2026",
+    path: "https://brookell.github.io/move-track/",
+    displayUrl: "https://brookell.github.io/move-track/",
+    deviceType: "phone",
+    details: {
+      subtitle: "Move, achieve, repeat.",
+      motivation: "Most workout trackers overwhelm users with cold spreadsheets and stats. MoveTrack redesigns the fitness dashboard into a sleek, clean, aesthetic space that celebrates movement as a form of personal art.",
+      exploring: "I explored visual minimalism in dashboards—stripping away visual noise and using clean typography, soft pastel charts, and satisfying completion rings.",
+      exploringFeatures: [
+        { icon: "✦", label: "Clean Analytics", desc: "Interactive, simple charts mapping calorie burns and step progress." },
+        { icon: "✦", label: "Streak Achieve", desc: "Visual flame streaks that glow brighter as habits solidify." },
+        { icon: "✦", label: "Glass Layouts", desc: "A sleek, responsive layout built for the active phone screen." }
+      ],
+      stack: ["React", "Recharts", "Framer Motion", "CSS Grid & Flexbox", "LocalStorage"],
+      howBuilt: "Built with React and custom styled Recharts nodes. Framer Motion drives the entrance animations, presenting data progressively as you scroll.",
+      noticeQuote: "“Movement is art. Your data dashboard should feel as light and elegant as a clean run at dawn.”",
+      noticeText: "The daily progress circle expands dynamically, matching the breathing rate of an active runner.",
+      stickyNote: "Every step is a brushstroke on your canvas of movement."
     }
   }
 ]
 
-// Custom Sub-component for Bento Grid Case Study Details
+const categories = [
+  { id: 'all', label: 'All', icon: Sparkles },
+  { id: 'film', label: 'Film', icon: Film },
+  { id: 'literature', label: 'Literature', icon: BookOpen },
+  { id: 'music', label: 'Music', icon: Music },
+  { id: 'coffee', label: 'Coffee', icon: Coffee },
+  { id: 'sports', label: 'Sports', icon: Activity }
+]
+
 function ProjectDetails({ project, device }) {
   return (
     <div className={`details-view-container ${device}-details`}>
-      <div className="details-hero">
-        <span className="details-tag">{project.meta}</span>
-        <h2 className="details-title">{project.title}</h2>
-      </div>
-
-      <div className="details-grid">
-        <div className="details-card">
-          <h3>🌱 Motivation & Background</h3>
-          <p>{project.details.motivation}</p>
-        </div>
-
-        <div className="details-card">
-          <h3>🛠️ Stack & Technologies</h3>
-          <div className="stack-tags">
-            {project.details.stack.map(tech => (
-              <span key={tech} className="stack-tag">{tech}</span>
-            ))}
+      <div className="editorial-case-study">
+        {/* Editorial Header */}
+        <div className="editorial-header">
+          <span className="editorial-meta-tag">• {project.meta}</span>
+          <h2 className="editorial-title">{project.title}</h2>
+          {project.details.subtitle && (
+            <p className="editorial-subtitle">{project.details.subtitle}</p>
+          )}
+          <p className="editorial-description">
+            {project.desc}
+          </p>
+          
+          <div className="editorial-hero-actions">
+            <a href={project.path} target="_blank" rel="noopener noreferrer" className="editorial-live-btn">
+              ↗ Live Site
+            </a>
           </div>
         </div>
 
-        <div className="details-card full-width">
-          <h3>⚡ Methods & Key Features</h3>
-          <p>{project.details.methods}</p>
+        {/* Sections Grid */}
+        <div className="editorial-sections-grid">
+          {/* Section 01 */}
+          <div className="editorial-section sec-01">
+            <div className="section-header-row">
+              <span className="section-number">01</span>
+              <h4>WHY I MADE THIS</h4>
+            </div>
+            <div className="section-content">
+              <p>{project.details.motivation}</p>
+            </div>
+          </div>
+
+          {/* Section 02 */}
+          <div className="editorial-section sec-02">
+            <div className="section-header-row">
+              <span className="section-number">02</span>
+              <h4>WHAT I WAS EXPLORING</h4>
+            </div>
+            <div className="section-content">
+              <p className="section-intro-text">{project.details.exploring}</p>
+              
+              {project.details.exploringFeatures && (
+                <div className="exploring-features-grid">
+                  {project.details.exploringFeatures.map((feat, idx) => (
+                    <div key={idx} className="exploring-feature-item">
+                      <span className="feature-icon">{feat.icon}</span>
+                      <div className="feature-info">
+                        <h5>{feat.label}</h5>
+                        <p>{feat.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Section 03 */}
+          <div className="editorial-section sec-03">
+            <div className="section-header-row">
+              <span className="section-number">03</span>
+              <h4>HOW I BUILT IT</h4>
+            </div>
+            <div className="section-content">
+              <div className="editorial-stack-tags">
+                {project.details.stack.map(tech => (
+                  <span key={tech} className="editorial-stack-tag">{tech}</span>
+                ))}
+              </div>
+              <p>{project.details.howBuilt}</p>
+            </div>
+          </div>
+
+          {/* Section 04 */}
+          <div className="editorial-section sec-04">
+            <div className="section-header-row">
+              <span className="section-number">04</span>
+              <h4>WHAT I WANT YOU TO NOTICE</h4>
+            </div>
+            <div className="section-content">
+              {project.details.noticeQuote && (
+                <blockquote className="editorial-notice-quote">
+                  {project.details.noticeQuote}
+                </blockquote>
+              )}
+              <p>{project.details.noticeText}</p>
+            </div>
+          </div>
         </div>
+
+        {/* Sticky Note Feature */}
+        {project.details.stickyNote && (
+          <div className="editorial-sticky-note-wrapper">
+            <div className="editorial-sticky-note">
+              <div className="tape-effect"></div>
+              <p className="sticky-note-text">
+                “{project.details.stickyNote}”
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
+  )
+}
+
+function DynamicWord() {
+  const containerRef = useRef(null)
+  const rotatingRef = useRef(null)
+  const isInView = useInView(containerRef, { amount: 0.1 })
+
+  useEffect(() => {
+    if (isInView && rotatingRef.current) {
+      rotatingRef.current.reset()
+    }
+  }, [isInView])
+
+  const texts = ["demands.", "pressure.", "assignments.", "curiosity."]
+
+  return (
+    <span ref={containerRef} className="portfolio-dynamic-word-wrapper">
+      <RotatingText
+        ref={rotatingRef}
+        texts={texts}
+        mainClassName={(idx) => idx === texts.length - 1 ? "portfolio-title-gradient" : "portfolio-title-alt-word"}
+        staggerFrom="first"
+        initial={{ y: "100%", opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: "-120%", opacity: 0 }}
+        staggerDuration={0.025}
+        splitLevelClassName="overflow-hidden pb-0.5"
+        transition={{ type: "spring", damping: 30, stiffness: 400 }}
+        rotationInterval={2000}
+        splitBy="characters"
+        auto={true}
+        loop={false}
+      />
+    </span>
   )
 }
 
 export default function SectionPortfolio() {
   const [activeProject, setActiveProject] = useState(null)
   const [modalTab, setModalTab] = useState('preview') // 'preview' or 'details'
+  const [activeTab, setActiveTab] = useState('all')
 
   useEffect(() => {
     if (activeProject) {
@@ -117,95 +310,251 @@ export default function SectionPortfolio() {
     }
   }, [activeProject])
 
+  // Filter works by active tab
+  const filteredWorks = activeTab === 'all' 
+    ? works 
+    : works.filter(w => w.category === activeTab)
+
+  const orderedSliderWorks = [
+    works.find(w => w.category === 'film'),
+    works.find(w => w.category === 'literature'),
+    works.find(w => w.category === 'music'),
+    works.find(w => w.category === 'coffee'),
+    works.find(w => w.category === 'sports')
+  ].filter(Boolean)
+
+  const activeSliderIndex = ['film', 'literature', 'music', 'coffee', 'sports'].indexOf(activeTab)
+
   return (
     <section id="portfolio" className="section portfolio-section-container" style={{ background: 'transparent' }}>
-      {/* Dynamic atmospheric auras */}
-      <div className="aura-blob aura-blue" style={{ top: '30%', left: '-10%', opacity: 0.08, width: '450px', height: '450px' }} />
-      <div className="aura-blob aura-pink" style={{ bottom: '15%', right: '-10%', opacity: 0.06, width: '500px', height: '500px' }} />
-
-      <div className="container">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
+      <div className="container portfolio-outer-container">
+        {/* Header styling matching reference */}
+        <motion.div 
+          className="portfolio-header-container"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="label-mono">03 — Portfolio</span>
-          <h2 className="title-display" style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', marginBottom: '40px' }}>
-            SELECTED WORK
-          </h2>
-          
-          <div className="portfolio-card-grid">
-            {works.map((work, i) => (
-              <motion.div
-                key={work.title}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ 
-                  duration: 0.8, 
-                  delay: i * 0.15,
-                  ease: [0.16, 1, 0.3, 1]
-                }}
-                className="portfolio-premium-card"
-                onClick={() => {
-                  setActiveProject(work);
-                  setModalTab('preview');
-                }}
-              >
-                <div className="portfolio-premium-card-image-wrapper">
-                  <img 
-                    src={`${import.meta.env.BASE_URL}${work.image.startsWith('/') ? work.image.slice(1) : work.image}`} 
-                    alt={work.title} 
-                    className="portfolio-premium-card-image"
-                    onError={(e) => {
-                      e.target.onerror = null; // Prevent infinite loop if fallback fails
-                      e.target.src = `${import.meta.env.BASE_URL}${work.fallbackImage.startsWith('/') ? work.fallbackImage.slice(1) : work.fallbackImage}`;
-                    }}
-                  />
-                </div>
-                
-                <div className="portfolio-premium-card-content">
-                  <div className="portfolio-premium-card-meta-row">
-                    <span className="portfolio-premium-card-tag">{work.meta}</span>
-                  </div>
-                  
-                  <h3 className="portfolio-premium-card-title">
-                    {work.title}
-                  </h3>
-                  
-                  <p className="portfolio-premium-card-desc">
-                    {work.desc}
-                  </p>
-
-                  {/* Dual Action Buttons Row */}
-                  <div className="portfolio-card-actions">
-                    <button 
-                      className="portfolio-action-btn-secondary"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveProject(work);
-                        setModalTab('details');
-                      }}
-                    >
-                      Details
-                    </button>
-                    <button 
-                      className="portfolio-action-btn-primary"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveProject(work);
-                        setModalTab('preview');
-                      }}
-                    >
-                      Live
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+          <div className="portfolio-header-left">
+            <span className="portfolio-label-accent">✦ MY PROJECTS</span>
+            <h2 className="portfolio-title-fancy">
+              Projects shaped by <DynamicWord />
+            </h2>
+            <p className="portfolio-subtitle">
+              A collection of digital experiences inspired by the things I love — film, literature, music, coffee, and movement.
+            </p>
           </div>
         </motion.div>
+ 
+        <div className="portfolio-main-layout">
+          {/* Left Vertical Category Nav Sidebar */}
+          <motion.div 
+            className="portfolio-sidebar"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="portfolio-timeline-wrapper">
+              <div className="portfolio-timeline-line" />
+              {categories.map((cat) => {
+                const IconComponent = cat.icon
+                const isSelected = activeTab === cat.id
+                const isActiveOrAll = activeTab === 'all' || activeTab === cat.id
+                
+                return (
+                  <div
+                    key={cat.id}
+                    className={`portfolio-sidebar-item sidebar-item-${cat.id} ${isActiveOrAll ? 'active' : ''} ${isSelected ? 'selected' : ''}`}
+                    onClick={() => setActiveTab(cat.id)}
+                  >
+                    <div className="portfolio-sidebar-icon-circle">
+                      <IconComponent size={14} />
+                    </div>
+                    <span className="portfolio-sidebar-label">{cat.label}</span>
+                  </div>
+                )
+              })}
+            </div>
+          </motion.div>
+ 
+          {/* Right Projects Area */}
+          <div className="portfolio-grid-area">
+            <AnimatePresence mode="wait">
+              {activeTab === 'all' ? (
+                <motion.div 
+                  key="grid"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  className="portfolio-new-grid"
+                >
+                  {filteredWorks.map((work) => {
+                    const isFullWidth = work.title === 'MoveTrack' && activeTab === 'all'
+                    
+                    return (
+                      <motion.div
+                        key={work.title}
+                        layout
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        exit={{ opacity: 0, y: 30 }}
+                        transition={{ 
+                          duration: 0.6, 
+                          ease: [0.16, 1, 0.3, 1],
+                          layout: { type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.6 }
+                        }}
+                        className={`portfolio-premium-card ${isFullWidth ? 'full-width' : ''}`}
+                        onClick={() => {
+                          setActiveProject(work)
+                          setModalTab('preview')
+                        }}
+                      >
+                        <motion.div 
+                          layout 
+                          transition={{ type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.6 }}
+                          className="portfolio-premium-card-image-wrapper"
+                        >
+                          <img 
+                            src={`${import.meta.env.BASE_URL}${work.image.startsWith('/') ? work.image.slice(1) : work.image}`} 
+                            alt={work.title} 
+                            className="portfolio-premium-card-image"
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = `${import.meta.env.BASE_URL}${work.fallbackImage.startsWith('/') ? work.fallbackImage.slice(1) : work.fallbackImage}`;
+                            }}
+                          />
+                        </motion.div>
+                        
+                        <motion.div 
+                          layout 
+                          transition={{ type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.6 }}
+                          className="portfolio-premium-card-content"
+                        >
+                          <div className="portfolio-premium-card-meta-row">
+                            <span className="portfolio-premium-card-tag">{work.meta}</span>
+                          </div>
+                          
+                          <h3 className="portfolio-premium-card-title">
+                            {work.title}
+                          </h3>
+                          
+                          <p className="portfolio-premium-card-desc">
+                            {work.desc}
+                          </p>
+     
+                          {/* Dual Action Buttons Row */}
+                          <div className="portfolio-card-actions">
+                            <button 
+                              className="portfolio-action-btn-secondary"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                setActiveProject(work)
+                                setModalTab('details')
+                              }}
+                            >
+                              Details
+                            </button>
+                            <button 
+                              className="portfolio-action-btn-primary"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                setActiveProject(work)
+                                setModalTab('preview')
+                              }}
+                            >
+                              Live
+                            </button>
+                          </div>
+                        </motion.div>
+                      </motion.div>
+                    )
+                  })}
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="slider"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  className="portfolio-vertical-slider-container"
+                >
+                  <motion.div 
+                    className="portfolio-vertical-slider-track"
+                    animate={{ y: `-${activeSliderIndex * 100}%` }}
+                    transition={{ type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.6 }}
+                  >
+                    {orderedSliderWorks.map((work) => (
+                      <div className="portfolio-slider-item" key={work.title}>
+                        <div 
+                          className="portfolio-premium-card horizontal-layout"
+                          onClick={() => {
+                            setActiveProject(work)
+                            setModalTab('preview')
+                          }}
+                        >
+                          <div className="portfolio-premium-card-image-wrapper">
+                            <img 
+                              src={`${import.meta.env.BASE_URL}${work.image.startsWith('/') ? work.image.slice(1) : work.image}`} 
+                              alt={work.title} 
+                              className="portfolio-premium-card-image"
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = `${import.meta.env.BASE_URL}${work.fallbackImage.startsWith('/') ? work.fallbackImage.slice(1) : work.fallbackImage}`;
+                              }}
+                            />
+                          </div>
+                          
+                          <div className="portfolio-premium-card-content">
+                            <div className="portfolio-premium-card-meta-row">
+                              <span className="portfolio-premium-card-tag">{work.meta}</span>
+                            </div>
+                            
+                            <h3 className="portfolio-premium-card-title">
+                              {work.title}
+                            </h3>
+                            
+                            <p className="portfolio-premium-card-desc">
+                              {work.desc}
+                            </p>
+       
+                            {/* Dual Action Buttons Row */}
+                            <div className="portfolio-card-actions">
+                              <button 
+                                className="portfolio-action-btn-secondary"
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  setActiveProject(work)
+                                  setModalTab('details')
+                                }}
+                              >
+                                Details
+                              </button>
+                              <button 
+                                className="portfolio-action-btn-primary"
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  setActiveProject(work)
+                                  setModalTab('preview')
+                                }}
+                              >
+                                Live
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
       </div>
 
       {/* Interactive Mockup Modal Frame */}
@@ -230,7 +579,6 @@ export default function SectionPortfolio() {
               {activeProject.deviceType === 'phone' ? (
                 /* 📱 MOBILE APP DEVICE MOCKUP FRAME */
                 <div className="phone-device-wrapper">
-                  {/* Floating App Info Board next to Phone on Desktop */}
                   <div className="phone-info-overlay">
                     <div className="phone-info-title-area">
                       <span className="phone-info-meta">{activeProject.meta}</span>
@@ -238,7 +586,6 @@ export default function SectionPortfolio() {
                       <span className="phone-info-url">{activeProject.displayUrl}</span>
                     </div>
 
-                    {/* Mobile App Info Board Segmented Control */}
                     <div className="phone-segmented-control-wrapper">
                       <div className="phone-segmented-control">
                         <button 
@@ -278,15 +625,11 @@ export default function SectionPortfolio() {
                     </div>
                   </div>
 
-                  {/* Physical phone container */}
                   <div className="phone-device-frame">
-                    
-                    {/* Volume buttons */}
                     <div className="phone-side-button phone-vol-up"></div>
                     <div className="phone-side-button phone-vol-down"></div>
                     <div className="phone-side-button phone-power"></div>
                     
-                    {/* Screen wrapper */}
                     <div className="phone-screen">
                       {modalTab === 'preview' ? (
                         <iframe 
@@ -300,48 +643,42 @@ export default function SectionPortfolio() {
                       )}
                     </div>
                     
-                    {/* Home swipe indicator bar */}
                     <div className="phone-home-bar"></div>
                   </div>
                 </div>
               ) : (
                 /* 💻 DESKTOP BROWSER WINDOW MOCKUP FRAME */
                 <div className="browser-device-wrapper">
-                  {/* Mockup Header Bar (matching reference image) */}
                   <div className="browser-mockup-header">
-                    {/* macOS Traffic lights */}
                     <div className="browser-traffic-lights">
                       <button className="dot red" onClick={() => setActiveProject(null)} title="Close"></button>
                       <span className="dot yellow"></span>
                       <span className="dot green"></span>
                     </div>
 
-                    {/* Integrated Browser Mockup Tabs */}
                     <div className="browser-mockup-tabs">
                       <button 
-                        className={`browser-tab ${modalTab === 'preview' ? 'active' : ''}`}
+                        className={`browser-tab tab-preview ${modalTab === 'preview' ? 'active' : ''}`}
                         onClick={() => setModalTab('preview')}
                       >
-                        <span className="tab-icon">🌐</span>
+                        <Globe size={13} className="tab-icon-svg" />
                         <span className="tab-title">Interactive Live</span>
                       </button>
                       <button 
-                        className={`browser-tab ${modalTab === 'details' ? 'active' : ''}`}
+                        className={`browser-tab tab-details ${modalTab === 'details' ? 'active' : ''}`}
                         onClick={() => setModalTab('details')}
                       >
-                        <span className="tab-icon">📖</span>
+                        <FileText size={13} className="tab-icon-svg" />
                         <span className="tab-title">Case Study</span>
                       </button>
                     </div>
                     
-                    {/* Address bar capsule */}
                     <div className="browser-address-bar">
                       <span className="address-bar-text">
                         {modalTab === 'preview' ? activeProject.displayUrl : `${activeProject.displayUrl}#case-study`}
                       </span>
                     </div>
                     
-                    {/* Actions and Close on the right */}
                     <div className="browser-header-actions">
                       <a 
                         href={activeProject.path} 
@@ -362,7 +699,6 @@ export default function SectionPortfolio() {
                     </div>
                   </div>
                   
-                  {/* Browser Screen */}
                   <div className="browser-screen">
                     {modalTab === 'preview' ? (
                       <iframe 
