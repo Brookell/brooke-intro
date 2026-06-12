@@ -145,9 +145,9 @@ const works = [
       "/custom-gallery/3.png",
       "/custom-gallery/4.png",
       "/custom-gallery/5.png",
-      "/custom-gallery/6.png",
-      "/custom-gallery/7.png",
-      "/custom-gallery/8.png"
+      "/custom-gallery/photo-6.jpg",
+      "/custom-gallery/photo-7.jpg",
+      "/custom-gallery/photo-8.jpg"
     ],
     details: {
       subtitle: "More facets of my creations.",
