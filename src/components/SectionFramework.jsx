@@ -114,9 +114,11 @@ export default function SectionFramework() {
   useEffect(() => {
     const updateMaxDrag = () => {
       if (!viewportRef.current || !trackRef.current) return
-      const viewportWidth = viewportRef.current.clientWidth
+      const screenWidth = window.innerWidth
+      const padding = screenWidth > 1200 ? (screenWidth - 1200) / 2 + screenWidth * 0.08 : screenWidth * 0.08
+      const visibleWidth = screenWidth - padding * 2
       const trackWidth = trackRef.current.scrollWidth
-      setMaxDrag(Math.max(0, trackWidth - viewportWidth))
+      setMaxDrag(Math.max(0, trackWidth - visibleWidth))
     }
     updateMaxDrag()
     window.addEventListener('resize', updateMaxDrag)
