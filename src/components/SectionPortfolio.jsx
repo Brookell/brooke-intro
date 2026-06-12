@@ -781,7 +781,15 @@ export default function SectionPortfolio() {
                     
                     <div className="phone-screen">
                       {modalTab === 'preview' ? (
-                        <ScreenshotSlider screenshots={activeProject.screenshots} />
+                        activeProject.isMoreCard ? (
+                          <ScreenshotSlider screenshots={activeProject.screenshots} />
+                        ) : (
+                          <iframe 
+                            src={activeProject.path} 
+                            title={activeProject.title}
+                            style={{ width: '100%', height: '100%', border: 'none', backgroundColor: '#0f0f13' }}
+                          />
+                        )
                       ) : (
                         <ProjectDetails project={activeProject} device="phone" />
                       )}
@@ -845,7 +853,15 @@ export default function SectionPortfolio() {
                   
                   <div className="browser-screen">
                     {modalTab === 'preview' ? (
-                      <ScreenshotSlider screenshots={activeProject.screenshots} />
+                      activeProject.isMoreCard ? (
+                        <ScreenshotSlider screenshots={activeProject.screenshots} />
+                      ) : (
+                        <iframe 
+                          src={activeProject.path} 
+                          title={activeProject.title}
+                          style={{ width: '100%', height: '100%', border: 'none', backgroundColor: '#0f0f13' }}
+                        />
+                      )
                     ) : (
                       <ProjectDetails project={activeProject} device="browser" />
                     )}
