@@ -7,7 +7,7 @@ import SectionAbout from './components/SectionAbout'
 import SectionFramework from './components/SectionFramework'
 import SectionExperience from './components/SectionExperience'
 import SectionPortfolio from './components/SectionPortfolio'
-import SectionGallery from './components/SectionGallery'
+import SectionContact from './components/SectionContact'
 import './App.css'
 
 const navItems = [
@@ -16,7 +16,6 @@ const navItems = [
   { id: 'experience', label: 'Experience' },
   { id: 'portfolio', label: 'Projects' },
   { id: 'framework', label: 'Pillars' },
-  { id: 'skills', label: 'Skills' },
   { id: 'footer', label: 'Contact' }
 ]
 
@@ -33,7 +32,7 @@ function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'experience', 'portfolio', 'framework', 'skills', 'footer']
+      const sections = ['home', 'about', 'experience', 'portfolio', 'framework', 'footer']
       const scrollPosition = window.scrollY + 200
 
       for (const section of sections) {
@@ -80,6 +79,15 @@ function App() {
         
         <section id="home" className="section hero-section">
           <Background />
+          
+          {/* 3D Interaction Hint (Tooltip on Hover) */}
+          <div className="three-interaction-hint">
+            <span className="hint-icon">✦</span>
+            <div className="tooltip-text">
+              Pinch to zoom, Three-finger rotate
+            </div>
+          </div>
+
           <div className="container hero-container">
             <motion.h1 
               className="title-display"
@@ -176,93 +184,8 @@ function App() {
         <SectionPortfolio />
 
         <SectionFramework />
-
-        <SectionGallery />
         
-        <footer id="footer" className="contact-premium-footer">
-          {/* Top Half: White Card Envelope */}
-          <div className="contact-envelope-card">
-            <div className="contact-envelope-header">
-              <span className="envelope-tag">(Creative)</span>
-              <span className="envelope-tag">(2024-2026)</span>
-              <span className="envelope-tag">(Design & Strategy)</span>
-            </div>
-
-            <div className="contact-envelope-body">
-              <h2 className="thank-you-title">Thank You</h2>
-              
-              <div className="envelope-banners">
-                <div className="banner-blue">Looking Forward to</div>
-                <div className="banner-black">Connect with You!</div>
-              </div>
-            </div>
-
-            {/* Tactile Button & String Closure Tie */}
-            <div className="string-closure-container">
-              <div className="closure-button top-button">
-                <div className="eyelet"></div>
-              </div>
-              
-              <svg className="closure-thread" width="40" height="110" viewBox="0 0 40 110" fill="none">
-                <path d="M20 15 L20 95 M20 15 L32 55 L20 95 M20 15 L8 55 L20 95" stroke="#2563eb" strokeWidth="2.5" strokeLinecap="round" />
-              </svg>
-
-              <div className="closure-button bottom-button">
-                <div className="eyelet"></div>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Half: Slate Dark Info Area */}
-          <div className="contact-dark-info">
-            <div className="container contact-info-grid">
-              
-              {/* Left Column: Connections */}
-              <div className="contact-info-left">
-                <div className="info-item">
-                  <span className="info-label">Email</span>
-                  <a href="mailto:brookel0619@163.com" className="info-link email-link">
-                    brookel0619@163.com
-                  </a>
-                </div>
-
-                <div className="info-item" style={{ marginTop: '30px' }}>
-                  <span className="info-label">Social Connections</span>
-                  <div className="info-links-list">
-                    <a href="https://www.linkedin.com/in/brooke-liao0619/" target="_blank" rel="noopener noreferrer" className="social-sublink">
-                      linkedin.com/in/brooke-liao0619
-                    </a>
-                    <a href="https://github.com/Brookell" target="_blank" rel="noopener noreferrer" className="social-sublink">
-                      github.com/Brookell
-                    </a>
-                    <span className="social-sublink-static">
-                      wechat: brookel0619
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column: Signature & Copys */}
-              <div className="contact-info-right">
-                <div className="signature-wrapper">
-                  <span className="info-label regards-label">Warm Regards,</span>
-                  
-                  {/* Custom Autograph Signature of "Brooke" */}
-                  <svg className="autograph-svg" width="180" height="90" viewBox="0 0 180 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M30 60 C32 30, 42 20, 52 50 C55 60, 58 70, 64 60 C72 45, 82 40, 88 55 C90 60, 96 60, 100 52 C108 40, 115 40, 120 55 C122 60, 128 58, 132 52 C138 38, 150 45, 160 60" stroke="#ffffff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                    <path d="M45 55 Q95 55 165 62" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
-                    <text x="35" y="85" fill="#ffffff" fontFamily="'Plus Jakarta Sans', sans-serif" fontSize="14" letterSpacing="3" fontWeight="600" opacity="0.9">BROOKE</text>
-                  </svg>
-                </div>
-
-                <div className="footer-copyright">
-                  © 2026 BROOKE. DESIGNED FOR THE BOLD & FLOWING.
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </footer>
+        <SectionContact />
 
       </div>
     </div>

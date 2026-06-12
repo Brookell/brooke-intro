@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
-import { X, ExternalLink, Film, BookOpen, Music, Coffee, Activity, Sparkles, Globe, FileText } from 'lucide-react'
+import { X, ExternalLink, Film, BookOpen, Music, Coffee, Activity, Sparkles, Globe, FileText, MoreHorizontal } from 'lucide-react'
 import RotatingText from './RotatingText'
 
 const works = [
@@ -15,6 +15,11 @@ const works = [
     path: "https://brookell.github.io/her-gaze/",
     displayUrl: "https://brookell.github.io/her-gaze/",
     deviceType: "browser",
+    screenshots: [
+      "/portfolio/hergaze.png",
+      "/portfolio/hergaze1.png",
+      "/portfolio/hergaze2.png"
+    ],
     details: {
       subtitle: "A cinema of her own.",
       motivation: "Her Gaze started from a question: who gets to look, and who gets to be seen? I wanted to create a quiet digital archive that challenges the historically dominant male gaze in cinema and celebrates women behind and in front of the camera.",
@@ -42,6 +47,9 @@ const works = [
     path: "https://brookell.github.io/cat-pu-c-ci-no/",
     displayUrl: "https://brookell.github.io/cat-pu-c-ci-no/",
     deviceType: "phone",
+    screenshots: [
+      "/portfolio/catpuccino.png"
+    ],
     details: {
       subtitle: "Tactile purr-fection for hydration.",
       motivation: "Catpuccino was born from a simple observation: cats rarely drink enough water, yet their parents struggle to log hydration consistently. I designed a cozy, comforting pocket diary that transforms health tracking into a delightful daily ritual.",
@@ -69,6 +77,10 @@ const works = [
     path: "https://brookell.github.io/love-letters-space/",
     displayUrl: "https://brookell.github.io/love-letters-space/",
     deviceType: "browser",
+    screenshots: [
+      "/portfolio/virginia-woolf.png",
+      "/portfolio/virginia-woolf1.png"
+    ],
     details: {
       subtitle: "Rooted in words, flowing in space.",
       motivation: "An interactive tribute to Virginia Woolf's stream-of-consciousness philosophy: 'I am rooted, but I flow.' The challenge was converting complex, non-linear literary prose into an immersive spatial choreography.",
@@ -96,6 +108,9 @@ const works = [
     path: "https://brookell.github.io/cosmic-vinyl/",
     displayUrl: "https://brookell.github.io/cosmic-vinyl/",
     deviceType: "browser",
+    screenshots: [
+      "/portfolio/cosmic-vinyl.png"
+    ],
     details: {
       subtitle: "Flipping records in a starfield.",
       motivation: "Cosmic Vinyl addresses the loss of physical sensation in digital music browsing. By pairing gesture tracking with generative spatial audio, we recreate the tactile joy of record store crates in a cosmic virtual showroom.",
@@ -113,30 +128,37 @@ const works = [
     }
   },
   { 
-    title: "MoveTrack", 
-    meta: "Vibecoding / Sports", 
+    title: "More Creations", 
+    meta: "Design / Showcase", 
     category: "sports",
-    desc: "A comprehensive fitness companion that tracks your activities, progress, and helps you build sustainable healthy habits through data-driven insights.",
-    image: "/portfolio/movetrack.png",
+    desc: "Click to explore screenshots of my other custom creations and digital prototypes.",
+    image: "/portfolio/more.png",
     fallbackImage: "/portfolio/work-1.svg",
     date: "June 9, 2026",
-    path: "https://brookell.github.io/move-track/",
-    displayUrl: "https://brookell.github.io/move-track/",
+    path: "#",
+    displayUrl: "Gallery / Showcase",
     deviceType: "phone",
+    isMoreCard: true,
+    screenshots: [
+      "/custom-gallery/1.png",
+      "/custom-gallery/2.png",
+      "/custom-gallery/3.png",
+      "/custom-gallery/4.png",
+      "/custom-gallery/5.png",
+      "/custom-gallery/6.png",
+      "/custom-gallery/7.png",
+      "/custom-gallery/8.png"
+    ],
     details: {
-      subtitle: "Move, achieve, repeat.",
-      motivation: "Most workout trackers overwhelm users with cold spreadsheets and stats. MoveTrack redesigns the fitness dashboard into a sleek, clean, aesthetic space that celebrates movement as a form of personal art.",
-      exploring: "I explored visual minimalism in dashboards—stripping away visual noise and using clean typography, soft pastel charts, and satisfying completion rings.",
-      exploringFeatures: [
-        { icon: "✦", label: "Clean Analytics", desc: "Interactive, simple charts mapping calorie burns and step progress." },
-        { icon: "✦", label: "Streak Achieve", desc: "Visual flame streaks that glow brighter as habits solidify." },
-        { icon: "✦", label: "Glass Layouts", desc: "A sleek, responsive layout built for the active phone screen." }
-      ],
-      stack: ["React", "Recharts", "Framer Motion", "CSS Grid & Flexbox", "LocalStorage"],
-      howBuilt: "Built with React and custom styled Recharts nodes. Framer Motion drives the entrance animations, presenting data progressively as you scroll.",
-      noticeQuote: "“Movement is art. Your data dashboard should feel as light and elegant as a clean run at dawn.”",
-      noticeText: "The daily progress circle expands dynamically, matching the breathing rate of an active runner.",
-      stickyNote: "Every step is a brushstroke on your canvas of movement."
+      subtitle: "More facets of my creations.",
+      motivation: "A collection of miscellaneous design works and prototypes.",
+      exploring: "This gallery showcases additional user interfaces and graphic experiments.",
+      exploringFeatures: [],
+      stack: ["React", "UI Design", "Figma", "Prototyping"],
+      howBuilt: "Curated from various projects and stored in custom screenshot files.",
+      noticeQuote: "“Every design is a step towards understanding user resonance.”",
+      noticeText: "Browse through the screenshots using the slider in the mockup device.",
+      stickyNote: "Never stop exploring."
     }
   }
 ]
@@ -147,7 +169,7 @@ const categories = [
   { id: 'literature', label: 'Literature', icon: BookOpen },
   { id: 'music', label: 'Music', icon: Music },
   { id: 'coffee', label: 'Coffee', icon: Coffee },
-  { id: 'sports', label: 'Sports', icon: Activity }
+  { id: 'sports', label: 'More', icon: MoreHorizontal }
 ]
 
 function ProjectDetails({ project, device }) {
@@ -294,6 +316,107 @@ function DynamicWord() {
   )
 }
 
+function ScreenshotSlider({ screenshots }) {
+  const [validScreenshots, setValidScreenshots] = useState([])
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    let active = true
+    const checkImages = async () => {
+      const checked = []
+      for (const src of screenshots) {
+        const fullSrc = `${import.meta.env.BASE_URL}${src.startsWith('/') ? src.slice(1) : src}`
+        const isValid = await new Promise((resolve) => {
+          const img = new Image()
+          img.onload = () => resolve(true)
+          img.onerror = () => resolve(false)
+          img.src = fullSrc
+        })
+        if (isValid) {
+          checked.push(src)
+        }
+      }
+      if (active) {
+        setValidScreenshots(checked)
+        setLoading(false)
+      }
+    }
+    checkImages()
+    return () => { active = false }
+  }, [screenshots])
+
+  if (loading) {
+    return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'rgba(255,255,255,0.6)' }}>Loading screenshots...</div>
+  }
+
+  if (validScreenshots.length === 0) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'rgba(255,255,255,0.6)', padding: '20px', textAlign: 'center' }}>
+        <p>No screenshots found in this gallery yet.</p>
+        <p style={{ fontSize: '0.8rem', opacity: 0.7, marginTop: '8px' }}>Please place images (e.g. 1.png, 2.png) in public/custom-gallery/</p>
+      </div>
+    )
+  }
+
+  const nextSlide = (e) => {
+    e.stopPropagation()
+    setCurrentSlide((prev) => (prev + 1) % validScreenshots.length)
+  }
+
+  const prevSlide = (e) => {
+    e.stopPropagation()
+    setCurrentSlide((prev) => (prev - 1 + validScreenshots.length) % validScreenshots.length)
+  }
+
+  return (
+    <div className="screenshot-slider" style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#0f0f13' }}>
+      <AnimatePresence mode="wait">
+        <motion.img
+          key={currentSlide}
+          src={`${import.meta.env.BASE_URL}${validScreenshots[currentSlide].startsWith('/') ? validScreenshots[currentSlide].slice(1) : validScreenshots[currentSlide]}`}
+          alt={`Screenshot ${currentSlide + 1}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+        />
+      </AnimatePresence>
+
+      {validScreenshots.length > 1 && (
+        <>
+          <button 
+            onClick={prevSlide}
+            style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(15,15,15,0.6)', color: '#fff', border: 'none', borderRadius: '50%', width: '36px', height: '36px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', zIndex: 10, transition: 'background 0.3s' }}
+            onMouseEnter={(e) => e.target.style.background = 'var(--accent-pink)'}
+            onMouseLeave={(e) => e.target.style.background = 'rgba(15,15,15,0.6)'}
+          >
+            ‹
+          </button>
+          <button 
+            onClick={nextSlide}
+            style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', background: 'rgba(15,15,15,0.6)', color: '#fff', border: 'none', borderRadius: '50%', width: '36px', height: '36px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', zIndex: 10, transition: 'background 0.3s' }}
+            onMouseEnter={(e) => e.target.style.background = 'var(--accent-pink)'}
+            onMouseLeave={(e) => e.target.style.background = 'rgba(15,15,15,0.6)'}
+          >
+            ›
+          </button>
+          <div style={{ position: 'absolute', bottom: '20px', display: 'flex', gap: '8px', zIndex: 10 }}>
+            {validScreenshots.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={(e) => { e.stopPropagation(); setCurrentSlide(idx); }}
+                style={{ width: '8px', height: '8px', borderRadius: '50%', border: 'none', background: idx === currentSlide ? '#fff' : 'rgba(255,255,255,0.4)', padding: 0, cursor: 'pointer', transition: 'background 0.3s' }}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
 export default function SectionPortfolio() {
   const [activeProject, setActiveProject] = useState(null)
   const [modalTab, setModalTab] = useState('preview') // 'preview' or 'details'
@@ -310,20 +433,19 @@ export default function SectionPortfolio() {
     }
   }, [activeProject])
 
-  // Filter works by active tab
+  // Filter works by active tab (exclude 'isMoreCard' from 'all' grid view)
   const filteredWorks = activeTab === 'all' 
-    ? works 
+    ? works.filter(w => !w.isMoreCard) 
     : works.filter(w => w.category === activeTab)
 
   const orderedSliderWorks = [
     works.find(w => w.category === 'film'),
     works.find(w => w.category === 'literature'),
     works.find(w => w.category === 'music'),
-    works.find(w => w.category === 'coffee'),
-    works.find(w => w.category === 'sports')
+    works.find(w => w.category === 'coffee')
   ].filter(Boolean)
 
-  const activeSliderIndex = ['film', 'literature', 'music', 'coffee', 'sports'].indexOf(activeTab)
+  const activeSliderIndex = ['film', 'literature', 'music', 'coffee'].indexOf(activeTab)
 
   return (
     <section id="portfolio" className="section portfolio-section-container" style={{ background: 'transparent' }}>
@@ -360,14 +482,25 @@ export default function SectionPortfolio() {
               <div className="portfolio-timeline-line" />
               {categories.map((cat) => {
                 const IconComponent = cat.icon
-                const isSelected = activeTab === cat.id
-                const isActiveOrAll = activeTab === 'all' || activeTab === cat.id
+                const isMoreBtn = cat.id === 'sports'
+                const isSelected = !isMoreBtn && activeTab === cat.id
+                const isActiveOrAll = !isMoreBtn && (activeTab === 'all' || activeTab === cat.id)
                 
                 return (
                   <div
                     key={cat.id}
                     className={`portfolio-sidebar-item sidebar-item-${cat.id} ${isActiveOrAll ? 'active' : ''} ${isSelected ? 'selected' : ''}`}
-                    onClick={() => setActiveTab(cat.id)}
+                    onClick={() => {
+                      if (isMoreBtn) {
+                        const moreProject = works.find(w => w.isMoreCard)
+                        if (moreProject) {
+                          setActiveProject(moreProject)
+                          setModalTab('preview')
+                        }
+                      } else {
+                        setActiveTab(cat.id)
+                      }
+                    }}
                   >
                     <div className="portfolio-sidebar-icon-circle">
                       <IconComponent size={14} />
@@ -407,69 +540,78 @@ export default function SectionPortfolio() {
                           ease: [0.16, 1, 0.3, 1],
                           layout: { type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.6 }
                         }}
-                        className={`portfolio-premium-card ${isFullWidth ? 'full-width' : ''}`}
+                        className={`portfolio-premium-card ${isFullWidth ? 'full-width' : ''} ${work.isMoreCard ? 'more-card-style' : ''}`}
                         onClick={() => {
                           setActiveProject(work)
                           setModalTab('preview')
                         }}
                       >
-                        <motion.div 
-                          layout 
-                          transition={{ type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.6 }}
-                          className="portfolio-premium-card-image-wrapper"
-                        >
-                          <img 
-                            src={`${import.meta.env.BASE_URL}${work.image.startsWith('/') ? work.image.slice(1) : work.image}`} 
-                            alt={work.title} 
-                            className="portfolio-premium-card-image"
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src = `${import.meta.env.BASE_URL}${work.fallbackImage.startsWith('/') ? work.fallbackImage.slice(1) : work.fallbackImage}`;
-                            }}
-                          />
-                        </motion.div>
-                        
-                        <motion.div 
-                          layout 
-                          transition={{ type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.6 }}
-                          className="portfolio-premium-card-content"
-                        >
-                          <div className="portfolio-premium-card-meta-row">
-                            <span className="portfolio-premium-card-tag">{work.meta}</span>
+                        {work.isMoreCard ? (
+                          <div className="more-card-inner-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', background: '#0f0f13', color: '#fff', padding: '40px', textAlign: 'center', borderRadius: '24px', minHeight: '380px', border: '1px solid rgba(255,255,255,0.08)', width: '100%' }}>
+                            <span style={{ fontSize: '3rem', fontWeight: '800', letterSpacing: '0.15em', color: '#fff', textTransform: 'uppercase', marginBottom: '12px', fontFamily: 'var(--font-sans)' }}>MORE</span>
+                            <p style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.5)', maxWidth: '280px', margin: '0', fontWeight: '500', lineHeight: 1.5 }}>Click to explore screenshots of my other design works and prototypes.</p>
                           </div>
-                          
-                          <h3 className="portfolio-premium-card-title">
-                            {work.title}
-                          </h3>
-                          
-                          <p className="portfolio-premium-card-desc">
-                            {work.desc}
-                          </p>
-     
-                          {/* Dual Action Buttons Row */}
-                          <div className="portfolio-card-actions">
-                            <button 
-                              className="portfolio-action-btn-secondary"
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                setActiveProject(work)
-                                setModalTab('details')
-                              }}
+                        ) : (
+                          <>
+                            <motion.div 
+                              layout 
+                              transition={{ type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.6 }}
+                              className="portfolio-premium-card-image-wrapper"
                             >
-                              Details
-                            </button>
-                            <button 
-                              className="portfolio-action-btn-primary"
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                setActiveProject(work)
-                                setModalTab('preview')
-                              }}
+                              <img 
+                                src={`${import.meta.env.BASE_URL}${work.image.startsWith('/') ? work.image.slice(1) : work.image}`} 
+                                alt={work.title} 
+                                className="portfolio-premium-card-image"
+                                onError={(e) => {
+                                  e.target.onerror = null;
+                                  e.target.src = `${import.meta.env.BASE_URL}${work.fallbackImage.startsWith('/') ? work.fallbackImage.slice(1) : work.fallbackImage}`;
+                                }}
+                              />
+                            </motion.div>
+                            
+                            <motion.div 
+                              layout 
+                              transition={{ type: "tween", ease: [0.16, 1, 0.3, 1], duration: 0.6 }}
+                              className="portfolio-premium-card-content"
                             >
-                              Live
-                            </button>
-                          </div>
-                        </motion.div>
+                              <div className="portfolio-premium-card-meta-row">
+                                <span className="portfolio-premium-card-tag">{work.meta}</span>
+                              </div>
+                              
+                              <h3 className="portfolio-premium-card-title">
+                                {work.title}
+                              </h3>
+                              
+                              <p className="portfolio-premium-card-desc">
+                                {work.desc}
+                              </p>
+         
+                              {/* Dual Action Buttons Row */}
+                              <div className="portfolio-card-actions">
+                                <button 
+                                  className="portfolio-action-btn-secondary"
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    setActiveProject(work)
+                                    setModalTab('details')
+                                  }}
+                                >
+                                  Details
+                                </button>
+                                <button 
+                                  className="portfolio-action-btn-primary"
+                                  onClick={(e) => {
+                                    e.stopPropagation()
+                                    setActiveProject(work)
+                                    setModalTab('preview')
+                                  }}
+                                >
+                                  Live
+                                </button>
+                              </div>
+                            </motion.div>
+                          </>
+                        )}
                       </motion.div>
                     )
                   })}
@@ -491,61 +633,70 @@ export default function SectionPortfolio() {
                     {orderedSliderWorks.map((work) => (
                       <div className="portfolio-slider-item" key={work.title}>
                         <div 
-                          className="portfolio-premium-card horizontal-layout"
+                          className={`portfolio-premium-card horizontal-layout ${work.isMoreCard ? 'more-card-style' : ''}`}
                           onClick={() => {
                             setActiveProject(work)
                             setModalTab('preview')
                           }}
                         >
-                          <div className="portfolio-premium-card-image-wrapper">
-                            <img 
-                              src={`${import.meta.env.BASE_URL}${work.image.startsWith('/') ? work.image.slice(1) : work.image}`} 
-                              alt={work.title} 
-                              className="portfolio-premium-card-image"
-                              onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src = `${import.meta.env.BASE_URL}${work.fallbackImage.startsWith('/') ? work.fallbackImage.slice(1) : work.fallbackImage}`;
-                              }}
-                            />
-                          </div>
-                          
-                          <div className="portfolio-premium-card-content">
-                            <div className="portfolio-premium-card-meta-row">
-                              <span className="portfolio-premium-card-tag">{work.meta}</span>
+                          {work.isMoreCard ? (
+                            <div className="more-card-inner-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', background: '#0f0f13', color: '#fff', padding: '40px', textAlign: 'center', borderRadius: '24px', minHeight: '380px', border: '1px solid rgba(255,255,255,0.08)', width: '100%' }}>
+                              <span style={{ fontSize: '3rem', fontWeight: '800', letterSpacing: '0.15em', color: '#fff', textTransform: 'uppercase', marginBottom: '12px', fontFamily: 'var(--font-sans)' }}>MORE</span>
+                              <p style={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.5)', maxWidth: '280px', margin: '0', fontWeight: '500', lineHeight: 1.5 }}>Click to explore screenshots of my other design works and prototypes.</p>
                             </div>
-                            
-                            <h3 className="portfolio-premium-card-title">
-                              {work.title}
-                            </h3>
-                            
-                            <p className="portfolio-premium-card-desc">
-                              {work.desc}
-                            </p>
-       
-                            {/* Dual Action Buttons Row */}
-                            <div className="portfolio-card-actions">
-                              <button 
-                                className="portfolio-action-btn-secondary"
-                                onClick={(e) => {
-                                  e.stopPropagation()
-                                  setActiveProject(work)
-                                  setModalTab('details')
-                                }}
-                              >
-                                Details
-                              </button>
-                              <button 
-                                className="portfolio-action-btn-primary"
-                                onClick={(e) => {
-                                  e.stopPropagation()
-                                  setActiveProject(work)
-                                  setModalTab('preview')
-                                }}
-                              >
-                                Live
-                              </button>
-                            </div>
-                          </div>
+                          ) : (
+                            <>
+                              <div className="portfolio-premium-card-image-wrapper">
+                                <img 
+                                  src={`${import.meta.env.BASE_URL}${work.image.startsWith('/') ? work.image.slice(1) : work.image}`} 
+                                  alt={work.title} 
+                                  className="portfolio-premium-card-image"
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = `${import.meta.env.BASE_URL}${work.fallbackImage.startsWith('/') ? work.fallbackImage.slice(1) : work.fallbackImage}`;
+                                  }}
+                                />
+                              </div>
+                              
+                              <div className="portfolio-premium-card-content">
+                                <div className="portfolio-premium-card-meta-row">
+                                  <span className="portfolio-premium-card-tag">{work.meta}</span>
+                                </div>
+                                
+                                <h3 className="portfolio-premium-card-title">
+                                  {work.title}
+                                </h3>
+                                
+                                <p className="portfolio-premium-card-desc">
+                                  {work.desc}
+                                </p>
+           
+                                {/* Dual Action Buttons Row */}
+                                <div className="portfolio-card-actions">
+                                  <button 
+                                    className="portfolio-action-btn-secondary"
+                                    onClick={(e) => {
+                                      e.stopPropagation()
+                                      setActiveProject(work)
+                                      setModalTab('details')
+                                    }}
+                                  >
+                                    Details
+                                  </button>
+                                  <button 
+                                    className="portfolio-action-btn-primary"
+                                    onClick={(e) => {
+                                      e.stopPropagation()
+                                      setActiveProject(work)
+                                      setModalTab('preview')
+                                    }}
+                                  >
+                                    Live
+                                  </button>
+                                </div>
+                              </div>
+                            </>
+                          )}
                         </div>
                       </div>
                     ))}
@@ -632,12 +783,7 @@ export default function SectionPortfolio() {
                     
                     <div className="phone-screen">
                       {modalTab === 'preview' ? (
-                        <iframe 
-                          src={activeProject.path} 
-                          title={activeProject.title}
-                          className="portfolio-modal-iframe"
-                          allow="camera"
-                        />
+                        <ScreenshotSlider screenshots={activeProject.screenshots} />
                       ) : (
                         <ProjectDetails project={activeProject} device="phone" />
                       )}
@@ -701,12 +847,7 @@ export default function SectionPortfolio() {
                   
                   <div className="browser-screen">
                     {modalTab === 'preview' ? (
-                      <iframe 
-                        src={activeProject.path} 
-                        title={activeProject.title}
-                        className="portfolio-modal-iframe"
-                        allow="camera"
-                      />
+                      <ScreenshotSlider screenshots={activeProject.screenshots} />
                     ) : (
                       <ProjectDetails project={activeProject} device="browser" />
                     )}

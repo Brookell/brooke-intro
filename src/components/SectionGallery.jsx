@@ -5,42 +5,42 @@ import { Sparkles, Code2, Orbit, FileText, BarChart3, Languages } from 'lucide-r
 const skillsList = [
   {
     title: "AI Product Operations",
-    desc: "Overseas product localization, visual LLM community building, user lifecycle management, and data-driven product iterations. Hands-on experience at Baidu & ShengShu.",
+    desc: "Overseas localization, visual LLM community building, and product operations at Baidu & ShengShu.",
     icon: Sparkles,
     tags: ["Product Ops", "Visual LLM", "Localization", "Community Curation"],
     isDark: true
   },
   {
     title: "Vibecoding & Prototyping",
-    desc: "Rapid full-stack prototyping, interactive UI building, and agile web curation utilizing AI-agent workflows, React, Framer Motion, and Tailwind architectures.",
+    desc: "Rapid interactive web prototyping using React, Framer Motion, and AI-agent workflows.",
     icon: Code2,
     tags: ["Vibecoding", "React", "Framer Motion", "Vite"],
     isDark: false
   },
   {
     title: "Creative Development",
-    desc: "Crafting immersive, highly responsive WebGL graphics, physics engines, interactive 3D elements, and smooth web storytelling with Three.js & GSAP.",
+    desc: "Immersive WebGL graphics and interactive 3D storytelling with Three.js and GSAP.",
     icon: Orbit,
     tags: ["Three.js", "WebGL", "GSAP Animations", "Creative Coding"],
     isDark: true
   },
   {
     title: "Content Strategy & Curation",
-    desc: "Multi-platform international media incubation, cinematic curations, and cultural critique writing (e.g. 'Reclaiming the Gaze' feminist film critique).",
+    desc: "Multi-platform content incubation, curation, and cultural/film critique writing.",
     icon: FileText,
     tags: ["Content Matrix", "Curation", "Film Theory", "TikTok/Redbook"],
     isDark: false
   },
   {
     title: "Global Business Strategy",
-    desc: "Deep theoretical research on multinational strategies, cross-border M&A price discrimination models, and global industry scope economics (Anta Group Case Study).",
+    desc: "Multinational strategies, M&A pricing models, and market scope economics.",
     icon: BarChart3,
     tags: ["MIB", "M&A Strategy", "Economics of Scope", "Market Analysis"],
     isDark: true
   },
   {
     title: "Bilingual Communication",
-    desc: "Fluent written and oral English & Chinese communication, enabling cross-border partnerships, global user community management, and localization campaigns.",
+    desc: "Fluent English & Chinese communication enabling cross-border team collaborations.",
     icon: Languages,
     tags: ["Bilingual", "Cross-cultural", "Public Relations", "Team Lead"],
     isDark: false

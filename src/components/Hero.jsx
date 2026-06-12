@@ -10,7 +10,7 @@ export default function Hero() {
       {/* 3D Canvas Interaction Hint */}
       <div className="three-interaction-hint">
         <span className="hint-icon">✦</span>
-        <span className="hint-text">两指缩放，三指旋转 3D 空间</span>
+        <span className="hint-text">Pinch to zoom, Three-finger rotate</span>
       </div>
 
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>

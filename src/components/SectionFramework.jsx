@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useMotionValue } from 'framer-motion'
 import { Trophy, Sparkles, Eye, Leaf, Zap, Mountain } from 'lucide-react'
 
 const pillars = [
@@ -9,8 +9,10 @@ const pillars = [
     meta: 'National Athlete Spirit', 
     icon: Trophy,
     fileName: 'bold.jpg',
-    gradient: 'linear-gradient(135deg, #1c1c24 0%, #101015 100%)',
-    shadow: 'rgba(0, 0, 0, 0.15)'
+    gradient: 'linear-gradient(135deg, rgba(254, 137, 137, 0.05) 0%, rgba(254, 137, 137, 0.12) 100%)',
+    shadow: '0 20px 40px rgba(254, 137, 137, 0.18), 0 8px 16px rgba(254, 137, 137, 0.08), inset 0 2px 0 rgba(255, 255, 255, 0.7)',
+    textColor: '#fe8989',
+    borderColor: 'rgba(254, 137, 137, 0.35)'
   },
   { 
     name: 'Relational', 
@@ -18,8 +20,10 @@ const pillars = [
     meta: 'Digital Mentorship', 
     icon: Sparkles,
     fileName: 'relational.jpg',
-    gradient: 'linear-gradient(135deg, #1c1c24 0%, #101015 100%)',
-    shadow: 'rgba(0, 0, 0, 0.15)'
+    gradient: 'linear-gradient(135deg, rgba(126, 200, 227, 0.05) 0%, rgba(126, 200, 227, 0.12) 100%)',
+    shadow: '0 20px 40px rgba(126, 200, 227, 0.18), 0 8px 16px rgba(126, 200, 227, 0.08), inset 0 2px 0 rgba(255, 255, 255, 0.7)',
+    textColor: '#7ec8e3',
+    borderColor: 'rgba(126, 200, 227, 0.35)'
   },
   { 
     name: 'Observant', 
@@ -27,8 +31,10 @@ const pillars = [
     meta: 'Strategy & Research', 
     icon: Eye,
     fileName: 'observant.jpg',
-    gradient: 'linear-gradient(135deg, #1c1c24 0%, #101015 100%)',
-    shadow: 'rgba(0, 0, 0, 0.15)'
+    gradient: 'linear-gradient(135deg, rgba(254, 137, 137, 0.05) 0%, rgba(254, 137, 137, 0.12) 100%)',
+    shadow: '0 20px 40px rgba(254, 137, 137, 0.18), 0 8px 16px rgba(254, 137, 137, 0.08), inset 0 2px 0 rgba(255, 255, 255, 0.7)',
+    textColor: '#fe8989',
+    borderColor: 'rgba(254, 137, 0, 0.25)' 
   },
   { 
     name: 'Organic', 
@@ -36,8 +42,10 @@ const pillars = [
     meta: 'Vibe Coding Aesthetic', 
     icon: Leaf,
     fileName: 'organic.jpg',
-    gradient: 'linear-gradient(135deg, #1c1c24 0%, #101015 100%)',
-    shadow: 'rgba(0, 0, 0, 0.15)'
+    gradient: 'linear-gradient(135deg, rgba(126, 200, 227, 0.05) 0%, rgba(126, 200, 227, 0.12) 100%)',
+    shadow: '0 20px 40px rgba(126, 200, 227, 0.18), 0 8px 16px rgba(126, 200, 227, 0.08), inset 0 2px 0 rgba(255, 255, 255, 0.7)',
+    textColor: '#7ec8e3',
+    borderColor: 'rgba(126, 200, 227, 0.35)'
   },
   { 
     name: 'Keen', 
@@ -45,8 +53,10 @@ const pillars = [
     meta: 'AI & Tech Exploration', 
     icon: Zap,
     fileName: 'keen.jpg',
-    gradient: 'linear-gradient(135deg, #1c1c24 0%, #101015 100%)',
-    shadow: 'rgba(0, 0, 0, 0.15)'
+    gradient: 'linear-gradient(135deg, rgba(254, 137, 137, 0.05) 0%, rgba(254, 137, 137, 0.12) 100%)',
+    shadow: '0 20px 40px rgba(254, 137, 137, 0.18), 0 8px 16px rgba(254, 137, 137, 0.08), inset 0 2px 0 rgba(255, 255, 255, 0.7)',
+    textColor: '#fe8989',
+    borderColor: 'rgba(254, 137, 137, 0.35)'
   },
   { 
     name: 'Endurance', 
@@ -54,8 +64,10 @@ const pillars = [
     meta: 'Academic & Physical', 
     icon: Mountain,
     fileName: 'endurance.jpg',
-    gradient: 'linear-gradient(135deg, #1c1c24 0%, #101015 100%)',
-    shadow: 'rgba(0, 0, 0, 0.15)'
+    gradient: 'linear-gradient(135deg, rgba(126, 200, 227, 0.05) 0%, rgba(126, 200, 227, 0.12) 100%)',
+    shadow: '0 20px 40px rgba(126, 200, 227, 0.18), 0 8px 16px rgba(126, 200, 227, 0.08), inset 0 2px 0 rgba(255, 255, 255, 0.7)',
+    textColor: '#7ec8e3',
+    borderColor: 'rgba(126, 200, 227, 0.35)'
   },
 ]
 
@@ -63,43 +75,13 @@ export default function SectionFramework() {
   const trackRef = useRef(null)
   const viewportRef = useRef(null)
   const scrollbarTrackRef = useRef(null)
-  
-  // Start at index 0 (first card "Bold")
-  const [currentIndex, setCurrentIndex] = useState(0)
+
+  const x = useMotionValue(0)
+  const [maxDrag, setMaxDrag] = useState(0)
+  const [scrollProgress, setScrollProgress] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const [isDraggingScrollbar, setIsDraggingScrollbar] = useState(false)
-
-  const handleScrollbarPointerDown = (e) => {
-    setIsDraggingScrollbar(true)
-    updateScrollPosition(e)
-    e.currentTarget.setPointerCapture(e.pointerId)
-  }
-
-  const handleScrollbarPointerMove = (e) => {
-    if (!isDraggingScrollbar) return
-    updateScrollPosition(e)
-  }
-
-  const handleScrollbarPointerUp = (e) => {
-    setIsDraggingScrollbar(false)
-    try {
-      e.currentTarget.releasePointerCapture(e.pointerId)
-    } catch (err) {}
-  }
-
-  const updateScrollPosition = (e) => {
-    if (!scrollbarTrackRef.current) return
-    const rect = scrollbarTrackRef.current.getBoundingClientRect()
-    const clientX = e.clientX
-    const clickX = clientX - rect.left
-    const percentage = Math.max(0, Math.min(1, clickX / rect.width))
-    const targetIndex = Math.round(percentage * (pillars.length - 1))
-    goTo(targetIndex)
-  }
-  
-  // Tracking individual card flip states (0 to 5 index representing the root pillars)
   const [flippedCards, setFlippedCards] = useState({})
-  const lastScrollTime = useRef(0)
 
   const [cardWidth, setCardWidth] = useState(384)
   const gap = 24
@@ -128,88 +110,77 @@ export default function SectionFramework() {
     return () => window.removeEventListener('resize', updateWidth)
   }, [])
 
-  // Warp logic removed for non-looping scrolling mode
+  // Calculate max drag distance dynamically
+  useEffect(() => {
+    const updateMaxDrag = () => {
+      if (!viewportRef.current || !trackRef.current) return
+      const viewportWidth = viewportRef.current.clientWidth
+      const trackWidth = trackRef.current.scrollWidth
+      setMaxDrag(Math.max(0, trackWidth - viewportWidth))
+    }
+    updateMaxDrag()
+    window.addEventListener('resize', updateMaxDrag)
+    const timer = setTimeout(updateMaxDrag, 100)
+    return () => {
+      window.removeEventListener('resize', updateMaxDrag)
+      clearTimeout(timer)
+    }
+  }, [cardWidth])
+
+  // Map motion value x to scrollProgress [0, 1]
+  useEffect(() => {
+    return x.onChange((latest) => {
+      if (maxDrag <= 0) return
+      const progress = -latest / maxDrag
+      setScrollProgress(Math.max(0, Math.min(1, progress)))
+    })
+  }, [maxDrag, x])
 
   // Trackpad horizontal swipe / wheel scroll support
   useEffect(() => {
     const viewport = viewportRef.current
     if (!viewport) return
 
-    let accumulatedDelta = 0
-    let scrollTimeout = null
-
     const handleWheel = (e) => {
       // Check horizontal wheel scrolling
       if (Math.abs(e.deltaX) > 4) {
-        // Prevent browser's native history swipe navigation gestures
         e.preventDefault()
-        
-        accumulatedDelta += e.deltaX
-        
-        clearTimeout(scrollTimeout)
-        scrollTimeout = setTimeout(() => {
-          accumulatedDelta = 0
-        }, 150)
-
-        // Threshold of 70px horizontal swipe to scroll to next/prev card
-        const swipeThreshold = 70
-        const now = Date.now()
-        if (Math.abs(accumulatedDelta) >= swipeThreshold) {
-          if (now - lastScrollTime.current > 500) { // 500ms swipe throttle
-            if (accumulatedDelta > 0) {
-              setCurrentIndex(prev => prev + 1)
-            } else {
-              setCurrentIndex(prev => prev - 1)
-            }
-            lastScrollTime.current = now
-          }
-          accumulatedDelta = 0
-        }
+        const newX = x.get() - e.deltaX * 1.2
+        x.set(Math.max(-maxDrag, Math.min(0, newX)))
       }
     }
 
     viewport.addEventListener('wheel', handleWheel, { passive: false })
     return () => {
       viewport.removeEventListener('wheel', handleWheel)
-      clearTimeout(scrollTimeout)
     }
-  }, [cardWidth])
+  }, [maxDrag, x])
 
+  // Drag handlers for scrollbar thumb
+  const handleScrollbarPointerDown = (e) => {
+    setIsDraggingScrollbar(true)
+    updateScrollPosition(e)
+    e.currentTarget.setPointerCapture(e.pointerId)
+  }
 
+  const handleScrollbarPointerMove = (e) => {
+    if (!isDraggingScrollbar) return
+    updateScrollPosition(e)
+  }
 
-  // Drag logic with silky momentum flick and multi-card advances
-  const handleDragEnd = (event, info) => {
-    setIsDragging(false)
-    const offset = info.offset.x
-    const velocity = info.velocity.x
-    const cardStep = cardWidth + gap
+  const handleScrollbarPointerUp = (e) => {
+    setIsDraggingScrollbar(false)
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    } catch (err) {}
+  }
 
-    const swipeThreshold = 50
-    const velocityThreshold = 300
-
-    let cardsToMove = 0
-
-    if (Math.abs(offset) > swipeThreshold || Math.abs(velocity) > velocityThreshold) {
-      // Calculate how many cards dragged physically
-      const physicalDragged = -offset / cardStep
-      // Add velocity contribution for the silky flick inertia
-      const flickContribution = -velocity * 0.0015
-      
-      const totalEstimatedMove = physicalDragged + flickContribution
-      
-      if (totalEstimatedMove > 0) {
-        cardsToMove = Math.max(1, Math.round(totalEstimatedMove))
-      } else {
-        cardsToMove = Math.min(-1, Math.round(totalEstimatedMove))
-      }
-    }
-
-    // Limit maximum move per swipe to 3 cards to keep it elegant and controllable
-    const finalMove = Math.max(-3, Math.min(3, cardsToMove))
-
-    if (finalMove !== 0) {
-      setCurrentIndex(prev => prev + finalMove)
-    }
+  const updateScrollPosition = (e) => {
+    if (!scrollbarTrackRef.current || maxDrag <= 0) return
+    const rect = scrollbarTrackRef.current.getBoundingClientRect()
+    const clickX = e.clientX - rect.left
+    const percentage = Math.max(0, Math.min(1, clickX / rect.width))
+    x.set(-percentage * maxDrag)
   }
 
   const toggleFlip = (index) => {
@@ -219,12 +190,6 @@ export default function SectionFramework() {
       [index]: !prev[index]
     }))
   }
-
-  const goTo = (index) => {
-    setCurrentIndex(index)
-  }
-
-  const activeIndex = currentIndex
 
   return (
     <section id="framework" className="section" style={{ background: 'transparent', overflow: 'hidden' }}>
@@ -255,38 +220,27 @@ export default function SectionFramework() {
             className="carousel-track"
             drag="x"
             dragConstraints={{
-              left: -currentIndex * (cardWidth + gap) - (currentIndex === pillars.length - 1 ? 0 : 180),
-              right: -currentIndex * (cardWidth + gap) + (currentIndex === 0 ? 0 : 180)
+              left: -maxDrag,
+              right: 0
             }}
-            dragElastic={0.4}
+            dragElastic={0.2}
             onDragStart={() => setIsDragging(true)}
-            onDragEnd={handleDragEnd}
-            animate={{ x: -currentIndex * (cardWidth + gap) }}
-            transition={{ type: 'spring', stiffness: 180, damping: 24, mass: 0.8 }}
-            style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+            onDragEnd={() => setTimeout(() => setIsDragging(false), 50)}
+            style={{ x, cursor: isDragging ? 'grabbing' : 'grab' }}
+            dragTransition={{ power: 0.2, timeConstant: 200 }}
           >
             {pillars.map((item, i) => {
               const isFlipped = !!flippedCards[i]
-              const offsetIndex = i - currentIndex
-              
-              // Clean straight horizontal layout
-              const arcY = 0
-              const arcRotateZ = 0
-              const arcScale = i === currentIndex ? 1 : 0.95
+              const isPink = item.textColor === '#fe8989'
 
               return (
                 <motion.div
                   key={`${item.name}-${i}`}
                   className="pillar-card-wrapper"
                   onClick={() => toggleFlip(i)}
-                  animate={{ 
-                    y: arcY,
-                    rotateZ: arcRotateZ,
-                    scale: arcScale
-                  }}
                   whileHover={{
                     y: -15,
-                    scale: i === currentIndex ? 1.08 : 1.04
+                    scale: 1.05
                   }}
                   transition={{ type: 'spring', stiffness: 350, damping: 25 }}
                   style={{
@@ -307,24 +261,29 @@ export default function SectionFramework() {
                     className="pillar-card-front"
                     style={{
                       background: item.gradient,
-                      boxShadow: `0 12px 40px ${item.shadow}`,
+                      boxShadow: item.shadow,
+                      borderColor: item.borderColor,
+                      '--border-color': item.borderColor,
+                      '--bg-letter-stroke': isPink ? 'rgba(254, 137, 137, 0.22)' : 'rgba(126, 200, 227, 0.22)',
+                      '--bg-letter-stroke-hover': isPink ? 'rgba(254, 137, 137, 0.38)' : 'rgba(126, 200, 227, 0.38)',
+                      '--bg-letter-color': isPink ? 'rgba(254, 137, 137, 0.04)' : 'rgba(126, 200, 227, 0.04)'
                     }}
                   >
                     {/* Giant background letter spelling BROOKE */}
                     <div className="pillar-bg-letter">{item.name[0]}</div>
 
                     <div className="pillar-card-top">
-                      <span className="pillar-icon">
+                      <span className="pillar-icon" style={{ color: item.textColor }}>
                         <item.icon size={36} strokeWidth={1.5} />
                       </span>
-                      <span className="pillar-meta">{item.meta}</span>
+                      <span className="pillar-meta" style={{ color: 'rgba(28, 23, 22, 0.5)' }}>{item.meta}</span>
                     </div>
                     
                     <div className="pillar-front-middle">
-                      <h3 className="pillar-front-name">{item.name}</h3>
+                      <h3 className="pillar-front-name" style={{ color: '#1c1716' }}>{item.name}</h3>
                     </div>
                     
-                    <div className="pillar-discover-btn">
+                    <div className="pillar-discover-btn" style={{ color: item.textColor }}>
                       Discover &rarr;
                     </div>
                   </div>
@@ -378,7 +337,7 @@ export default function SectionFramework() {
             className="carousel-scrollbar-thumb"
             style={{
               width: `${100 / pillars.length}%`,
-              left: `${(activeIndex / pillars.length) * 100}%`
+              left: `${scrollProgress * (100 - 100 / pillars.length)}%`
             }}
           />
         </div>

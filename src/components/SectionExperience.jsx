@@ -6,25 +6,26 @@ const experiences = [
     company: "百度",
     companyEn: "Baidu, Inc. · Internship",
     role: "AI海外产品运营",
-    roleEn: "Baidu, Inc. · Internship",
+    roleEn: "AI Overseas Product Operations",
     time: "Apr 2026 - Present · 2 mos",
     location: "Beijing, China · On-site",
     description: [
-      "负责AI大模型海外产品的日常运营与本地化策略制定，深度挖掘目标市场用户痛点，优化产品在不同国家 and 地区的本地化体验。",
-      "通过用户行为数据分析，推进产品功能的迭代与优化，实现核心运营指标与海外活跃用户的显著增长。",
-      "与跨职能团队高效协同，策划多元化海外推广方案，助力AI产品出海品牌影响力的全面提升。"
+      "创意应用搭建：使用无代码开发工具 MeDo 搭建有创意、美观的高质量应用。",
+      "海外内容运营：独立产出海外新媒体账号（X, Blog, Youtube）的视频/图文内容。",
+      "海外增长运营：协助负责海外用户拉新和维护，包括但不限于 KOL 营销、Affiliate 营销、Discord 社区维护、社群拓展等工作。",
+      "产品与市场调研：系统性地追踪、收集、分析主流竞品的功能亮点、应用场景及推广方式。"
     ]
   },
   {
     company: "生数科技",
     companyEn: "ShengShu · Internship",
     role: "海外用户运营",
-    roleEn: "ShengShu · Internship",
+    roleEn: "Overseas User Operations",
     time: "Mar 2026 - Apr 2026 · 2 mos",
     location: "Beijing, China · On-site",
     description: [
       "深度挖掘海外创作者及专业用户群体的需求，搭建高黏性的海外用户社群，策划并落地多场跨国社群创意运营活动。",
-      "负责视觉大语言模型及AI生图/生视频产品的海外用户生命周期管理，建立健全海外用户反馈处理 with 需求转化机制。",
+      "负责视觉大语言模型及AI生图/生视频产品的海外用户生命周期管理，建立健全海外用户反馈处理与需求转化机制。",
       "协同产研团队推进产品海外本地化版本升级，促进海外留存率及用户参与度的有效提升。"
     ]
   },
@@ -32,12 +33,12 @@ const experiences = [
     company: "安哲科技",
     companyEn: "Ancher · Internship",
     role: "海外内容运营",
-    roleEn: "Ancher · Internship",
+    roleEn: "Overseas Content Operations",
     time: "Dec 2025 - Mar 2026 · 4 mos",
-    location: "Beijing, China",
+    location: "Beijing, China · On-site",
     description: [
       "负责海外主流社媒平台（TikTok, Instagram, YouTube等）的账号矩阵孵化与长短期内容策略制定，产出高质量多媒体宣发内容。",
-      "研究海外流行趋势 with 受众偏好，针对不同垂直领域进行本土化内容创作与翻译润色，提高内容曝光与粉丝转化率。",
+      "研究海外流行趋势与受众偏好，针对不同垂直领域进行本土化内容创作与翻译润色，提高内容曝光与粉丝转化率。",
       "监测海外社媒核心数据，根据内容反馈持续优化宣发逻辑，成功打造多款具有海外传播效应的爆款内容。"
     ]
   }
