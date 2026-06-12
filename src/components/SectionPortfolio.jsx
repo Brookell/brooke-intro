@@ -787,7 +787,8 @@ export default function SectionPortfolio() {
                           <iframe 
                             src={activeProject.path} 
                             title={activeProject.title}
-                            style={{ width: '100%', height: '100%', border: 'none', backgroundColor: '#0f0f13' }}
+                            className="portfolio-modal-iframe"
+                            style={{ border: 'none', backgroundColor: '#0f0f13' }}
                           />
                         )
                       ) : (
@@ -859,7 +860,8 @@ export default function SectionPortfolio() {
                         <iframe 
                           src={activeProject.path} 
                           title={activeProject.title}
-                          style={{ width: '100%', height: '100%', border: 'none', backgroundColor: '#0f0f13' }}
+                          className="portfolio-modal-iframe"
+                          style={{ border: 'none', backgroundColor: '#0f0f13' }}
                         />
                       )
                     ) : (
