@@ -602,8 +602,7 @@ export default function SectionPortfolio() {
                                   className="portfolio-action-btn-primary"
                                   onClick={(e) => {
                                     e.stopPropagation()
-                                    setActiveProject(work)
-                                    setModalTab('preview')
+                                    window.open(work.path, '_blank', 'noopener,noreferrer')
                                   }}
                                 >
                                   Live
@@ -687,8 +686,7 @@ export default function SectionPortfolio() {
                                     className="portfolio-action-btn-primary"
                                     onClick={(e) => {
                                       e.stopPropagation()
-                                      setActiveProject(work)
-                                      setModalTab('preview')
+                                      window.open(work.path, '_blank', 'noopener,noreferrer')
                                     }}
                                   >
                                     Live
