@@ -1,0 +1,2 @@
+You can delete this file and place the screenshots you want to display in the slider inside this directory.
+Please name your files custom1.png, custom2.png, custom3.png, etc., or let me know their exact filenames!
