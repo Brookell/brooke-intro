@@ -1285,6 +1285,7 @@ body.modal-open .nav-fixed {
 /* Right Grid Area */
 .portfolio-grid-area {
   flex: 1;
+  min-height: 880px;
 }
 
 .portfolio-new-grid {
