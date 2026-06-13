@@ -1,0 +1,68 @@
+.ripple-grid-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  width: 100%;
+  overflow-x: auto;
+  padding: 10px 0;
+}
+
+/* 隐藏滚动条，但保留滚动功能 */
+.ripple-grid-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.ripple-grid-container {
+  display: grid;
+  gap: 0;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* No transition — matches original HTML exactly.
+   Transitions on cells conflict with the CSS animation
+   and cause the jitter/jank effect. */
+.ripple-grid-cell {
+  width: 18px;
+  height: 18px;
+  background-color: #FAF8F5;
+  border: 1px solid rgba(180, 165, 148, 0.35);
+  cursor: pointer;
+}
+
+/* 亮起的文字点阵样式 */
+.ripple-grid-cell.lit {
+  background-color: #1c1716;
+}
+
+/* 波纹脉冲动画 — 300ms forwards, 与原始 HTML 完全一致 */
+.ripple-grid-cell.pulse {
+  animation: ripple-pulse-anim 300ms forwards;
+}
+
+@keyframes ripple-pulse-anim {
+  0%,100% {
+    background-color: #FAF8F5;
+    transform: scale(1);
+  }
+  50% {
+    background-color: rgba(254, 137, 137, 0.7);
+    transform: scale(1.1);
+  }
+}
+
+.ripple-grid-hint {
+  font-size: 0.7rem;
+  color: rgba(92, 83, 79, 0.45);
+  margin-top: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  animation: pulse-hint 2s infinite ease-in-out;
+}
+
+@keyframes pulse-hint {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}

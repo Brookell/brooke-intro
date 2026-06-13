@@ -4028,7 +4028,8 @@ body.modal-open .nav-fixed {
   padding: 40px;
   box-shadow: 0 10px 30px rgba(15, 15, 15, 0.02);
   text-align: left;
-  max-width: 900px;
+  /* Match ripple grid width: 57 cols × 18px = 1026px */
+  max-width: 1026px;
   width: 100%;
   margin: 0 auto;
 }

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { Phone, Mail, Clock, MapPin, Send, Github, Linkedin, BookOpen } from 'lucide-react'
 import { smoothScrollTo } from '../utils/scroll'
 import { LocationMap } from './LocationMap'
+import { RippleGrid } from './RippleGrid'
 
 export default function SectionContact() {
   const [formData, setFormData] = useState({
@@ -27,12 +28,10 @@ export default function SectionContact() {
     <section id="footer" className="section contact-section-new">
       <div className="container">
         
-        {/* Section Header */}
-        <div className="contact-header-new" style={{ textAlign: 'center', marginBottom: '50px' }}>
-          <span className="label-mono">05 — Get In Touch</span>
-          <h2 className="title-display" style={{ fontSize: 'clamp(2.0rem, 5vw, 3.8rem)', textTransform: 'uppercase', marginBottom: '10px', wordSpacing: '0.15em' }}>
-            Thank you for your curiosity
-          </h2>
+        {/* Section Header with Ripple Grid */}
+        <div className="contact-header-new" style={{ textAlign: 'center', marginBottom: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <span className="label-mono" style={{ marginBottom: '15px' }}>05 — Get In Touch</span>
+          <RippleGrid />
         </div>
 
         <div className="contact-grid-new">
