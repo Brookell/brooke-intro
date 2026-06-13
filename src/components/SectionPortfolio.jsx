@@ -294,7 +294,7 @@ function DynamicWord() {
     }
   }, [isInView])
 
-  const texts = ["demands.", "pressure.", "assignments.", "curiosity."]
+  const texts = ["DEMANDS.", "PRESSURE.", "ASSIGNMENTS.", "CURIOSITY."]
 
   return (
     <span ref={containerRef} className="portfolio-dynamic-word-wrapper">
@@ -463,11 +463,8 @@ export default function SectionPortfolio() {
           <div className="portfolio-header-left">
             <span className="portfolio-label-accent">✦ MY PROJECTS</span>
             <h2 className="portfolio-title-fancy">
-              Projects shaped by <DynamicWord />
+              PROJECTS SHAPED BY <DynamicWord />
             </h2>
-            <p className="portfolio-subtitle">
-              A collection of digital experiences inspired by the things I love — film, literature, music, coffee, and movement.
-            </p>
           </div>
         </motion.div>
  

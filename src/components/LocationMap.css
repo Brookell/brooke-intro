@@ -1,0 +1,206 @@
+.location-map-container {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  perspective: 1000px;
+  width: fit-content;
+  margin: 15px auto 0 auto;
+}
+
+.location-map-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background-color: #f3f4f6;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transform-style: preserve-3d;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.location-map-card:hover {
+  border-color: rgba(52, 211, 153, 0.5);
+  box-shadow: 0 15px 35px rgba(52, 211, 153, 0.08);
+}
+
+/* 渐变层 */
+.location-map-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), transparent 50%, rgba(0, 0, 0, 0.02));
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* 展开区域背景 */
+.location-map-expanded-area {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.location-map-bg-muted {
+  position: absolute;
+  inset: 0;
+  background-color: #f3f4f6;
+}
+
+.location-map-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 道路线样式 */
+.location-map-road-main-1 {
+  stroke: rgba(0, 0, 0, 0.15);
+}
+.location-map-road-main-2 {
+  stroke: rgba(0, 0, 0, 0.12);
+}
+.location-map-road-sub {
+  stroke: rgba(0, 0, 0, 0.06);
+}
+
+/* 建筑物样式 */
+.location-map-building {
+  position: absolute;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+/* 销钉容器 */
+.location-map-pin-container {
+  position: absolute;
+  top: 46%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+}
+
+.location-map-pin-svg {
+  filter: drop-shadow(0 0 10px rgba(52, 211, 153, 0.3));
+}
+
+/* 道路名文字标签 */
+.location-map-label-vertical {
+  position: absolute;
+  left: 33%;
+  top: 12%;
+  font-size: 9px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.15em;
+  writing-mode: vertical-lr;
+}
+
+.location-map-label-horizontal {
+  position: absolute;
+  left: 45%;
+  top: 29%;
+  font-size: 9px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.4);
+  letter-spacing: 0.15em;
+}
+
+/* 网格背景 */
+.location-map-grid-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.location-map-grid-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.location-map-grid-path {
+  stroke: rgba(0, 0, 0, 0.15);
+}
+
+/* 内容布局 */
+.location-map-content {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.location-map-top {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.location-map-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 9999px;
+  background-color: rgba(0, 0, 0, 0.04);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.location-map-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #34d399;
+}
+
+.location-map-status-text {
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.location-map-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.location-map-h3 {
+  color: #1f2937;
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.location-map-coords {
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 10px;
+  font-family: monospace;
+  margin: 0;
+}
+
+.location-map-underline {
+  height: 1px;
+  background: linear-gradient(to right, rgba(52, 211, 153, 0.6), rgba(52, 211, 153, 0.2), transparent);
+}
+
+/* 提示文本 */
+.location-map-hint {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  color: rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Phone, Mail, Clock, MapPin, Send, Github, Linkedin, BookOpen } from 'lucide-react'
 import { smoothScrollTo } from '../utils/scroll'
+import { LocationMap } from './LocationMap'
 
 export default function SectionContact() {
   const [formData, setFormData] = useState({
@@ -38,154 +39,54 @@ export default function SectionContact() {
           
           {/* Left Side: Contact Information Card */}
           <div className="contact-info-card-new">
-            <h3 className="contact-info-title-new">Contact Information</h3>
-            <p className="contact-info-desc-new">
-              Let's build something extraordinary together. Reach out via email, phone, or find me at BFSU.
-            </p>
+            <div className="contact-card-split">
+              <div className="contact-card-left">
+                <h3 className="contact-info-title-new" style={{ marginBottom: '25px' }}>Contact Information</h3>
 
-            <div className="contact-details-list-new">
-              
-              <div className="contact-detail-item-new">
-                <div className="contact-detail-icon-new">
-                  <Phone size={18} strokeWidth={2} />
-                </div>
-                <div className="contact-detail-content-new">
-                  <span className="contact-detail-label-new">Phone Number</span>
-                  <a href="tel:+8615874242681" className="contact-detail-link-new">
-                    +86 158 7424 2681
-                  </a>
+                <div className="contact-details-list-new">
+                  <div className="contact-detail-item-new">
+                    <div className="contact-detail-icon-new">
+                      <Phone size={18} strokeWidth={2} />
+                    </div>
+                    <div className="contact-detail-content-new">
+                      <span className="contact-detail-label-new">PHONE NUMBER</span>
+                      <a href="tel:+8615874242681" className="contact-detail-link-new" style={{ fontWeight: 600, fontSize: '1.05rem' }}>
+                        +86 158 7424 2681
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="contact-detail-item-new">
+                    <div className="contact-detail-icon-new">
+                      <Mail size={18} strokeWidth={2} />
+                    </div>
+                    <div className="contact-detail-content-new">
+                      <span className="contact-detail-label-new">EMAIL ADDRESS</span>
+                      <a href="mailto:brookel0619@163.com" className="contact-detail-link-new" style={{ fontWeight: 600, fontSize: '1.05rem' }}>
+                        brookel0619@163.com
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="contact-detail-item-new">
+                    <div className="contact-detail-icon-new">
+                      <MapPin size={18} strokeWidth={2} />
+                    </div>
+                    <div className="contact-detail-content-new">
+                      <span className="contact-detail-label-new">LOCATION</span>
+                      <span className="contact-detail-text-new" style={{ fontWeight: 600, fontSize: '1.05rem', color: '#1c1716' }}>
+                        Beijing Foreign Studies University
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="contact-detail-item-new">
-                <div className="contact-detail-icon-new">
-                  <Mail size={18} strokeWidth={2} />
-                </div>
-                <div className="contact-detail-content-new">
-                  <span className="contact-detail-label-new">Email Address</span>
-                  <a href="mailto:brookel0619@163.com" className="contact-detail-link-new">
-                    brookel0619@163.com
-                  </a>
-                </div>
+              <div className="contact-card-right">
+                <LocationMap location="北京外国语大学" coordinates="39.9575° N, 116.3075° E" />
               </div>
-
-              <div className="contact-detail-item-new">
-                <div className="contact-detail-icon-new">
-                  <Clock size={18} strokeWidth={2} />
-                </div>
-                <div className="contact-detail-content-new">
-                  <span className="contact-detail-label-new">Response Time</span>
-                  <span className="contact-detail-text-new">
-                    Usually replies within 24 hours
-                  </span>
-                </div>
-              </div>
-
-              <div className="contact-detail-item-new">
-                <div className="contact-detail-icon-new">
-                  <MapPin size={18} strokeWidth={2} />
-                </div>
-                <div className="contact-detail-content-new">
-                  <span className="contact-detail-label-new">Our Location</span>
-                  <span className="contact-detail-text-new">
-                    East Campus of Beijing Foreign Studies University, Beijing, China
-                  </span>
-                </div>
-              </div>
-
             </div>
           </div>
-
-          {/* Right Side: Contact Form */}
-          {/* Right Side: Contact Form */}
-          <div className="contact-form-card-new">
-            <div className="contact-form-badge-new">
-              <span className="badge-dot-new">✦</span> Get In Touch
-            </div>
-            <h3 className="contact-form-title-new">Send a Message</h3>
-            
-            {submitted ? (
-              <motion.div 
-                className="contact-success-message"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-              >
-                <span className="success-icon-new">✦</span>
-                <h4>Thank You!</h4>
-                <p>Your message has been sent successfully. I will get back to you shortly.</p>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="contact-form-new">
-                <div className="form-row-new">
-                  <div className="form-group-new">
-                    <label htmlFor="name">Name</label>
-                    <input 
-                      type="text" 
-                      id="name" 
-                      placeholder="Your name" 
-                      required 
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    />
-                  </div>
-                  <div className="form-group-new">
-                    <label htmlFor="email">Email Address</label>
-                    <input 
-                      type="email" 
-                      id="email" 
-                      placeholder="Your email address" 
-                      required 
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    />
-                  </div>
-                </div>
-
-                <div className="form-row-new">
-                  <div className="form-group-new">
-                    <label htmlFor="phone">Phone Number</label>
-                    <input 
-                      type="text" 
-                      id="phone" 
-                      placeholder="Your phone number" 
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    />
-                  </div>
-                  <div className="form-group-new">
-                    <label htmlFor="topic">Topic of Interest</label>
-                    <select 
-                      id="topic"
-                      value={formData.topic}
-                      onChange={(e) => setFormData({ ...formData, topic: e.target.value })}
-                    >
-                      <option value="General Collaboration">General Collaboration</option>
-                      <option value="AI / Product Operations">AI / Product Operations</option>
-                      <option value="Creative Coding Prototyping">Creative Coding / Prototyping</option>
-                      <option value="Table Tennis / Sports Coaching">Table Tennis / Sports</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="form-group-new full-width-new">
-                  <label htmlFor="message">Message</label>
-                  <textarea 
-                    id="message" 
-                    rows="4" 
-                    placeholder="Tell me about your project or inquiry..." 
-                    required
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  />
-                </div>
-
-                <button type="submit" className="form-submit-btn-new">
-                  Send Message <Send size={14} style={{ marginLeft: '6px' }} />
-                </button>
-              </form>
-            )}
-          </div>
-
         </div>
 
         <footer className="footer-advanced">

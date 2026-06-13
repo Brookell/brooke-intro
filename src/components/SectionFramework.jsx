@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { motion, useMotionValue } from 'framer-motion'
+import { motion, useMotionValue, animate } from 'framer-motion'
 import { Trophy, Sparkles, Eye, Leaf, Zap, Mountain } from 'lucide-react'
 
 const pillars = [
@@ -157,6 +157,30 @@ export default function SectionFramework() {
       viewport.removeEventListener('wheel', handleWheel)
     }
   }, [maxDrag, x])
+
+  // Keyboard arrow keys navigation support
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      const activeEl = document.activeElement
+      if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.isContentEditable)) {
+        return
+      }
+
+      const step = cardWidth + gap
+      if (e.key === 'ArrowRight') {
+        e.preventDefault()
+        const newX = Math.max(-maxDrag, x.get() - step)
+        animate(x, newX, { type: 'spring', stiffness: 300, damping: 30 })
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault()
+        const newX = Math.min(0, x.get() + step)
+        animate(x, newX, { type: 'spring', stiffness: 300, damping: 30 })
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [maxDrag, cardWidth, gap, x])
 
   // Drag handlers for scrollbar thumb
   const handleScrollbarPointerDown = (e) => {
