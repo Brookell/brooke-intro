@@ -266,9 +266,8 @@ export default function SectionFramework() {
                       boxShadow: item.shadow,
                       borderColor: item.borderColor,
                       '--border-color': item.borderColor,
-                      '--bg-letter-stroke': isPink ? 'rgba(254, 137, 137, 0.22)' : 'rgba(126, 200, 227, 0.22)',
-                      '--bg-letter-stroke-hover': isPink ? 'rgba(254, 137, 137, 0.38)' : 'rgba(126, 200, 227, 0.38)',
-                      '--bg-letter-color': isPink ? 'rgba(254, 137, 137, 0.04)' : 'rgba(126, 200, 227, 0.04)'
+                      '--bg-letter-color': isPink ? 'rgba(254, 137, 137, 0.16)' : 'rgba(126, 200, 227, 0.16)',
+                      '--bg-letter-color-hover': isPink ? 'rgba(254, 137, 137, 0.32)' : 'rgba(126, 200, 227, 0.32)'
                     }}
                   >
                     {/* Giant background letter spelling BROOKE */}
@@ -293,21 +292,6 @@ export default function SectionFramework() {
                   {/* ── Back Side: Photography/Curations ── */}
                   <div className="pillar-card-back">
                     <div className="pillar-back-content">
-                      
-                      {/* Media Image Frame with Guide text */}
-                      <div className="pillar-media-placeholder">
-                        <img 
-                          src={`${import.meta.env.BASE_URL}pillars/${item.fileName}`} 
-                          alt={item.name} 
-                          className="pillar-media-img"
-                          onError={(e) => { e.target.style.display = 'none'; }}
-                        />
-                        <div className="pillar-media-info">
-                          <span className="placeholder-text-folder">public/pillars/</span>
-                          <span className="placeholder-text-filename">{item.fileName}</span>
-                        </div>
-                      </div>
-
                       <span className="pillar-back-meta">{item.meta}</span>
                       <p className="pillar-back-desc">{item.desc}</p>
                       

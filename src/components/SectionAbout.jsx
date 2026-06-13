@@ -143,7 +143,7 @@ export default function SectionAbout() {
                 onClick={() => setShowEduModal(true)}
               >
                 <span className="feature-icon"><GraduationCap size={32} strokeWidth={1.5} /></span>
-                <h4 className="feature-title">EDUCATIONAL<br/>BACKGROUND</h4>
+                <h4 className="feature-title">EDUCATIONAL BACKGROUND</h4>
               </motion.div>
               
               <motion.div 
@@ -155,7 +155,7 @@ export default function SectionAbout() {
                 onClick={() => setShowSkillsModal(true)}
               >
                 <span className="feature-icon"><Zap size={32} strokeWidth={1.5} /></span>
-                <h4 className="feature-title">SKILLS &<br/>EXPERTISE</h4>
+                <h4 className="feature-title">SKILLS & EXPERTISE</h4>
               </motion.div>
             </div>
           </div>

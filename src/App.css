@@ -313,9 +313,9 @@ body {
   transform: translate(-50%, -50%);
   font-size: 15rem;
   font-weight: 900;
-  font-family: var(--font-sans);
-  color: var(--bg-letter-color, transparent);
-  -webkit-text-stroke: 2px var(--bg-letter-stroke, rgba(28, 23, 22, 0.04));
+  font-family: 'Inter', sans-serif;
+  color: var(--bg-letter-color, rgba(28, 23, 22, 0.04));
+  -webkit-text-stroke: none;
   pointer-events: none;
   z-index: 0;
   user-select: none;
@@ -324,7 +324,7 @@ body {
 }
 
 .pillar-card-wrapper:hover .pillar-bg-letter {
-  -webkit-text-stroke-color: var(--bg-letter-stroke-hover, rgba(28, 23, 22, 0.12));
+  color: var(--bg-letter-color-hover, rgba(28, 23, 22, 0.1));
   transform: translate(-50%, -50%) scale(1.08);
 }
 
@@ -434,8 +434,10 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: space-between;
-  gap: 14px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
 }
 
 .pillar-media-placeholder {
@@ -495,20 +497,21 @@ body {
 }
 
 .pillar-back-meta {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent-pink);
-  margin-top: 4px;
+  margin-top: 10px;
 }
 
 .pillar-back-desc {
-  font-size: 0.85rem;
-  line-height: 1.6;
-  opacity: 0.85;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  opacity: 0.9;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.95);
+  margin-top: 10px;
 }
 
 .pillar-back-close {
@@ -521,7 +524,7 @@ body {
   align-items: center;
   gap: 4px;
   transition: all 0.3s ease;
-  align-self: flex-start;
+  align-self: center;
   margin-top: auto;
 }
 
@@ -878,13 +881,14 @@ body.modal-open .nav-fixed {
 }
 
 .feature-card {
-  border-radius: 22px;
-  padding: 20px 18px;
+  border-radius: 18px;
+  padding: 16px 20px;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 12px;
-  min-height: 120px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  min-height: 70px;
   position: relative;
   overflow: hidden;
   cursor: pointer;

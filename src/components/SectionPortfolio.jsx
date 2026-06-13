@@ -187,11 +187,13 @@ function ProjectDetails({ project, device }) {
             {project.desc}
           </p>
           
-          <div className="editorial-hero-actions">
-            <a href={project.path} target="_blank" rel="noopener noreferrer" className="editorial-live-btn">
-              ↗ Live Site
-            </a>
-          </div>
+          {project.path && project.path !== '#' && !project.isMoreCard && (
+            <div className="editorial-hero-actions">
+              <a href={project.path} target="_blank" rel="noopener noreferrer" className="editorial-live-btn">
+                ↗ Live Site
+              </a>
+            </div>
+          )}
         </div>
 
         {/* Sections Grid */}
@@ -753,16 +755,18 @@ export default function SectionPortfolio() {
                     </div>
 
                     <div className="phone-info-actions">
-                      <a 
-                        href={activeProject.path} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="phone-action-btn"
-                        title="Open in new tab"
-                      >
-                        <ExternalLink size={18} />
-                        <span>Open</span>
-                      </a>
+                      {activeProject.path && activeProject.path !== '#' && !activeProject.isMoreCard && (
+                        <a 
+                          href={activeProject.path} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="phone-action-btn"
+                          title="Open in new tab"
+                        >
+                          <ExternalLink size={18} />
+                          <span>Open</span>
+                        </a>
+                      )}
                       <button 
                         className="phone-close-btn" 
                         onClick={() => setActiveProject(null)}
@@ -789,6 +793,7 @@ export default function SectionPortfolio() {
                             title={activeProject.title}
                             className="portfolio-modal-iframe"
                             style={{ border: 'none', backgroundColor: '#0f0f13' }}
+                            allow="camera"
                           />
                         )
                       ) : (
@@ -833,15 +838,17 @@ export default function SectionPortfolio() {
                     </div>
                     
                     <div className="browser-header-actions">
-                      <a 
-                        href={activeProject.path} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="browser-action-btn"
-                        title="Open in new tab"
-                      >
-                        <ExternalLink size={16} />
-                      </a>
+                      {activeProject.path && activeProject.path !== '#' && !activeProject.isMoreCard && (
+                        <a 
+                          href={activeProject.path} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="browser-action-btn"
+                          title="Open in new tab"
+                        >
+                          <ExternalLink size={16} />
+                        </a>
+                      )}
                       <button 
                         className="browser-close-btn" 
                         onClick={() => setActiveProject(null)}
@@ -862,6 +869,7 @@ export default function SectionPortfolio() {
                           title={activeProject.title}
                           className="portfolio-modal-iframe"
                           style={{ border: 'none', backgroundColor: '#0f0f13' }}
+                          allow="camera"
                         />
                       )
                     ) : (
