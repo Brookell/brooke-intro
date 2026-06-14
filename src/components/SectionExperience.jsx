@@ -10,9 +10,9 @@ const experiences = [
     time: "Apr 2026 - Present · 2 mos",
     location: "Beijing, China · On-site",
     description: [
-      "创意应用搭建：使用无代码开发工具 MeDo 搭建有创意、美观的高质量应用。",
-      "海外内容运营：独立产出海外新媒体账号（X, Blog, Youtube）的视频/图文内容。",
-      "海外增长运营：协助负责海外用户拉新和维护，包括但不限于 KOL 营销、Affiliate 营销、Discord 社区维护、社群拓展等工作。",
+      "AI应用创新与无代码搭建：熟练运用 MeDo 等前沿无代码开发工具，高效将创意转化为兼具高视觉反馈与流畅交互设计的创新 AI 应用。",
+      "运营自动化与 Discord 生态建设：驱动全球用户增长并深度经营 Discord 官方社区；针对用户反馈散乱的痛点，自主设计Bug自动化 Skill，同时负责官方 Discord Bot 的功能配置与逻辑打通，成功构建“社区反馈-自动捕获-高效流转”的自动化工作流。",
+      "海外全媒体内容冷启动与矩阵运营：独立主导海外主流新媒体账号（X/Twitter、官方 Blog、YouTube）的冷启动与内容生态建设。完成图片、文案、视频的多重内容制作。",
       "产品与市场调研：系统性地追踪、收集、分析主流竞品的功能亮点、应用场景及推广方式。"
     ]
   },
@@ -24,9 +24,9 @@ const experiences = [
     time: "Mar 2026 - Apr 2026 · 2 mos",
     location: "Beijing, China · On-site",
     description: [
-      "深度挖掘海外创作者及专业用户群体的需求，搭建高黏性的海外用户社群，策划并落地多场跨国社群创意运营活动。",
-      "负责视觉大语言模型及AI生图/生视频产品的海外用户生命周期管理，建立健全海外用户反馈处理与需求转化机制。",
-      "协同产研团队推进产品海外本地化版本升级，促进海外留存率及用户参与度的有效提升。"
+      "海外核心用户触达与生态搭建：聚焦全球顶尖 AI 视频大模型产品 Vidu 的海外推广，主导并执行海外核心视频创作者Creators与KOL的深度挖掘、商务触达与维护，巩固 Vidu 海外高粘性创作者生态。",
+      "社群精细化运营与促活：运营海外创作者官方社群，通过策划专属活动与高频互动，提升社群活跃度，激励用户产出高质量 AI 视频内容。",
+      "用户反馈协同与产品迭代：深度跟进海外用户与创作者的反馈及 Bug，建立高效的需求流转机制，定期输出优化报告，直接驱动产品的本土化迭代。"
     ]
   },
   {
@@ -37,9 +37,9 @@ const experiences = [
     time: "Dec 2025 - Mar 2026 · 4 mos",
     location: "Beijing, China · On-site",
     description: [
-      "负责海外主流社媒平台（TikTok, Instagram, YouTube等）的账号矩阵孵化与长短期内容策略制定，产出高质量多媒体宣发内容。",
-      "研究海外流行趋势与受众偏好，针对不同垂直领域进行本土化内容创作与翻译润色，提高内容曝光与粉丝转化率。",
-      "监测海外社媒核心数据，根据内容反馈持续优化宣发逻辑，成功打造多款具有海外传播效应的爆款内容。"
+      "产品内容中台建设与多端分发：负责 AI 聚合平台 Founder News 的后台内容架构管理；每日独立完成 30+ 条全球 AI 资讯的抓取、多维筛选与聚合分析，确保平台内容的高实效性与行业前瞻性。",
+      "高信号 Newsletter 独立主理：独立主理 Substack Newsletter，累计采编并发送 40+ 期高信息密度内容；通过对 1500+ 条资讯的脱水整合，精准识别核心用户增长点，实现订阅用户增长。",
+      "Prompt 闭环开发与 A/B 测试：针对不同海外社区语境，对提示词进行 8 个大版本及 100+ 次细分迭代；建立 50+ 条测试用例进行 A/B 测试，将模型生成内容的准确度与自然度提升 25%。"
     ]
   }
 ]
@@ -57,7 +57,7 @@ export default function SectionExperience() {
           {/* ── Left Column: Sticky Editorial Heading ── */}
           <div className="experience-left">
             <div className="experience-title-sticky">
-              <span className="label-mono">03 — Experience</span>
+              <span className="label-mono">02 — EXPERIENCE</span>
               <h2 className="experience-huge-title">
                 INTERNSHIP<br />
                 <span className="stroke-text">EXPERIENCE</span>

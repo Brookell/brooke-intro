@@ -30,7 +30,7 @@ export default function SectionContact() {
         
         {/* Section Header with Ripple Grid */}
         <div className="contact-header-new" style={{ textAlign: 'center', marginBottom: '16px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <span className="label-mono" style={{ marginBottom: '15px' }}>05 — Get In Touch</span>
+          <span className="label-mono" style={{ marginBottom: '15px' }}>05 — CONTACT</span>
           <RippleGrid />
         </div>
 

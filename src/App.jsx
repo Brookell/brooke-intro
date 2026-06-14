@@ -55,7 +55,7 @@ function App() {
   return (
     <div className="app-wrapper">
       <motion.div className="scroll-progress-bar" style={{ scaleX }} />
-      
+
       <nav className="nav-fixed">
         <div className="nav-inner">
           {navItems.map((item) => (

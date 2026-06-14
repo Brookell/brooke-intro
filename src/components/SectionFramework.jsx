@@ -5,8 +5,8 @@ import { Trophy, Sparkles, Eye, Leaf, Zap, Mountain } from 'lucide-react'
 const pillars = [
   { 
     name: 'Bold', 
-    desc: 'Competitive courage and decisive action. The fearless mindset cultivated through years of national-level table tennis competition.', 
-    meta: 'National Athlete Spirit', 
+    desc: 'From standard athletic training to studying business and trying out AI operations—always willing to start as a fresh beginner.', 
+    meta: 'Beginner Mindset', 
     icon: Trophy,
     fileName: 'bold.jpg',
     gradient: 'linear-gradient(135deg, rgba(254, 137, 137, 0.05) 0%, rgba(254, 137, 137, 0.12) 100%)',
@@ -16,8 +16,8 @@ const pillars = [
   },
   { 
     name: 'Relational', 
-    desc: 'Emotional resonance and human connection. Building meaningful bridges between people, cultures, and ideas through empathy.', 
-    meta: 'Digital Mentorship', 
+    desc: 'Valuing genuine, quiet human connections within communities and teams.', 
+    meta: 'Genuine Connection', 
     icon: Sparkles,
     fileName: 'relational.jpg',
     gradient: 'linear-gradient(135deg, rgba(126, 200, 227, 0.05) 0%, rgba(126, 200, 227, 0.12) 100%)',
@@ -27,8 +27,8 @@ const pillars = [
   },
   { 
     name: 'Observant', 
-    desc: 'Identifying patterns and hidden signals in data, behavior, and markets. Turning observation into strategic insight.', 
-    meta: 'Strategy & Research', 
+    desc: 'A quiet observer of the world, often found gathering fragments of life through literature and films.', 
+    meta: 'Quiet Observer', 
     icon: Eye,
     fileName: 'observant.jpg',
     gradient: 'linear-gradient(135deg, rgba(254, 137, 137, 0.05) 0%, rgba(254, 137, 137, 0.12) 100%)',
@@ -38,8 +38,8 @@ const pillars = [
   },
   { 
     name: 'Organic', 
-    desc: 'Natural, intuitive growth rhythms. Embracing an aesthetic approach to technology that feels alive and human.', 
-    meta: 'Vibe Coding Aesthetic', 
+    desc: "Named after a little stream, I prefer growing at my own pace, browsing bookstores, and enjoying life's simple pleasures.", 
+    meta: 'Natural Pace', 
     icon: Leaf,
     fileName: 'organic.jpg',
     gradient: 'linear-gradient(135deg, rgba(126, 200, 227, 0.05) 0%, rgba(126, 200, 227, 0.12) 100%)',
@@ -49,8 +49,8 @@ const pillars = [
   },
   { 
     name: 'Keen', 
-    desc: 'High-signal curiosity and razor-sharp focus. Exploring the frontier of AI, tech, and creative tools with depth.', 
-    meta: 'AI & Tech Exploration', 
+    desc: 'Driven by a simple, sharp curiosity for new things, always eager to explore what captures my heart.', 
+    meta: 'Sharp Curiosity', 
     icon: Zap,
     fileName: 'keen.jpg',
     gradient: 'linear-gradient(135deg, rgba(254, 137, 137, 0.05) 0%, rgba(254, 137, 137, 0.12) 100%)',
@@ -60,8 +60,8 @@ const pillars = [
   },
   { 
     name: 'Endurance', 
-    desc: 'The "Rooted" foundation of grit. Years of discipline in both academics and athletics forged an unshakable core.', 
-    meta: 'Academic & Physical', 
+    desc: 'A steady inner strength built through long hours of repetitive practice and quiet persistence.', 
+    meta: 'Steady Grit', 
     icon: Mountain,
     fileName: 'endurance.jpg',
     gradient: 'linear-gradient(135deg, rgba(126, 200, 227, 0.05) 0%, rgba(126, 200, 227, 0.12) 100%)',
@@ -70,6 +70,31 @@ const pillars = [
     borderColor: 'rgba(126, 200, 227, 0.35)'
   },
 ]
+
+const TypewriterText = ({ text, start }) => {
+  if (!start) return <span style={{ opacity: 0 }}>{text}</span>
+
+  const characters = Array.from(text)
+
+  return (
+    <motion.span>
+      {characters.map((char, index) => (
+        <motion.span
+          key={index}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            duration: 0.05,
+            delay: index * 0.03,
+            ease: "linear"
+          }}
+        >
+          {char}
+        </motion.span>
+      ))}
+    </motion.span>
+  )
+}
 
 export default function SectionFramework() {
   const trackRef = useRef(null)
@@ -86,7 +111,7 @@ export default function SectionFramework() {
   const [cardWidth, setCardWidth] = useState(384)
   const gap = 24
 
-  // Dynamically calculate cardWidth to ensure exactly 3 cards fit in the viewport container on desktop
+  // Dynamically calculate cardWidth — cards start flush left, desktop shows ~3.5 cards
   useEffect(() => {
     const updateWidth = () => {
       const screenWidth = window.innerWidth
@@ -97,12 +122,11 @@ export default function SectionFramework() {
         numCards = 2
       }
 
-      // Calculate container width equivalent (max 1200px, padding 8vw on both sides)
-      const padding = screenWidth > 1200 ? (screenWidth - 1200) / 2 + screenWidth * 0.08 : screenWidth * 0.08
-      const visibleWidth = screenWidth - padding * 2
-      
-      const computedWidth = (visibleWidth - gap * (numCards - 1)) / numCards
-      setCardWidth(Math.max(280, computedWidth))
+      // Cards start at 0 (no padding), fill screenWidth
+      // Divide by numCards + 1.5 so each card is narrower and more cards peek in
+      const divisor = numCards === 1 ? 1.2 : numCards + 1.5
+      const computedWidth = (screenWidth - gap * numCards) / divisor
+      setCardWidth(Math.max(240, computedWidth))
     }
 
     updateWidth()
@@ -114,11 +138,9 @@ export default function SectionFramework() {
   useEffect(() => {
     const updateMaxDrag = () => {
       if (!viewportRef.current || !trackRef.current) return
-      const screenWidth = window.innerWidth
-      const padding = screenWidth > 1200 ? (screenWidth - 1200) / 2 + screenWidth * 0.08 : screenWidth * 0.08
-      const visibleWidth = screenWidth - padding * 2
+      const viewportWidth = viewportRef.current.clientWidth
       const trackWidth = trackRef.current.scrollWidth
-      setMaxDrag(Math.max(0, trackWidth - visibleWidth))
+      setMaxDrag(Math.max(0, trackWidth - viewportWidth))
     }
     updateMaxDrag()
     window.addEventListener('resize', updateMaxDrag)
@@ -226,7 +248,7 @@ export default function SectionFramework() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <span className="label-mono">02 — The Framework</span>
+          <span className="label-mono">04 — THE FRAMEWORK</span>
           <h2 className="title-display" style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', marginBottom: '10px' }}>
             THE BROOKE CORE
           </h2>
@@ -317,7 +339,9 @@ export default function SectionFramework() {
                   <div className="pillar-card-back">
                     <div className="pillar-back-content">
                       <span className="pillar-back-meta">{item.meta}</span>
-                      <p className="pillar-back-desc">{item.desc}</p>
+                      <p className="pillar-back-desc">
+                        <TypewriterText text={item.desc} start={isFlipped} />
+                      </p>
                       
                       <div className="pillar-back-close">
                         &larr; Close Card

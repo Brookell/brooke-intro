@@ -24,10 +24,32 @@ html {
   /* Disabled native smooth scroll to eliminate stutter/lag conflict with custom high-performance quintic ease scroll */
 }
 
+body, button, input, select, textarea, div, span, a, p, li, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+/* Preserve Playfair Display for specific artistic components */
+.portfolio-quote-card,
+.editorial-title,
+.editorial-subtitle,
+.section-number,
+.editorial-notice-quote,
+.sticky-note-text {
+  font-family: 'Playfair Display', Georgia, serif !important;
+}
+
+/* Enforce Plus Jakarta Sans for all main section titles */
+.title-display,
+.about-heading,
+.experience-huge-title,
+.portfolio-title-fancy,
+.contact-info-title-new {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
 body {
   background-color: var(--bg-main);
   color: var(--text-primary);
-  font-family: var(--font-sans);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
@@ -255,7 +277,6 @@ body {
   width: 100%;
   overflow: visible;
   padding: 30px 0 10px;
-  margin-left: max(calc((100vw - 1200px) / 2 + 8vw), 8vw);
 }
 
 .carousel-track {
@@ -429,14 +450,15 @@ body {
   border-color: rgba(255, 255, 255, 0.95);
 }
 
+
 /* Back Side layout */
 .pillar-back-content {
   display: flex;
   flex-direction: column;
   height: 100%;
   justify-content: center;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  text-align: left;
   gap: 20px;
 }
 
@@ -503,6 +525,8 @@ body {
   text-transform: uppercase;
   color: var(--accent-pink);
   margin-top: 10px;
+  width: 100%;
+  text-align: center;
 }
 
 .pillar-back-desc {
@@ -512,6 +536,8 @@ body {
   font-weight: 400;
   color: rgba(255, 255, 255, 0.95);
   margin-top: 10px;
+  text-align: left;
+  width: 100%;
 }
 
 .pillar-back-close {
@@ -772,6 +798,7 @@ body.modal-open .nav-fixed {
   opacity: 0.75;
   margin-bottom: 24px;
   color: var(--text-primary);
+  white-space: pre-line;
 }
 
 .profile-socials {
@@ -830,7 +857,7 @@ body.modal-open .nav-fixed {
   background-clip: text;
   -webkit-background-clip: text;
   font-style: italic;
-  font-weight: 300;
+  font-weight: 800;
 }
 
 .about-description {
@@ -838,6 +865,7 @@ body.modal-open .nav-fixed {
   line-height: 1.75;
   opacity: 0.7;
   max-width: 520px;
+  white-space: pre-line;
 }
 
 /* ── Stats Row ── */
@@ -1060,26 +1088,37 @@ body.modal-open .nav-fixed {
   margin-bottom: 16px;
 }
 
+.portfolio-title-fancy,
+.portfolio-title-fancy * {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  letter-spacing: -0.04em !important;
+}
+
 .portfolio-title-fancy {
   font-size: clamp(2.2rem, 5vw, 3.8rem);
   font-weight: 800;
   line-height: 1.15;
   color: #0f0f0f;
   margin-bottom: 12px;
-  letter-spacing: -0.02em;
 }
 
 .portfolio-title-gradient {
   background: none;
   -webkit-background-clip: unset;
   -webkit-text-fill-color: unset;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-weight: 800 !important;
 }
 
 .portfolio-title-gradient .text-rotate-element {
-  background: linear-gradient(135deg, #ff5555 0%, #00e5ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* 🎨 CURIOSITY 颜色 — 用户选定: #fbacac */
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: #fbacac;
+  color: #fbacac;
   display: inline-block;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-weight: 800 !important;
 }
 
 .portfolio-dynamic-word-wrapper {
@@ -1093,7 +1132,8 @@ body.modal-open .nav-fixed {
 .portfolio-title-alt-word {
   color: rgba(15, 15, 15, 0.22);
   text-decoration: line-through;
-  font-weight: 800;
+  font-weight: 800 !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
 .portfolio-subtitle {
@@ -4008,7 +4048,7 @@ body.modal-open .nav-fixed {
 
 /* New Contact Section Styles */
 .contact-section-new {
-  padding: 100px 0 0 0;
+  padding: 40px 0 0 0;
   position: relative;
   background: transparent;
 }
@@ -4537,7 +4577,3 @@ body.modal-open .nav-fixed {
     text-align: center;
   }
 }
-
-
-
-

@@ -78,12 +78,13 @@ export default function SectionAbout() {
             </div>
 
             <h3 className="profile-name">
-              Liao Yuxin<br />
               Brooke
             </h3>
 
             <p className="profile-bio">
-              A passionate MIB candidate and national table tennis athlete who bridges academic rigor with creative digital exploration.
+              MIB @ BFSU.
+              {"\n"}Competitive grit × Creative soul.
+              {"\n"}Rooted yet fluid.
             </p>
 
             <div className="profile-socials">
@@ -105,14 +106,14 @@ export default function SectionAbout() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.15 }}
             >
+              <span className="label-mono">01 — ABOUT</span>
               <h2 className="about-heading">
-                DYNAMIC<br />
-                <span className="about-heading-accent">STABILITY</span>
+                DYNAMIC <span className="about-heading-accent">STABILITY</span>
               </h2>
               <p className="about-description">
-                Passionate about creating intuitive and engaging experiences. 
-                Specializing in transforming ideas into beautifully crafted products — 
-                from academic research to AI product operations and creative coding.
+                Rooted in structured business strategy.
+                {"\n"}Flowing through AI-driven creations.
+                {"\n"}Fueled by literature, indie waves, and deep sleep.
               </p>
             </motion.div>
 
