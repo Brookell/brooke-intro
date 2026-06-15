@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { GraduationCap, Zap, Mail, Linkedin, Github, MessageCircle, BookOpen, ChevronUp, ChevronDown, Sparkles, Code2, Orbit, FileText, BarChart3, Languages, Heart, Music, Film, Coffee, ChevronLeft, ChevronRight, Sliders, Camera } from 'lucide-react'
+import { GraduationCap, Zap, Mail, Linkedin, Github, MessageCircle, BookOpen, ChevronUp, ChevronDown, Sparkles, Code2, Orbit, FileText, BarChart3, Languages, Heart, Music, Film, Coffee, ChevronLeft, ChevronRight, Camera } from 'lucide-react'
 import { smoothScrollTo } from '../utils/scroll'
 
 const stats = [
@@ -123,41 +123,7 @@ export default function SectionAbout() {
     setImageError(false)
   }, [currentHobby, currentImageIndex])
 
-  const [isEditingLayout, setIsEditingLayout] = useState(false)
-  const [cardStyles, setCardStyles] = useState(() => {
-    try {
-      const saved = localStorage.getItem('customFeatureCardStyles')
-      return saved ? JSON.parse(saved) : {
-        minHeight: 56,
-        paddingY: 12,
-        paddingX: 16,
-        gap: 16,
-        fontSize: 0.76
-      }
-    } catch (e) {
-      return {
-        minHeight: 56,
-        paddingY: 12,
-        paddingX: 16,
-        gap: 16,
-        fontSize: 0.76
-      }
-    }
-  })
-  const [saveStatus, setSaveStatus] = useState("保存配置")
 
-  const handleStyleChange = (key, value) => {
-    setCardStyles(prev => ({
-      ...prev,
-      [key]: value
-    }))
-    setSaveStatus("保存配置")
-  }
-
-  const handleSaveStyles = () => {
-    localStorage.setItem('customFeatureCardStyles', JSON.stringify(cardStyles))
-    setSaveStatus("已保存！请通知助手 ✅")
-  }
 
   const handleHobbyChange = (newIndex) => {
     setCurrentHobby(newIndex)
@@ -246,13 +212,7 @@ export default function SectionAbout() {
             </motion.div>
 
             {/* Feature Cards Row */}
-            <div 
-              className="feature-cards-row"
-              style={{
-                gridTemplateColumns: '1fr 1fr 1fr',
-                gap: `${cardStyles.gap}px`
-              }}
-            >
+            <div className="feature-cards-row">
               <motion.div 
                 className="feature-card feature-card-pink"
                 initial={{ opacity: 0, y: 30 }}
@@ -260,13 +220,9 @@ export default function SectionAbout() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.4 }}
                 onClick={() => setShowEduModal(true)}
-                style={{
-                  minHeight: `${cardStyles.minHeight}px`,
-                  padding: `${cardStyles.paddingY}px ${cardStyles.paddingX}px`
-                }}
               >
                 <span className="feature-icon"><GraduationCap size={24} strokeWidth={1.5} /></span>
-                <h4 className="feature-title" style={{ fontSize: `${cardStyles.fontSize}rem` }}>EDUCATIONAL BACKGROUND</h4>
+                <h4 className="feature-title">EDUCATIONAL BACKGROUND</h4>
               </motion.div>
               
               <motion.div 
@@ -276,13 +232,9 @@ export default function SectionAbout() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.5 }}
                 onClick={() => setShowSkillsModal(true)}
-                style={{
-                  minHeight: `${cardStyles.minHeight}px`,
-                  padding: `${cardStyles.paddingY}px ${cardStyles.paddingX}px`
-                }}
               >
                 <span className="feature-icon"><Zap size={24} strokeWidth={1.5} /></span>
-                <h4 className="feature-title" style={{ fontSize: `${cardStyles.fontSize}rem` }}>SKILLS & EXPERTISE</h4>
+                <h4 className="feature-title">SKILLS & EXPERTISE</h4>
               </motion.div>
 
               <motion.div 
@@ -292,159 +244,10 @@ export default function SectionAbout() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.6 }}
                 onClick={() => setShowHobbiesModal(true)}
-                style={{
-                  minHeight: `${cardStyles.minHeight}px`,
-                  padding: `${cardStyles.paddingY}px ${cardStyles.paddingX}px`
-                }}
               >
                 <span className="feature-icon"><Heart size={24} strokeWidth={1.5} /></span>
-                <h4 className="feature-title" style={{ fontSize: `${cardStyles.fontSize}rem` }}>HOBBIES & INTERESTS</h4>
+                <h4 className="feature-title">HOBBIES & INTERESTS</h4>
               </motion.div>
-            </div>
-
-            {/* Visual Editor Controller */}
-            <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-              <button 
-                onClick={() => setIsEditingLayout(!isEditingLayout)}
-                style={{
-                  background: 'rgba(28, 23, 22, 0.05)',
-                  border: '1px dashed rgba(28, 23, 22, 0.15)',
-                  padding: '6px 12px',
-                  borderRadius: '10px',
-                  fontSize: '0.72rem',
-                  fontWeight: '700',
-                  color: '#1c1716',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  transition: 'all 0.3s ease'
-                }}
-              >
-                <Sliders size={12} />
-                {isEditingLayout ? '隐藏卡片调节器' : '🔧 调节卡片大小 (拖动调节)'}
-              </button>
-
-              <AnimatePresence>
-                {isEditingLayout && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    style={{
-                      width: '100%',
-                      background: 'rgba(255, 255, 255, 0.65)',
-                      backdropFilter: 'blur(10px)',
-                      borderRadius: '16px',
-                      padding: '16px',
-                      marginTop: '12px',
-                      border: '1px solid rgba(28, 23, 22, 0.08)',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '12px',
-                      boxShadow: '0 8px 30px rgba(0,0,0,0.03)',
-                      overflow: 'hidden'
-                    }}
-                  >
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                      {/* Min Height */}
-                      <div className="layout-editor-slider-group" style={{ display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'left' }}>
-                        <label style={{ fontSize: '0.72rem', fontWeight: '700', color: 'rgba(28, 23, 22, 0.6)' }}>
-                          最小高度: {cardStyles.minHeight}px
-                        </label>
-                        <input 
-                          type="range" 
-                          min="40" 
-                          max="150" 
-                          value={cardStyles.minHeight}
-                          onChange={(e) => handleStyleChange('minHeight', parseInt(e.target.value))}
-                          style={{ width: '100%', cursor: 'pointer' }}
-                        />
-                      </div>
-
-                      {/* Font Size */}
-                      <div className="layout-editor-slider-group" style={{ display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'left' }}>
-                        <label style={{ fontSize: '0.72rem', fontWeight: '700', color: 'rgba(28, 23, 22, 0.6)' }}>
-                          文字大小: {cardStyles.fontSize}rem
-                        </label>
-                        <input 
-                          type="range" 
-                          min="0.5" 
-                          max="1.2" 
-                          step="0.02"
-                          value={cardStyles.fontSize}
-                          onChange={(e) => handleStyleChange('fontSize', parseFloat(e.target.value))}
-                          style={{ width: '100%', cursor: 'pointer' }}
-                        />
-                      </div>
-
-                      {/* Padding Y */}
-                      <div className="layout-editor-slider-group" style={{ display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'left' }}>
-                        <label style={{ fontSize: '0.72rem', fontWeight: '700', color: 'rgba(28, 23, 22, 0.6)' }}>
-                          上下内边距: {cardStyles.paddingY}px
-                        </label>
-                        <input 
-                          type="range" 
-                          min="4" 
-                          max="30" 
-                          value={cardStyles.paddingY}
-                          onChange={(e) => handleStyleChange('paddingY', parseInt(e.target.value))}
-                          style={{ width: '100%', cursor: 'pointer' }}
-                        />
-                      </div>
-
-                      {/* Padding X */}
-                      <div className="layout-editor-slider-group" style={{ display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'left' }}>
-                        <label style={{ fontSize: '0.72rem', fontWeight: '700', color: 'rgba(28, 23, 22, 0.6)' }}>
-                          左右内边距: {cardStyles.paddingX}px
-                        </label>
-                        <input 
-                          type="range" 
-                          min="8" 
-                          max="40" 
-                          value={cardStyles.paddingX}
-                          onChange={(e) => handleStyleChange('paddingX', parseInt(e.target.value))}
-                          style={{ width: '100%', cursor: 'pointer' }}
-                        />
-                      </div>
-
-                      {/* Gap */}
-                      <div className="layout-editor-slider-group" style={{ display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'left' }}>
-                        <label style={{ fontSize: '0.72rem', fontWeight: '700', color: 'rgba(28, 23, 22, 0.6)' }}>
-                          卡片间距: {cardStyles.gap}px
-                        </label>
-                        <input 
-                          type="range" 
-                          min="4" 
-                          max="40" 
-                          value={cardStyles.gap}
-                          onChange={(e) => handleStyleChange('gap', parseInt(e.target.value))}
-                          style={{ width: '100%', cursor: 'pointer' }}
-                        />
-                      </div>
-                    </div>
-
-                    <button 
-                      onClick={handleSaveStyles}
-                      style={{
-                        alignSelf: 'flex-start',
-                        marginTop: '8px',
-                        background: '#1c1716',
-                        color: '#fff',
-                        border: 'none',
-                        padding: '8px 16px',
-                        borderRadius: '10px',
-                        fontSize: '0.75rem',
-                        fontWeight: '700',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease'
-                      }}
-                    >
-                      {saveStatus}
-                    </button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
           </div>
         </motion.div>

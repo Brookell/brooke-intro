@@ -906,6 +906,8 @@ body.modal-open .nav-fixed {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 16px;
+  max-width: 580px;
+  width: 100%;
 }
 
 .feature-card {
