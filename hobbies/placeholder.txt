@@ -1,0 +1,5 @@
+Please place your hobby images in this folder.
+Expected files:
+- read1.jpg, read2.jpg, read3.jpg (for Reading & Film)
+- music1.jpg, music2.jpg, music3.jpg (for Music)
+- sport1.jpg, sport2.jpg, sport3.jpg (for Sports)
