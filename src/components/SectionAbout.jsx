@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { GraduationCap, Zap, Mail, Linkedin, Github, MessageCircle, BookOpen, ChevronUp, ChevronDown, Sparkles, Code2, Orbit, FileText, BarChart3, Languages } from 'lucide-react'
+import { GraduationCap, Zap, Mail, Linkedin, Github, MessageCircle, BookOpen, ChevronUp, ChevronDown, Sparkles, Code2, Orbit, FileText, BarChart3, Languages, Heart, Music, Film, Coffee } from 'lucide-react'
 import { smoothScrollTo } from '../utils/scroll'
 
 const stats = [
@@ -48,9 +48,43 @@ const skillsList = [
   }
 ]
 
+const hobbiesList = [
+  {
+    title: "Literature & Writing",
+    desc: "A quiet observer of the world, gathering fragments of life through literature, novels, and creative expressions.",
+    icon: BookOpen,
+    color: "#fe8989"
+  },
+  {
+    title: "Film & Critique",
+    desc: "Deep diving into film theory, cinema curation, and writing detailed analyses or critiques.",
+    icon: Film,
+    color: "#7ec8e3"
+  },
+  {
+    title: "Indie Music & Waves",
+    desc: "Lover of independent records, indie-rock, lo-fi beats, and the ambient waves of quiet melodies.",
+    icon: Music,
+    color: "#b8a6ff"
+  },
+  {
+    title: "Athletic Persistence",
+    desc: "Long-term dedication to running and physical grit. A steady inner strength built through years of practice.",
+    icon: Zap,
+    color: "#fe8989"
+  },
+  {
+    title: "Bookstore Wandering",
+    desc: "Preferring to grow at a natural pace, exploring independent bookstores, and enjoying life's simple, organic pleasures.",
+    icon: Coffee,
+    color: "#7ec8e3"
+  }
+]
+
 export default function SectionAbout() {
   const [showEduModal, setShowEduModal] = useState(false)
   const [showSkillsModal, setShowSkillsModal] = useState(false)
+  const [showHobbiesModal, setShowHobbiesModal] = useState(false)
 
   return (
     <section id="about" className="section about-section">
@@ -143,7 +177,7 @@ export default function SectionAbout() {
                 transition={{ duration: 0.8, delay: 0.4 }}
                 onClick={() => setShowEduModal(true)}
               >
-                <span className="feature-icon"><GraduationCap size={32} strokeWidth={1.5} /></span>
+                <span className="feature-icon"><GraduationCap size={24} strokeWidth={1.5} /></span>
                 <h4 className="feature-title">EDUCATIONAL BACKGROUND</h4>
               </motion.div>
               
@@ -155,8 +189,20 @@ export default function SectionAbout() {
                 transition={{ duration: 0.8, delay: 0.5 }}
                 onClick={() => setShowSkillsModal(true)}
               >
-                <span className="feature-icon"><Zap size={32} strokeWidth={1.5} /></span>
+                <span className="feature-icon"><Zap size={24} strokeWidth={1.5} /></span>
                 <h4 className="feature-title">SKILLS & EXPERTISE</h4>
+              </motion.div>
+
+              <motion.div 
+                className="feature-card feature-card-lavender"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                onClick={() => setShowHobbiesModal(true)}
+              >
+                <span className="feature-icon"><Heart size={24} strokeWidth={1.5} /></span>
+                <h4 className="feature-title">HOBBIES & INTERESTS</h4>
               </motion.div>
             </div>
           </div>
@@ -260,6 +306,52 @@ export default function SectionAbout() {
                           <span key={tag} className="skills-modal-tag-pill">{tag}</span>
                         ))}
                       </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Hobbies Modal */}
+      <AnimatePresence>
+        {showHobbiesModal && (
+          <motion.div 
+            className="edu-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowHobbiesModal(false)}
+          >
+            <motion.div 
+              className="edu-modal-content skills-modal-content"
+              initial={{ scale: 0.9, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.9, y: 20, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 350 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="edu-modal-close" onClick={() => setShowHobbiesModal(false)}>✕</button>
+              
+              <div className="edu-modal-header">
+                <span className="edu-modal-tag">Interests & Hobbies</span>
+                <h3 className="edu-modal-title">Personal Curations</h3>
+              </div>
+              
+              <div className="skills-modal-list">
+                {hobbiesList.map((hobby) => {
+                  const Icon = hobby.icon
+                  return (
+                    <div key={hobby.title} className="skills-modal-item">
+                      <div className="skills-modal-item-header">
+                        <div className="skills-modal-icon-wrapper" style={{ backgroundColor: `${hobby.color}15`, color: hobby.color }}>
+                          <Icon size={20} strokeWidth={1.5} />
+                        </div>
+                        <h4 className="skills-modal-item-title">{hobby.title}</h4>
+                      </div>
+                      <p className="skills-modal-item-desc">{hobby.desc}</p>
                     </div>
                   )
                 })}
