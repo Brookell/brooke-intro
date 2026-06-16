@@ -138,7 +138,7 @@ export default function SectionContact() {
               <ul className="footer-links-list">
                 <li><span>AI Product Ops</span></li>
                 <li><span>Creative Coding</span></li>
-                <li><span>Table Tennis (Athlete)</span></li>
+                <li><span>Table Tennis</span></li>
                 <li><span>MIB Strategy</span></li>
               </ul>
             </div>
