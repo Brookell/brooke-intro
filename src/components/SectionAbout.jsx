@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { GraduationCap, Zap, Mail, Linkedin, Github, MessageCircle, BookOpen, ChevronUp, ChevronDown, Sparkles, Code2, Orbit, FileText, BarChart3, Languages, Heart, Music, Film, Coffee, ChevronLeft, ChevronRight, Camera } from 'lucide-react'
+import { GraduationCap, Zap, Mail, Linkedin, Github, MessageCircle, BookOpen, ChevronUp, ChevronDown, Sparkles, Code2, FileText, BarChart3, Languages, Heart, Music, Film, Coffee, ChevronLeft, ChevronRight, Camera } from 'lucide-react'
 import { smoothScrollTo } from '../utils/scroll'
 
 const stats = [
@@ -21,12 +21,6 @@ const skillsList = [
     desc: "Rapid interactive web prototyping using React, Framer Motion, and AI-agent workflows.",
     icon: Code2,
     tags: ["Vibecoding", "React", "Framer Motion", "Vite"]
-  },
-  {
-    title: "Creative Development",
-    desc: "Immersive WebGL graphics and interactive 3D storytelling with Three.js and GSAP.",
-    icon: Orbit,
-    tags: ["Three.js", "WebGL", "GSAP Animations", "Creative Coding"]
   },
   {
     title: "Content Strategy & Curation",
